@@ -99,6 +99,11 @@ if has('nvim')
 	let g:highlightedyank_highlight_duration = 300
 endif
 
+" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
+
 let g:lightline = {
 	\ 'enable': { 'tabline': 0 },
 	\ 'colorscheme': 'seoul256',

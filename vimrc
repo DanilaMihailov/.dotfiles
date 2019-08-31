@@ -44,11 +44,14 @@ Plug 'tpope/vim-dispatch'
 Plug 'pangloss/vim-javascript'
 " Plug 'mhinz/vim-startify'
 Plug 'https://github.com/machakann/vim-highlightedyank'
+
 " motions
 Plug 'easymotion/vim-easymotion'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
+Plug 'mattn/emmet-vim'
+Plug 'jiangmiao/auto-pairs'
 " Plug 'yuttie/comfortable-motion.vim'
 
 " complete and linting

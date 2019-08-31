@@ -25,6 +25,7 @@ set tabstop=4
 set shiftwidth=4
 set relativenumber
 let mapleader = " "
+colorscheme codedark
 
 call plug#begin()
 " files
@@ -42,7 +43,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-dispatch'
 Plug 'pangloss/vim-javascript'
 " Plug 'mhinz/vim-startify'
-
+Plug 'https://github.com/machakann/vim-highlightedyank'
 " motions
 Plug 'easymotion/vim-easymotion'
 Plug 'mattn/emmet-vim'
@@ -90,6 +91,13 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+
+
+if has('nvim')
+	set inccommand=split
+	highlight HighlightedyankRegion cterm=reverse gui=reverse
+	let g:highlightedyank_highlight_duration = 300
+endif
 
 let g:lightline = {
 	\ 'enable': { 'tabline': 0 },
@@ -157,4 +165,3 @@ endif " has("autocmd")
 "   packadd! matchit
 " endif
 
-colorscheme codedark

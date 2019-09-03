@@ -27,6 +27,15 @@ set relativenumber
 let mapleader = " "
 colorscheme codedark
 
+" Make searching better
+set gdefault      " Never have to type /g at the end of search / replace again
+set ignorecase    " case insensitive searching (unless specified)
+set smartcase
+
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
+
 call plug#begin()
 " files
 Plug '/usr/local/opt/fzf'
@@ -95,6 +104,9 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
+" recall the command-line whose beginning matches the current command-line
+cnoremap <c-n>  <down>
+cnoremap <c-p>  <up>
 
 if has('nvim')
 	set inccommand=split
@@ -106,6 +118,8 @@ endif
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
 endif
+
+set splitbelow splitright
 
 let g:lightline = {
 	\ 'enable': { 'tabline': 0 },

@@ -25,7 +25,6 @@ set tabstop=4
 set shiftwidth=4
 set relativenumber
 let mapleader = " "
-colorscheme codedark
 
 " Make searching better
 set gdefault      " Never have to type /g at the end of search / replace again
@@ -60,6 +59,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'pangloss/vim-javascript'
 " Plug 'mhinz/vim-startify'
 Plug 'https://github.com/machakann/vim-highlightedyank'
+Plug 'tomasiser/vim-code-dark'
 
 " motions
 Plug 'easymotion/vim-easymotion'
@@ -82,6 +82,9 @@ Plug 'ryanolsonx/vim-lsp-javascript'
 Plug 'ryanolsonx/vim-lsp-python'
 
 call plug#end()
+
+" theme
+colorscheme codedark
 
 " autocomplete bindings
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"

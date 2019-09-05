@@ -44,7 +44,9 @@ endif
 
 call plug#begin()
 " files
-Plug '/usr/local/opt/fzf'
+" git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+" ~/.fzf/install
+Plug '/usr/local/opt/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 " Plug 'jistr/vim-nerdtree-tabs'
@@ -78,7 +80,9 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
+" npm install -g typescript typescript-language-server
 Plug 'ryanolsonx/vim-lsp-javascript'
+" pip install python-language-server
 Plug 'ryanolsonx/vim-lsp-python'
 
 call plug#end()

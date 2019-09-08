@@ -122,6 +122,10 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 cnoremap <c-n>  <down>
 cnoremap <c-p>  <up>
 
+" navigate by display lines
+noremap j gj
+noremap k gk
+
 if has('nvim')
 	set inccommand=split
 	highlight HighlightedyankRegion cterm=reverse gui=reverse

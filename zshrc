@@ -74,7 +74,7 @@ ZSH_THEME=""
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(osx docker iterm2)
+plugins=(osx docker iterm2 zsh-nvm)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -85,12 +85,12 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR='nvim'
+# run this command on ssh login 
+if [[ -n $SSH_CONNECTION ]]; then
+	tmux attach || tmux new
+fi
+
 export GIT_EDITOR=nvim
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"

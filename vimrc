@@ -102,6 +102,9 @@ map <C-p> :GFiles<CR>
 map <C-b> :NERDTreeToggle<CR>
 " map <C-b> :NERDTreeTabsToggle<CR>
 
+" ignore files for NERDTree
+let NERDTreeIgnore = ['\.pyc$']
+
 autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
 
 call neomake#configure#automake('nrwi', 500)

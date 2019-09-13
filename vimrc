@@ -129,6 +129,9 @@ cnoremap <c-p>  <up>
 noremap j gj
 noremap k gk
 
+" make Y act like D
+noremap Y y$
+
 if has('nvim')
 	set inccommand=split
 	highlight HighlightedyankRegion cterm=reverse gui=reverse

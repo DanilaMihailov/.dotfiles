@@ -21,8 +21,14 @@ set imsearch=0
 set laststatus=2
 set noshowmode
 set cursorline
+
 set tabstop=4
 set shiftwidth=4
+filetype plugin indent on
+set expandtab
+set autoindent
+set softtabstop=4
+
 set relativenumber
 let mapleader = " "
 
@@ -68,8 +74,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
-Plug 'mattn/emmet-vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'bkad/CamelCaseMotion'
 " Plug 'yuttie/comfortable-motion.vim'
 
 " complete and linting
@@ -120,6 +126,25 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" Use camel case motions instead of default
+" map <silent> w <Plug>CamelCaseMotion_w
+" map <silent> b <Plug>CamelCaseMotion_b
+" map <silent> e <Plug>CamelCaseMotion_e
+" map <silent> ge <Plug>CamelCaseMotion_ge
+" sunmap w
+" sunmap b
+" sunmap e
+" sunmap ge
+" omap <silent> iw <Plug>CamelCaseMotion_iw
+" xmap <silent> iw <Plug>CamelCaseMotion_iw
+" omap <silent> ib <Plug>CamelCaseMotion_ib
+" xmap <silent> ib <Plug>CamelCaseMotion_ib
+" omap <silent> ie <Plug>CamelCaseMotion_ie
+" xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+" Use leader ket for camel case
+let g:camelcasemotion_key = '<leader>'
 
 " recall the command-line whose beginning matches the current command-line
 cnoremap <c-n>  <down>

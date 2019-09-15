@@ -1,4 +1,4 @@
-"
+
 " An example for a vimrc file.
 "
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
@@ -31,6 +31,10 @@ set softtabstop=4
 
 set relativenumber
 let mapleader = " "
+
+" mouse
+silent! set ttymouse=xterm2
+set mouse=a
 
 " Make searching better
 set gdefault      " Never have to type /g at the end of search / replace again

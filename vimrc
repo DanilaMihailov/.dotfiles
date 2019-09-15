@@ -157,6 +157,19 @@ noremap k gk
 " make Y act like D
 noremap Y y$
 
+" ----------------------------------------------------------------------------
+" <tab> / <s-tab> | Circular windows navigation
+" ----------------------------------------------------------------------------
+nnoremap <tab>   <c-w>w
+nnoremap <S-tab> <c-w>W
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-^> <C-o><C-^>
+
 if has('nvim')
 	set inccommand=split
 	highlight HighlightedyankRegion cterm=reverse gui=reverse

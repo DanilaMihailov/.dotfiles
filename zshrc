@@ -130,3 +130,17 @@ zle -N zle-keymap-select
 export KEYTIMEOUT=1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias cd.='cd ..'
+alias cd..='cd ..'
+alias l='ls -alF'
+alias ll='ls -l'
+alias vi='nvim'
+alias vim='nvim'
+# vim
+alias e="$EDITOR"

@@ -109,6 +109,8 @@ map <Leader>gd :LspDefinition<CR>
 
 " files view bindings
 map <C-p> :GFiles<CR>
+map <Leader>p :Commands<CR>
+map <Leader>g :G<CR>
 map <C-b> :NERDTreeToggle<CR>
 " map <C-b> :NERDTreeTabsToggle<CR>
 

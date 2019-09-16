@@ -164,8 +164,8 @@ noremap Y y$
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
 " ----------------------------------------------------------------------------
-nnoremap <tab>   <c-w>w
-nnoremap <S-tab> <c-w>W
+nnoremap <tab>   gt
+nnoremap <S-tab> gT
 
 " Movement in insert mode
 inoremap <C-h> <C-o>h

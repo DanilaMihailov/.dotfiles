@@ -124,7 +124,8 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 let g:lsp_diagnostics_enabled = 0
 " let g:lsp_signs_enabled = 1         " enable signs
 " let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-
+let g:dispatch_no_tmux_make = 1
+let g:dispatch_no_tmux_start = 1
 " move lines in all modes (option key mappings not working)
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==

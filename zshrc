@@ -88,7 +88,9 @@ export LANG=en_US.UTF-8
 export EDITOR='nvim'
 # run this command on ssh login 
 if [[ -n $SSH_CONNECTION ]]; then
-	tmux attach || tmux new
+    if [ -z $TMUX ]; then
+        tmux attach || tmux new
+    fi
 fi
 
 export GIT_EDITOR=nvim

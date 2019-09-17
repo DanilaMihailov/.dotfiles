@@ -95,6 +95,9 @@ Plug 'ryanolsonx/vim-lsp-javascript'
 " pip install python-language-server
 Plug 'ryanolsonx/vim-lsp-python'
 
+" terminal
+Plug 'kassio/neoterm'
+
 call plug#end()
 
 " theme
@@ -218,6 +221,17 @@ if has('nvim')
 	highlight HighlightedyankRegion cterm=reverse gui=reverse
 	let g:highlightedyank_highlight_duration = 300
 endif
+
+" ====================================
+" NeoTerm:
+" ====================================
+let g:neoterm_autoscroll = 1
+" nnoremap <silent> <leader>b :botright Ttoggle<cr><C-w>j
+nnoremap <leader>o :botright 1T grunt build<cr>
+" nnoremap <silent> <leader>B :botright Ttoggle<cr><C-w>jigrunt build<cr><C-\><C-n><esc><cr>
+
+" easily escape terminal
+tnoremap <leader><esc> <C-\><C-n><esc><cr>
 
 " Source the vimrc file after saving it
 if has("autocmd")

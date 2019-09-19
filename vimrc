@@ -98,11 +98,15 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'ryanolsonx/vim-lsp-javascript'
 " pip install python-language-server
 Plug 'ryanolsonx/vim-lsp-python'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'burnettk/vim-angular'
 
 " terminal
 Plug 'kassio/neoterm'
 
 call plug#end()
+
+let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jquery'
 
 " disable concealing for json files
 let g:vim_json_syntax_conceal = 0

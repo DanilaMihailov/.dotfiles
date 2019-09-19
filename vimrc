@@ -72,11 +72,15 @@ Plug 'pangloss/vim-javascript'
 " Plug 'mhinz/vim-startify'
 Plug 'https://github.com/machakann/vim-highlightedyank'
 Plug 'tomasiser/vim-code-dark'
-
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'elzr/vim-json'
+Plug 'hdima/python-syntax'
+Plug 'myusuf3/numbers.vim'
 " motions
 Plug 'easymotion/vim-easymotion'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'bkad/CamelCaseMotion'
@@ -99,6 +103,9 @@ Plug 'ryanolsonx/vim-lsp-python'
 Plug 'kassio/neoterm'
 
 call plug#end()
+
+" disable concealing for json files
+let g:vim_json_syntax_conceal = 0
 
 " theme
 colorscheme codedark

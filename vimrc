@@ -76,6 +76,7 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'elzr/vim-json'
 Plug 'hdima/python-syntax'
 Plug 'myusuf3/numbers.vim'
+Plug 'elixir-editors/vim-elixir'
 " motions
 Plug 'easymotion/vim-easymotion'
 Plug 'mattn/emmet-vim'
@@ -96,11 +97,13 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " npm install -g typescript typescript-language-server
 Plug 'ryanolsonx/vim-lsp-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
 " pip install python-language-server
 Plug 'ryanolsonx/vim-lsp-python'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'burnettk/vim-angular'
-
+Plug 'keith/swift.vim'
+" Plug 'ryanolsonx/vim-lsp-swift'
 " terminal
 Plug 'kassio/neoterm'
 

@@ -1,6 +1,6 @@
 cd ~
 
-rm .tmux.conf .zshrc .vimrc rm ~/.config/nvim/init.vim rm ~/.config/git/ignore
+# rm .tmux.conf .zshrc .vimrc rm ~/.config/nvim/init.vim rm ~/.config/git/ignore
 
 ln -s .dotfiles/zshrc .zshrc
 ln -s .dotfiles/vimrc .vimrc

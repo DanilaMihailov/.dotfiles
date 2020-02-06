@@ -10,6 +10,9 @@
 "  for MS-DOS and Win32:  $VIM\_vimrc
 "	    for OpenVMS:  sys$login:.vimrc
 
+set backupdir=/tmp//
+set directory=/tmp//
+set undodir=/tmp//
 syntax on
 "set ruler
 set number

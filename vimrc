@@ -1,15 +1,3 @@
-
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2017 Sep 20
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
-
 set backupdir=/tmp//
 set directory=/tmp//
 set undodir=/tmp//
@@ -166,7 +154,6 @@ endfunction
 " files view bindings
 map <C-p> :GFiles<CR>
 map <Leader>p :Commands<CR>
-map <Leader>g :G<CR>
 map <C-b> :NERDTreeToggle<CR>
 " map <C-b> :NERDTreeTabsToggle<CR>
 
@@ -182,13 +169,14 @@ let g:lsp_diagnostics_enabled = 0
 " let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 let g:dispatch_no_tmux_make = 1
 let g:dispatch_no_tmux_start = 1
+
 " move lines in all modes (option key mappings not working)
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+" nnoremap <A-k> :m .-2<CR>==
+" nnoremap <A-j> :m .+1<CR>==
+" inoremap <A-j> <Esc>:m .+1<CR>==gi
+" inoremap <A-k> <Esc>:m .-2<CR>==gi
+" vnoremap <A-j> :m '>+1<CR>gv=gv
+" vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Use camel case motions instead of default
 " map <silent> w <Plug>CamelCaseMotion_w

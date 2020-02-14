@@ -68,6 +68,7 @@ Plug 'elzr/vim-json'
 Plug 'hdima/python-syntax'
 Plug 'myusuf3/numbers.vim'
 Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
 " motions
 Plug 'easymotion/vim-easymotion'
 Plug 'mattn/emmet-vim'
@@ -85,12 +86,14 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'mattn/vim-lsp-settings'
 
 " npm install -g typescript typescript-language-server
 Plug 'ryanolsonx/vim-lsp-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 " pip install python-language-server
 Plug 'ryanolsonx/vim-lsp-python'
+Plug 'rust-lang/rust.vim'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'burnettk/vim-angular'
 Plug 'keith/swift.vim'
@@ -105,6 +108,14 @@ let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jqu
 " disable concealing for json files
 let g:vim_json_syntax_conceal = 0
 
+let g:lsp_settings = {
+\  'elixir-ls': {
+\    'disabled': 1,
+\   }
+\}
+
+" elixir, format files on save
+let g:mix_format_on_save = 1
 " theme
 colorscheme codedark
 
@@ -161,6 +172,7 @@ map <C-b> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
 autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
+autocmd BufNewFile,BufRead *.json.ejs set filetype=json
 
 call neomake#configure#automake('nrwi', 500)
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -169,30 +181,6 @@ let g:lsp_diagnostics_enabled = 0
 " let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 let g:dispatch_no_tmux_make = 1
 let g:dispatch_no_tmux_start = 1
-
-" move lines in all modes (option key mappings not working)
-" nnoremap <A-k> :m .-2<CR>==
-" nnoremap <A-j> :m .+1<CR>==
-" inoremap <A-j> <Esc>:m .+1<CR>==gi
-" inoremap <A-k> <Esc>:m .-2<CR>==gi
-" vnoremap <A-j> :m '>+1<CR>gv=gv
-" vnoremap <A-k> :m '<-2<CR>gv=gv
-
-" Use camel case motions instead of default
-" map <silent> w <Plug>CamelCaseMotion_w
-" map <silent> b <Plug>CamelCaseMotion_b
-" map <silent> e <Plug>CamelCaseMotion_e
-" map <silent> ge <Plug>CamelCaseMotion_ge
-" sunmap w
-" sunmap b
-" sunmap e
-" sunmap ge
-" omap <silent> iw <Plug>CamelCaseMotion_iw
-" xmap <silent> iw <Plug>CamelCaseMotion_iw
-" omap <silent> ib <Plug>CamelCaseMotion_ib
-" xmap <silent> ib <Plug>CamelCaseMotion_ib
-" omap <silent> ie <Plug>CamelCaseMotion_ie
-" xmap <silent> ie <Plug>CamelCaseMotion_ie
 
 " Use leader ket for camel case
 let g:camelcasemotion_key = '<leader>'

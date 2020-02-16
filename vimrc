@@ -94,6 +94,7 @@ Plug 'maxmellon/vim-jsx-pretty'
 " pip install python-language-server
 Plug 'ryanolsonx/vim-lsp-python'
 Plug 'rust-lang/rust.vim'
+Plug 'majutsushi/tagbar'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'burnettk/vim-angular'
 Plug 'keith/swift.vim'
@@ -110,7 +111,7 @@ let g:vim_json_syntax_conceal = 0
 
 let g:lsp_settings = {
 \  'elixir-ls': {
-\    'disabled': 1,
+\    'disabled': 0,
 \   }
 \}
 
@@ -182,6 +183,8 @@ let g:lsp_diagnostics_enabled = 0
 let g:dispatch_no_tmux_make = 1
 let g:dispatch_no_tmux_start = 1
 
+" format rust files on save by calling cargo format via :RustFmt
+let g:rustfmt_autosave = 1
 " Use leader ket for camel case
 let g:camelcasemotion_key = '<leader>'
 

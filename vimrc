@@ -94,6 +94,7 @@ Plug 'maxmellon/vim-jsx-pretty'
 " pip install python-language-server
 Plug 'ryanolsonx/vim-lsp-python'
 Plug 'rust-lang/rust.vim'
+Plug 'ron-rs/ron.vim'
 Plug 'majutsushi/tagbar'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'burnettk/vim-angular'

@@ -3,6 +3,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export TOOLCHAINS=swift
 # allows to install global packages without root
 export PATH=~/.npm-global/bin:$PATH
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export PS1="%~ $ "
 

@@ -62,7 +62,6 @@ Plug 'tpope/vim-dispatch'
 Plug 'pangloss/vim-javascript'
 " Plug 'mhinz/vim-startify'
 Plug 'https://github.com/machakann/vim-highlightedyank'
-Plug 'tomasiser/vim-code-dark'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'elzr/vim-json'
 Plug 'hdima/python-syntax'
@@ -119,7 +118,12 @@ let g:lsp_settings = {
 " elixir, format files on save
 let g:mix_format_on_save = 1
 " theme
-colorscheme codedark
+" Plug 'tomasiser/vim-code-dark'
+" colorscheme codedark
+Plug 'altercation/vim-colors-solarized' " then cp ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors
+ 
+set background=dark
+colorscheme solarized
 
 " autocomplete bindings
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -239,7 +243,7 @@ set splitbelow splitright
 
 let g:lightline = {
 	\ 'enable': { 'tabline': 0 },
-	\ 'colorscheme': 'seoul256',
+	\ 'colorscheme': 'solarized',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'paste' ],
 	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]

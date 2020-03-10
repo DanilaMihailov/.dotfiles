@@ -23,6 +23,10 @@ set softtabstop=4
 set relativenumber
 let mapleader = " "
 
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
 " mouse
 silent! set ttymouse=xterm2
 set mouse=a
@@ -64,7 +68,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'https://github.com/machakann/vim-highlightedyank'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'elzr/vim-json'
-Plug 'hdima/python-syntax'
+" Plug 'hdima/python-syntax'
 Plug 'myusuf3/numbers.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'

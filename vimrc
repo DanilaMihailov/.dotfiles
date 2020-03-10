@@ -1,44 +1,72 @@
-set backupdir=/tmp//
-set directory=/tmp//
-set undodir=/tmp//
-syntax on
-"set ruler
-set number
-set clipboard=unnamed
-"set showcmd
-set keymap=russian-jcukenwin
+set number " show line numbers
+set relativenumber " show relative line numbers (may be slow)
+set clipboard=unnamed " copy to system clipboard
+set keymap=russian-jcukenwin " allow use russian keys for moves and stuff
 set iminsert=0
 set imsearch=0
-set laststatus=2
-set noshowmode
-set cursorline
-
-set tabstop=4
-set shiftwidth=4
-filetype plugin indent on
-set expandtab
-set autoindent
-set softtabstop=4
-
-set relativenumber
-let mapleader = " "
-
+set cursorline " show cursor line
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-" mouse
-silent! set ttymouse=xterm2
-set mouse=a
+set updatetime=100 " delay for vim update (used by gitgutter)
+
+" indentation rules
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab " use spaces instead of tabs
+set autoindent
+filetype plugin indent on
+
+" leader key, mostly used for plugins
+let mapleader = " "
 
 " Make searching better
 set gdefault      " Never have to type /g at the end of search / replace again
 set ignorecase    " case insensitive searching (unless specified)
-set smartcase
+set smartcase     " use case sensitive, if have different cases in search string
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-^> <C-o><C-^>
+
+" recall the command-line whose beginning matches the current command-line
+cnoremap <c-n>  <down>
+cnoremap <c-p>  <up>
+
+" navigate by display lines
+noremap j gj
+noremap k gk
+
+" make Y act like D
+noremap Y y$
 
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
+
+" when splitting windows, they will appear to the right, or below
+set splitbelow splitright
+
+" highlight yanking region
+if has('nvim')
+	set inccommand=split
+	highlight HighlightedyankRegion cterm=reverse gui=reverse
+	let g:highlightedyank_highlight_duration = 300
+endif
+
+" mouse support (scrolling and other stuff)
+if !has('nvim')
+    set ttymouse=xterm2 " this option only affects vim
+endif
+set mouse=a
+
+" use zsh as default shell
+set shell=/bin/zsh
 
 " auto install vim plug if it is not installed
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -48,94 +76,68 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin()
-" files
-" git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-" ~/.fzf/install
-Plug '/usr/local/opt/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'
-" Plug 'jistr/vim-nerdtree-tabs'
-" Plug 'tpope/vim-vinegar'
-"Plug 'ryanoasis/vim-devicons'
+" Theme
+Plug 'altercation/vim-colors-solarized'
+" Plug 'tomasiser/vim-code-dark' " old theme (vscode theme)
 
-" visuals
-Plug 'itchyny/lightline.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-dispatch'
+" Files plugins
+Plug 'junegunn/fzf', { 'do': './install --all' } " --all makes it awailable to the system
+Plug 'junegunn/fzf.vim' " Ctrl+P fuzzy file search
+Plug 'scrooloose/nerdtree' " Ctrl+B file tree, sidebar
+
+" Git plugins
+Plug 'tpope/vim-fugitive' " git status, blame, history, etc
+Plug 'airblade/vim-gitgutter' " gutters
+
+" Languages
 Plug 'pangloss/vim-javascript'
-" Plug 'mhinz/vim-startify'
-Plug 'https://github.com/machakann/vim-highlightedyank'
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'elzr/vim-json'
-" Plug 'hdima/python-syntax'
-Plug 'myusuf3/numbers.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'elixir-editors/vim-elixir'
-Plug 'mhinz/vim-mix-format'
-" motions
-Plug 'easymotion/vim-easymotion'
-Plug 'mattn/emmet-vim'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tomtom/tcomment_vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'bkad/CamelCaseMotion'
-" Plug 'yuttie/comfortable-motion.vim'
+Plug 'keith/swift.vim'
+Plug 'ron-rs/ron.vim'
+Plug 'elzr/vim-json'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'burnettk/vim-angular'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'maxmellon/vim-jsx-pretty'
 
-" complete and linting
-Plug 'neomake/neomake'
+" Motion and helpers
+Plug 'easymotion/vim-easymotion' " Space+Space+Motion
+Plug 'mattn/emmet-vim' " Emmet support Ctrl+y Ctrl+,
+Plug 'tpope/vim-surround' " Surrond with braces ysB
+Plug 'tpope/vim-repeat' " enable repeat for tpope's plugins
+Plug 'tomtom/tcomment_vim' " gcc to comment line
+Plug 'jiangmiao/auto-pairs' " auto pair open brackets
+Plug 'bkad/CamelCaseMotion' " move by camel case words with Space + Motion
 
+" Autocomplete, linting, LSP
+Plug 'neomake/neomake' " run make commands, used for eslint
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'mattn/vim-lsp-settings'
-
 " npm install -g typescript typescript-language-server
 Plug 'ryanolsonx/vim-lsp-javascript'
-Plug 'maxmellon/vim-jsx-pretty'
 " pip install python-language-server
 Plug 'ryanolsonx/vim-lsp-python'
-Plug 'rust-lang/rust.vim'
-Plug 'ron-rs/ron.vim'
-Plug 'majutsushi/tagbar'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'burnettk/vim-angular'
-Plug 'keith/swift.vim'
 " Plug 'ryanolsonx/vim-lsp-swift'
-" terminal
-Plug 'kassio/neoterm'
 
+" Misc
+Plug 'itchyny/lightline.vim' " Status line
+Plug 'https://github.com/machakann/vim-highlightedyank' " Highlight yanked text
+Plug 'myusuf3/numbers.vim' " toggle line numbers intelligently
+Plug 'mhinz/vim-mix-format' " format elixir files on save
+Plug 'majutsushi/tagbar' " show ctags in sidebar
 call plug#end()
 
-let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jquery'
-
-" disable concealing for json files
-let g:vim_json_syntax_conceal = 0
-
-let g:lsp_settings = {
-\  'elixir-ls': {
-\    'disabled': 0,
-\   }
-\}
-
-" elixir, format files on save
-let g:mix_format_on_save = 1
 " theme
-" Plug 'tomasiser/vim-code-dark'
-" colorscheme codedark
-Plug 'altercation/vim-colors-solarized' " then cp ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors
- 
 set background=dark
 colorscheme solarized
-
-" autocomplete bindings
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
-map gh :LspHover<CR>
-map <Leader>gd :LspDefinition<CR>
-
+" colorscheme codedark
+ 
+" File plugins settings
+"
 "Let the input go up and the search list go down
 let $FZF_DEFAULT_OPTS = '--layout=reverse'
 
@@ -170,16 +172,30 @@ function! OpenFloatingWin()
         \ nonumber
         \ norelativenumber
         \ signcolumn=no
+        \ background=dark
 endfunction
 
-" files view bindings
+" Ctrl+P open search for git files
 map <C-p> :GFiles<CR>
+" Space+P search for commands
 map <Leader>p :Commands<CR>
+" Ctrl+B show sidebar
 map <C-b> :NERDTreeToggle<CR>
-" map <C-b> :NERDTreeTabsToggle<CR>
 
 " ignore files for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
+
+" highlight libs
+let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jquery'
+" disable concealing for json files
+let g:vim_json_syntax_conceal = 0
+
+" autocomplete bindings
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+map gh :LspHover<CR>
+map <Leader>gd :LspDefinition<CR>
 
 autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
 autocmd BufNewFile,BufRead *.json.ejs set filetype=json
@@ -196,54 +212,11 @@ let g:dispatch_no_tmux_start = 1
 let g:rustfmt_autosave = 1
 " Use leader ket for camel case
 let g:camelcasemotion_key = '<leader>'
+" elixir, format files on save
+let g:mix_format_on_save = 1
 
-" recall the command-line whose beginning matches the current command-line
-cnoremap <c-n>  <down>
-cnoremap <c-p>  <up>
-
-" navigate by display lines
-noremap j gj
-noremap k gk
-
-" make Y act like D
-noremap Y y$
-
-" ----------------------------------------------------------------------------
-" <tab> / <s-tab> | Circular windows navigation
-" ----------------------------------------------------------------------------
-nnoremap <tab>   gt
-nnoremap <S-tab> gT
-
-" Movement in insert mode
-inoremap <C-h> <C-o>h
-inoremap <C-l> <C-o>a
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
-inoremap <C-^> <C-o><C-^>
-
-if has('nvim')
-	set inccommand=split
-	highlight HighlightedyankRegion cterm=reverse gui=reverse
-	let g:highlightedyank_highlight_duration = 300
-endif
-
-" ====================================
-" NeoTerm:
-" ====================================
-let g:neoterm_autoscroll = 1
-" nnoremap <silent> <leader>b :botright Ttoggle<cr><C-w>j
-nnoremap <leader>o :botright 1T grunt build<cr>
-" nnoremap <silent> <leader>B :botright Ttoggle<cr><C-w>jigrunt build<cr><C-\><C-n><esc><cr>
-
-" easily escape terminal
-tnoremap <leader><esc> <C-\><C-n><esc><cr>
-
-" Source the vimrc file after saving it
-if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
-endif
-
-set splitbelow splitright
+" Status line settings
+set noshowmode " do not show mode, as it i shown by light line
 
 let g:lightline = {
 	\ 'enable': { 'tabline': 0 },
@@ -256,58 +229,3 @@ let g:lightline = {
 	\   'gitbranch': 'fugitive#head'
 	\ },
 	\ }
-
-if has("unnamedplus") " X11 support
-    set clipboard+=unnamedplus
-endif
-
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
-" Get the defaults that most users want.
-" source $VIMRUNTIME/defaults.vim
-
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file (restore to previous version)
-  if has('persistent_undo')
-    set undofile	" keep an undo file (undo changes after closing)
-  endif
-endif
-
-if &t_Co > 2 || has("gui_running")
-  " Switch on highlighting the last used search pattern.
-  set hlsearch
-endif
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
-
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
-
-  augroup END
-
-else
-
-  set autoindent		" always set autoindenting on
-
-endif " has("autocmd")
-
-" Add optional packages.
-"
-" The matchit plugin makes the % command work better, but it is not backwards
-" compatible.
-" The ! means the package won't be loaded right away but when plugins are
-" loaded during initialization.
-" if has('syntax') && has('eval')
-"   packadd! matchit
-" endif
-

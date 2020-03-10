@@ -19,6 +19,16 @@ set expandtab " use spaces instead of tabs
 set autoindent
 filetype plugin indent on
 
+" backups and undo dirs
+set backupdir=/tmp//
+set directory=/tmp//
+set undodir=/tmp//
+
+set backup		" keep a backup file (restore to previous version)
+if has('persistent_undo')
+    set undofile	" keep an undo file (undo changes after closing)
+endif
+
 " leader key, mostly used for plugins
 let mapleader = " "
 

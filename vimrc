@@ -86,6 +86,7 @@ Plug 'junegunn/fzf.vim' " Ctrl+P fuzzy file search
 Plug 'scrooloose/nerdtree' " Ctrl+B file tree, sidebar
 
 " Git plugins
+Plug 'tpope/vim-dispatch' " needed for fugitive
 Plug 'tpope/vim-fugitive' " git status, blame, history, etc
 Plug 'airblade/vim-gitgutter' " gutters
 

@@ -5,6 +5,7 @@ export TOOLCHAINS=swift
 export PATH=~/.npm-global/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
+export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 # this is slow, you can use source $NVM_DIR/nvm.sh to load manually
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

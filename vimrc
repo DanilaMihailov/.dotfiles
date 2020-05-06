@@ -114,6 +114,7 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'burnettk/vim-angular'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'neovimhaskell/haskell-vim'
 
 " Motion and helpers
 Plug 'easymotion/vim-easymotion' " Space+Space+Motion

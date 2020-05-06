@@ -5,8 +5,13 @@ export TOOLCHAINS=swift
 export PATH=~/.npm-global/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
+export ANDROID_HOME=/Users/$USER/Library/Android/sdk
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools/platform-tools
+
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
+
+export PATH="$HOME/.local/bin:$PATH"
 # this is slow, you can use source $NVM_DIR/nvm.sh to load manually
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
@@ -153,3 +158,4 @@ alias vi='nvim'
 alias vim='nvim'
 # vim
 alias e="$EDITOR"
+[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"

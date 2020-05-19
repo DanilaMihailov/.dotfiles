@@ -188,6 +188,8 @@ map <C-b> :NERDTreeToggle<CR>
 
 " ignore files for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 " highlight libs
 let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jquery'

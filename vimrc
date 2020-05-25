@@ -141,6 +141,10 @@ set background=dark
 colorscheme solarized
 " colorscheme codedark
  
+" make chaining hints gray color
+highlight CocRustChainingHint ctermfg=green
+highlight SignColumn ctermbg=black
+
 " File plugins settings
 "
 "Let the input go up and the search list go down
@@ -276,7 +280,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
@@ -349,4 +353,4 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>

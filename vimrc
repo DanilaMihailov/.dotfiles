@@ -145,6 +145,11 @@ colorscheme solarized
 highlight CocRustChainingHint ctermfg=green
 highlight SignColumn ctermbg=black
 
+" remove line under tabbar
+highlight TabLineFill cterm=NONE
+highlight TabLineSel cterm=NONE
+highlight TabLine cterm=NONE
+
 " File plugins settings
 "
 "Let the input go up and the search list go down

@@ -150,6 +150,8 @@ highlight TabLineFill cterm=NONE
 highlight TabLineSel cterm=NONE
 highlight TabLine cterm=NONE
 
+hi VertSplit ctermbg=bg ctermfg=bg
+
 " File plugins settings
 "
 "Let the input go up and the search list go down

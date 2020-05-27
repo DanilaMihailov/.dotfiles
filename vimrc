@@ -147,7 +147,7 @@ highlight SignColumn ctermbg=black
 
 " remove line under tabbar
 highlight TabLineFill cterm=NONE
-highlight TabLineSel cterm=NONE
+highlight TabLineSel cterm=NONE ctermbg=11 ctermfg=0
 highlight TabLine cterm=NONE
 
 hi VertSplit ctermbg=0 ctermfg=0

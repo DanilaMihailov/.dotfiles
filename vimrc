@@ -150,7 +150,8 @@ highlight TabLineFill cterm=NONE
 highlight TabLineSel cterm=NONE
 highlight TabLine cterm=NONE
 
-hi VertSplit ctermbg=bg ctermfg=bg
+hi VertSplit ctermbg=0 ctermfg=0
+hi EndOfBuffer ctermbg=bg ctermfg=bg
 
 " File plugins settings
 "

@@ -142,16 +142,18 @@ colorscheme solarized
 " colorscheme codedark
  
 " make chaining hints gray color
-highlight CocRustChainingHint ctermfg=green
-highlight SignColumn ctermbg=black
+hi CocRustChainingHint ctermfg=green
+hi SignColumn ctermbg=bg
+hi LineNr ctermbg=bg
 
 " remove line under tabbar
-highlight TabLineFill cterm=NONE
-highlight TabLineSel cterm=NONE ctermbg=11 ctermfg=0
-highlight TabLine cterm=NONE
+hi TabLineFill cterm=NONE
+hi TabLineSel cterm=NONE ctermbg=11 ctermfg=0
+hi TabLine cterm=NONE
 
 hi VertSplit ctermbg=0 ctermfg=0
 hi EndOfBuffer ctermbg=bg ctermfg=bg
+
 
 " File plugins settings
 "

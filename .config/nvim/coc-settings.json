@@ -1,0 +1,35 @@
+{
+    "diagnostic.errorSign": "E",
+    "diagnostic.warningSign": "W",
+    "diagnostic.infoSign": "I",
+    "diagnostic.hintSign": "H",
+    "coc.preferences.enableFloatHighlight": false,
+    "suggest.acceptSuggestionOnCommitCharacter": true,
+    "suggest.enablePreview": true,
+    "suggest.echodocSupport": true,
+    "codeLens.enable": false,
+    "rust-analyzer.inlayHints.chainingHints": false,
+    "diagnostic.virtualText": false,
+    "languageserver": {
+        "haskell": {
+            "command": "hie-wrapper",
+            "args": [
+                "--lsp"
+            ],
+            "rootPatterns": [
+                "*.cabal",
+                "stack.yaml",
+                "cabal.project",
+                "package.yaml"
+            ],
+            "filetypes": [
+                "hs",
+                "lhs",
+                "haskell"
+            ],
+            "initializationOptions": {
+                "languageServerHaskell": {}
+            }
+        }
+    }
+}

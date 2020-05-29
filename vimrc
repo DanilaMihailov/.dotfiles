@@ -98,6 +98,8 @@ endif
 call plug#begin()
 " Theme
 Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
+Plug 'shinchu/lightline-gruvbox.vim'
 " Plug 'tomasiser/vim-code-dark' " old theme (vscode theme)
 
 " Files plugins
@@ -145,22 +147,26 @@ call plug#end()
 
 " theme
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
+" colorscheme solarized
 " colorscheme codedark
  
-" make chaining hints gray color
-hi CocRustChainingHint ctermfg=green
 hi SignColumn ctermbg=bg
-hi LineNr ctermbg=bg
+hi GruvboxGreenSign ctermbg=bg
+hi GruvboxRedSign ctermbg=bg
+hi GruvboxBlueSign ctermbg=bg
+hi GruvboxAquaSign ctermbg=bg
+hi CursorLineNr ctermbg=bg
 
 " remove line under tabbar
-hi TabLineFill cterm=NONE
-hi TabLineSel cterm=NONE ctermbg=11 ctermfg=0
-hi TabLine cterm=NONE
+" hi TabLineFill cterm=NONE
+" hi TabLineSel cterm=NONE ctermbg=11 ctermfg=0
+" hi TabLine cterm=NONE
 
-hi VertSplit ctermbg=0 ctermfg=0
+" hi VertSplit ctermbg=0 ctermfg=0
+"
+" hide end of buffer '~' symbol
 hi EndOfBuffer ctermbg=bg ctermfg=bg
-
 
 " File plugins settings
 "
@@ -235,9 +241,10 @@ let g:mix_format_on_save = 1
 " Status line settings
 set noshowmode " do not show mode, as it i shown by light line
 
+let g:lightline = {}
 let g:lightline = {
 	\ 'enable': { 'tabline': 0 },
-	\ 'colorscheme': 'solarized',
+	\ 'colorscheme': 'jellybeans',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'paste' ],
 	\             [ 'gitbranch', 'readonly', 'filename', 'modified', 'cocstatus' ] ]

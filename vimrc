@@ -257,7 +257,7 @@ let g:mix_format_on_save = 1
 set noshowmode " do not show mode, as it i shown by light line
 
 let g:lightline = {
-	\ 'enable': { 'tabline': 0 },
+	\ 'enable': { 'tabline': 1 },
 	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'paste' ],
@@ -269,6 +269,10 @@ let g:lightline = {
 	\ },
 	\ }
 
+" hide close button in the tabline
+let g:lightline.tabline = {
+    \ 'left': [ [ 'tabs' ] ],
+    \ 'right': [ [] ] }
 
 " COC.VIM CONFIG
 " :CocInstall coc-rust-analyzer coc-tsserver coc-json coc-html coc-css coc-python coc-angular coc-elixir coc-eslint coc-yaml

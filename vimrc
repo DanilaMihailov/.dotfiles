@@ -263,6 +263,10 @@ let g:lightline = {
 " COC.VIM CONFIG
 " :CocInstall coc-rust-analyzer coc-tsserver coc-json coc-html coc-css coc-python coc-angular coc-elixir coc-eslint coc-yaml
 
+
+let g:coc_status_error_sign = 'E'
+let g:coc_status_warning_sign = 'W'
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.

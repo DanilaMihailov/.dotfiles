@@ -156,6 +156,7 @@ hi GruvboxGreenSign ctermbg=bg
 hi GruvboxRedSign ctermbg=bg
 hi GruvboxBlueSign ctermbg=bg
 hi GruvboxAquaSign ctermbg=bg
+hi GruvboxYellowSign ctermbg=bg
 hi CursorLineNr ctermbg=bg
 
 " remove line under tabbar
@@ -244,7 +245,7 @@ set noshowmode " do not show mode, as it i shown by light line
 let g:lightline = {}
 let g:lightline = {
 	\ 'enable': { 'tabline': 0 },
-	\ 'colorscheme': 'jellybeans',
+	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'paste' ],
 	\             [ 'gitbranch', 'readonly', 'filename', 'modified', 'cocstatus' ] ]

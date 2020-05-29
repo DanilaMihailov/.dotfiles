@@ -9,6 +9,9 @@ set cursorline " show cursor line
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
+" do not redrow while macros execute
+set lazyredraw
+
 set updatetime=100 " delay for vim update (used by gitgutter and coc.vim)
 set hidden " TextEdit might fail if hidden is not set.
 " Don't pass messages to |ins-completion-menu|.
@@ -39,6 +42,10 @@ let mapleader = " "
 set gdefault      " Never have to type /g at the end of search / replace again
 set ignorecase    " case insensitive searching (unless specified)
 set smartcase     " use case sensitive, if have different cases in search string
+
+" Jump to start and end of line using the home row keys
+map H ^
+map L $
 
 " Movement in insert mode
 inoremap <C-h> <C-o>h

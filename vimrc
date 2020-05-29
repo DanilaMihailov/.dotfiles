@@ -99,7 +99,6 @@ call plug#begin()
 " Theme
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
-Plug 'shinchu/lightline-gruvbox.vim'
 " Plug 'tomasiser/vim-code-dark' " old theme (vscode theme)
 
 " Files plugins
@@ -147,6 +146,7 @@ call plug#end()
 
 " theme
 set background=dark
+let g:gruvbox_italic=1
 colorscheme gruvbox
 " colorscheme solarized
 " colorscheme codedark
@@ -158,6 +158,9 @@ hi GruvboxBlueSign ctermbg=bg
 hi GruvboxAquaSign ctermbg=bg
 hi GruvboxYellowSign ctermbg=bg
 hi CursorLineNr ctermbg=bg
+
+" fix cursorline highlight breaking on operators
+hi Operator ctermbg=NONE
 
 " remove line under tabbar
 " hi TabLineFill cterm=NONE
@@ -242,7 +245,6 @@ let g:mix_format_on_save = 1
 " Status line settings
 set noshowmode " do not show mode, as it i shown by light line
 
-let g:lightline = {}
 let g:lightline = {
 	\ 'enable': { 'tabline': 0 },
 	\ 'colorscheme': 'gruvbox',

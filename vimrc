@@ -193,14 +193,14 @@ hi EndOfBuffer ctermbg=bg ctermfg=bg
 " File plugins settings
 "
 "Let the input go up and the search list go down
-let $FZF_DEFAULT_OPTS = '--layout=reverse --no-info --border'
+let $FZF_DEFAULT_OPTS = '--reverse --no-info --border --cycle --prompt="" --pointer=" "'
 
 "Open FZF and choose floating window
 let g:fzf_layout = { 'window': 'call OpenFloatingWin()' }
 
 " Empty value to disable preview window altogether
 let g:fzf_preview_window = ''
-let g:fzf_colors = { 'border': ['bg', 'NormalFloat'] }
+let g:fzf_colors = { 'border': ['bg', 'NormalFloat'], 'gutter': ['bg', 'NormalFloat'], 'pointer': ['bg', 'NormalFloat'] }
 
 function! OpenFloatingWin()
   let height = &lines - 3

@@ -12,6 +12,16 @@ set signcolumn=yes
 " do not redrow while macros execute
 set lazyredraw
 
+" Better display for messages
+set cmdheight=2
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
 set updatetime=100 " delay for vim update (used by gitgutter and coc.vim)
 set hidden " TextEdit might fail if hidden is not set.
 " Don't pass messages to |ins-completion-menu|.

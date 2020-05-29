@@ -157,6 +157,7 @@ hi GruvboxRedSign ctermbg=bg
 hi GruvboxBlueSign ctermbg=bg
 hi GruvboxAquaSign ctermbg=bg
 hi GruvboxYellowSign ctermbg=bg
+hi GruvboxOrangeSign ctermbg=bg
 hi CursorLineNr ctermbg=bg
 
 " fix cursorline highlight breaking on operators

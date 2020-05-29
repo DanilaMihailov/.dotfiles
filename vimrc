@@ -267,12 +267,14 @@ let g:mix_format_on_save = 1
 " Status line settings
 set noshowmode " do not show mode, as it i shown by light line
 
+set showtabline=2
+
 let g:lightline = {
 	\ 'enable': { 'tabline': 1 },
 	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'filename', 'modified', 'cocstatus' ] ]
+	\             [ 'gitbranch', 'readonly', 'modified', 'cocstatus' ] ]
 	\ },
 	\ 'component_function': {
 	\   'gitbranch': 'fugitive#head',

@@ -160,6 +160,8 @@ hi GruvboxYellowSign ctermbg=bg
 hi GruvboxOrangeSign ctermbg=bg
 hi CursorLineNr ctermbg=bg
 
+hi CocInfoSign ctermfg=blue
+
 " fix cursorline highlight breaking on operators
 hi Operator ctermbg=NONE
 

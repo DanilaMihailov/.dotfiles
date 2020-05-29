@@ -188,6 +188,9 @@ let $FZF_DEFAULT_OPTS = '--layout=reverse'
 "Open FZF and choose floating window
 let g:fzf_layout = { 'window': 'call OpenFloatingWin()' }
 
+" Empty value to disable preview window altogether
+let g:fzf_preview_window = ''
+
 function! OpenFloatingWin()
   let height = &lines - 3
   let width = float2nr(&columns - (&columns * 2 / 10))

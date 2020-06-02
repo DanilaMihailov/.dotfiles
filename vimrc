@@ -162,7 +162,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Misc
 Plug 'itchyny/lightline.vim' " Status line
 Plug 'https://github.com/machakann/vim-highlightedyank' " Highlight yanked text
-Plug 'myusuf3/numbers.vim' " toggle line numbers intelligently
 Plug 'mhinz/vim-mix-format' " format elixir files on save
 Plug 'majutsushi/tagbar' " show ctags in sidebar
 call plug#end()
@@ -171,6 +170,9 @@ call plug#end()
 set background=dark
 let g:gruvbox_italic=1
 colorscheme gruvbox
+
+" change folds colors
+hi Folded ctermbg=NONE cterm=bold
  
 " Fix background for signs
 hi SignColumn ctermbg=bg

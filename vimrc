@@ -13,6 +13,8 @@ set signcolumn=yes
 " do not redrow while macros execute
 set lazyredraw
 
+set scrolloff=8
+
 " Better display for messages
 set cmdheight=2
 

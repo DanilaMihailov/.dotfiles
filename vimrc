@@ -247,8 +247,11 @@ let g:vim_json_syntax_conceal = 0
 autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
 autocmd BufNewFile,BufRead *.json.ejs set filetype=json
 
-let g:dispatch_no_tmux_make = 1
-let g:dispatch_no_tmux_start = 1
+" run dispatch only in headless mode
+let g:dispatch_handlers = ['headless']
+
+" disable binds for dispatch
+let g:dispatch_no_maps = 1
 
 " format rust files on save by calling cargo format via :RustFmt
 let g:rustfmt_autosave = 1

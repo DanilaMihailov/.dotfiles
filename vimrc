@@ -64,7 +64,7 @@ set smartcase     " use case sensitive, if have different cases in search string
 map H ^
 map L $
 
-" Movement in insert mode
+" Movement in insert mode (not really working)
 inoremap <C-h> <C-o>h
 inoremap <C-l> <C-o>a
 inoremap <C-j> <C-o>j
@@ -114,9 +114,7 @@ endif
 
 call plug#begin()
 " Theme
-" Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
-" Plug 'tomasiser/vim-code-dark' " old theme (vscode theme)
 
 " Files plugins
 Plug 'junegunn/fzf', { 'do': './install --all' } " --all makes it awailable to the system
@@ -165,9 +163,8 @@ call plug#end()
 set background=dark
 let g:gruvbox_italic=1
 colorscheme gruvbox
-" colorscheme solarized
-" colorscheme codedark
  
+" Fix background for signs
 hi SignColumn ctermbg=bg
 hi GruvboxGreenSign ctermbg=bg
 hi GruvboxRedSign ctermbg=bg
@@ -182,13 +179,6 @@ hi CocInfoSign ctermfg=blue
 " fix cursorline highlight breaking on operators
 hi Operator ctermbg=NONE
 
-" remove line under tabbar
-" hi TabLineFill cterm=NONE
-" hi TabLineSel cterm=NONE ctermbg=11 ctermfg=0
-" hi TabLine cterm=NONE
-
-" hi VertSplit ctermbg=0 ctermfg=0
-"
 " hide end of buffer '~' symbol
 hi EndOfBuffer ctermbg=bg ctermfg=bg
 
@@ -246,6 +236,7 @@ let NERDTreeIgnore = ['\.pyc$']
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
+" hide sign column in nerd tree buffer
 autocmd BufWinEnter NERD_tree* setlocal signcolumn=no
 
 " highlight libs
@@ -269,6 +260,7 @@ let g:mix_format_on_save = 1
 " Status line settings
 set noshowmode " do not show mode, as it i shown by light line
 
+" always show tab line
 set showtabline=2
 
 let g:lightline = {
@@ -290,8 +282,8 @@ let g:lightline.tabline = {
     \ 'right': [ [] ] }
 
 " COC.VIM CONFIG
+" TODO: move it to vim-plug
 " :CocInstall coc-rust-analyzer coc-tsserver coc-json coc-html coc-css coc-python coc-angular coc-elixir coc-eslint coc-yaml
-
 
 let g:coc_status_error_sign = 'E'
 let g:coc_status_warning_sign = 'W'
@@ -342,9 +334,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight the symbol and its references when holding the cursor.
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -377,12 +366,6 @@ xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
-" Use <TAB> for selections ranges.
-" NOTE: Requires 'textDocument/selectionRange' support from the language server.
-" coc-tsserver, coc-python are the examples of servers that support it.
-" nmap <silent> <TAB> <Plug>(coc-range-select)
-" xmap <silent> <TAB> <Plug>(coc-range-select)
-
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
 
@@ -391,11 +374,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Use auocmd to force lightline update.
 autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
@@ -415,5 +393,3 @@ nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>

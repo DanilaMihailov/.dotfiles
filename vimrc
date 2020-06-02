@@ -5,6 +5,7 @@ set keymap=russian-jcukenwin " allow use russian keys for moves and stuff
 set iminsert=0
 set imsearch=0
 set cursorline " show cursor line
+
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
@@ -24,6 +25,7 @@ nnoremap <silent> g* g*zz
 
 set updatetime=100 " delay for vim update (used by gitgutter and coc.vim)
 set hidden " TextEdit might fail if hidden is not set.
+
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
@@ -112,7 +114,7 @@ endif
 
 call plug#begin()
 " Theme
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 " Plug 'tomasiser/vim-code-dark' " old theme (vscode theme)
 

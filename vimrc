@@ -293,8 +293,9 @@ let g:lightline.tabline = {
     \ 'right': [ [] ] }
 
 " COC.VIM CONFIG
-" TODO: move it to vim-plug
-" :CocInstall coc-rust-analyzer coc-tsserver coc-json coc-html coc-css coc-python coc-angular coc-elixir coc-eslint coc-yaml coc-explorer coc-emmet
+
+" this extensions will be installed
+let g:coc_global_extensions = ["coc-rust-analyzer", "coc-tsserver", "coc-json", "coc-html", "coc-css", "coc-python", "coc-angular", "coc-elixir", "coc-eslint", "coc-yaml", "coc-explorer", "coc-emmet"]
 
 " Ctrl+B show explorer
 nmap <C-b> :CocCommand explorer<CR>

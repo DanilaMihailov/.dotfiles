@@ -164,6 +164,7 @@ Plug 'itchyny/lightline.vim' " Status line
 Plug 'https://github.com/machakann/vim-highlightedyank' " Highlight yanked text
 Plug 'mhinz/vim-mix-format' " format elixir files on save
 Plug 'majutsushi/tagbar' " show ctags in sidebar
+Plug 'antoinemadec/coc-fzf'
 call plug#end()
 
 " theme
@@ -196,6 +197,7 @@ hi EndOfBuffer ctermbg=bg ctermfg=bg
 "
 "Let the input go up and the search list go down
 let $FZF_DEFAULT_OPTS = '--reverse --no-info --cycle'
+let g:coc_fzf_opts = ['--reverse', '--no-info', '--cycle']
 
 "Open FZF and choose floating window
 let g:fzf_layout = { 'window': { 'width': 0.5, 'height': 0.4, 'yoffset': 0 } }
@@ -207,6 +209,7 @@ let g:fzf_preview_window = ''
 map <C-p> :GFiles<CR>
 " Space+P search for commands
 map <Leader>p :Commands<CR>
+map <Leader>cp :CocFzfList<CR>
 
 map <Leader>r :source ~/.config/nvim/init.vim<CR>
 
@@ -344,7 +347,8 @@ xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current line.
-nmap <leader>ac  <Plug>(coc-codeaction)
+" nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>ac  :<C-u>CocFzfList actions<cr>
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
@@ -369,15 +373,15 @@ autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 " Mappings using CoCList:
 " Show all diagnostics.
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>a  :<C-u>CocFzfList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <space>e  :<C-u>CocFzfList extensions<cr>
 " Show commands.
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <space>c  :<C-u>CocFzfList commands<cr>
 " Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <space>o  :<C-u>CocFzfList outline<cr>
 " Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>s  :<C-u>CocFzfList symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.

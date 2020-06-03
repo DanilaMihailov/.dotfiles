@@ -195,49 +195,20 @@ hi EndOfBuffer ctermbg=bg ctermfg=bg
 " File plugins settings
 "
 "Let the input go up and the search list go down
-let $FZF_DEFAULT_OPTS = '--reverse --no-info --border --cycle --prompt="" --pointer=" "'
+let $FZF_DEFAULT_OPTS = '--reverse --no-info --cycle'
 
 "Open FZF and choose floating window
-let g:fzf_layout = { 'window': 'call OpenFloatingWin()' }
+let g:fzf_layout = { 'window': { 'width': 0.5, 'height': 0.4, 'yoffset': 0 } }
 
 " Empty value to disable preview window altogether
 let g:fzf_preview_window = ''
-let g:fzf_colors = { 'border': ['bg', 'NormalFloat'], 'gutter': ['bg', 'NormalFloat'], 'pointer': ['bg', 'NormalFloat'] }
-
-function! OpenFloatingWin()
-  let height = &lines - 3
-  let width = float2nr(&columns - (&columns * 2 / 10))
-  let col = float2nr((&columns - width) / 2)
-
-  "Set the position, size, etc. of the floating window.
-  "The size configuration here may not be so flexible, and there's room for further improvement.
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': 3,
-        \ 'col': col + 30,
-        \ 'width': width * 2 / 3,
-        \ 'height': height / 2
-        \ }
-
-  let buf = nvim_create_buf(v:false, v:true)
-  let win = nvim_open_win(buf, v:true, opts)
-
-  "Set Floating Window Highlighting
-  call setwinvar(win, '&winhl', 'Normal:Pmenu')
-
-  setlocal
-        \ buftype=nofile
-        \ nobuflisted
-        \ bufhidden=hide
-        \ nonumber
-        \ norelativenumber
-        \ signcolumn=no
-endfunction
 
 " Ctrl+P open search for git files
 map <C-p> :GFiles<CR>
 " Space+P search for commands
 map <Leader>p :Commands<CR>
+
+map <Leader>r :source ~/.config/nvim/init.vim<CR>
 
 " ignore files for NERDTree
 let NERDTreeIgnore = ['\.pyc$']

@@ -271,6 +271,9 @@ let g:coc_global_extensions = ["coc-rust-analyzer", "coc-tsserver", "coc-json", 
 " Ctrl+B show explorer
 nmap <C-b> :CocCommand explorer<CR>
 
+" correct comment highlight for jsonc
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
 let g:coc_status_error_sign = 'E'
 let g:coc_status_warning_sign = 'W'
 

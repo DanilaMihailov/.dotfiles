@@ -127,11 +127,12 @@ Plug 'morhetz/gruvbox'
 " Files plugins
 Plug 'junegunn/fzf', { 'do': './install --all' } " --all makes it awailable to the system
 Plug 'junegunn/fzf.vim' " Ctrl+P fuzzy file search
-Plug 'scrooloose/nerdtree' " Ctrl+B file tree, sidebar
+" Using coc-explorer, with Ctrl+B
 
 " Git plugins
 Plug 'tpope/vim-dispatch' " needed for fugitive
 Plug 'tpope/vim-fugitive' " git status, blame, history, etc
+Plug 'idanarye/vim-merginal' " git branches, merge conflicts
 Plug 'airblade/vim-gitgutter' " gutters
 
 " Languages
@@ -238,8 +239,6 @@ endfunction
 map <C-p> :GFiles<CR>
 " Space+P search for commands
 map <Leader>p :Commands<CR>
-" Ctrl+B show sidebar
-map <C-b> :NERDTreeToggle<CR>
 
 " ignore files for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
@@ -296,7 +295,10 @@ let g:lightline.tabline = {
 
 " COC.VIM CONFIG
 " TODO: move it to vim-plug
-" :CocInstall coc-rust-analyzer coc-tsserver coc-json coc-html coc-css coc-python coc-angular coc-elixir coc-eslint coc-yaml
+" :CocInstall coc-rust-analyzer coc-tsserver coc-json coc-html coc-css coc-python coc-angular coc-elixir coc-eslint coc-yaml coc-explorer
+
+" Ctrl+B show explorer
+nmap <C-b> :CocCommand explorer<CR>
 
 let g:coc_status_error_sign = 'E'
 let g:coc_status_warning_sign = 'W'

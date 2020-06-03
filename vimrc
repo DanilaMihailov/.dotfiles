@@ -150,7 +150,6 @@ Plug 'neovimhaskell/haskell-vim'
 
 " Motion and helpers
 Plug 'easymotion/vim-easymotion' " Space+Space+Motion
-Plug 'mattn/emmet-vim' " Emmet support Ctrl+y Ctrl+,
 Plug 'tpope/vim-surround' " Surrond with braces ysB
 Plug 'tpope/vim-repeat' " enable repeat for tpope's plugins
 Plug 'tomtom/tcomment_vim' " gcc to comment line
@@ -295,7 +294,7 @@ let g:lightline.tabline = {
 
 " COC.VIM CONFIG
 " TODO: move it to vim-plug
-" :CocInstall coc-rust-analyzer coc-tsserver coc-json coc-html coc-css coc-python coc-angular coc-elixir coc-eslint coc-yaml coc-explorer
+" :CocInstall coc-rust-analyzer coc-tsserver coc-json coc-html coc-css coc-python coc-angular coc-elixir coc-eslint coc-yaml coc-explorer coc-emmet
 
 " Ctrl+B show explorer
 nmap <C-b> :CocCommand explorer<CR>

@@ -6,6 +6,8 @@ set iminsert=0
 set imsearch=0
 set cursorline " show cursor line
 
+set t_Co=256
+
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes

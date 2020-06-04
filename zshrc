@@ -15,7 +15,10 @@ export PATH="$HOME/.local/bin:$PATH"
 # this is slow, you can use source $NVM_DIR/nvm.sh to load manually
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
+# show last folder on the left
 export PS1="%1~ $ "
+
+# show full path in the right prompt
 RPROMPT="%~"
 
 # export PATH="$PATH:`yarn global bin`"
@@ -133,6 +136,7 @@ zstyle ':completion:*' matcher-list '' \
 
 bindkey -v
 
+# show vim mod in left prompt
 function zle-line-init zle-keymap-select {
 	case ${KEYMAP} in
 		(vicmd)      VI_MODE="#" ;;

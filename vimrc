@@ -155,6 +155,7 @@ Plug 'easymotion/vim-easymotion' " Space+Space+Motion
 Plug 'tpope/vim-surround' " Surrond with braces ysB
 Plug 'tpope/vim-repeat' " enable repeat for tpope's plugins
 Plug 'tomtom/tcomment_vim' " gcc to comment line
+Plug 'tpope/vim-unimpaired'
 Plug 'jiangmiao/auto-pairs' " auto pair open brackets
 Plug 'bkad/CamelCaseMotion' " move by camel case words with Space + Motion
 
@@ -206,8 +207,13 @@ let g:fzf_layout = { 'window': { 'width': 0.5, 'height': 0.4, 'yoffset': 0 } }
 " Empty value to disable preview window altogether
 let g:fzf_preview_window = ''
 
+" jump to existing window if possible
+let g:fzf_buffers_jump = 1
+
 " Ctrl+P open search for git files
 map <C-p> :GFiles<CR>
+map <C-[> :Buffers<CR>
+
 " Space+P search for commands
 map <Leader>p :Commands<CR>
 map <Leader>cp :CocFzfList<CR>

@@ -262,6 +262,8 @@ let g:lightline = {
 	\ },
 	\ }
 
+let g:lightline.subseparator = { 'left': '⎜', 'right': '⎜' }
+
 " hide close button in the tabline
 let g:lightline.tabline = {
     \ 'left': [ [ 'tabs' ] ],

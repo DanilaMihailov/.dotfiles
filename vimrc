@@ -171,7 +171,6 @@ call plug#end()
 
 " theme
 set background=dark
-let g:gruvbox_italic=1
 colorscheme gruvbox
 
 " change folds colors
@@ -255,7 +254,7 @@ let g:lightline = {
 	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'modified', 'cocstatus' ] ]
+	\             [ 'gitbranch', 'readonly', 'filename', 'modified', 'cocstatus' ] ]
 	\ },
 	\ 'component_function': {
 	\   'gitbranch': 'fugitive#head',

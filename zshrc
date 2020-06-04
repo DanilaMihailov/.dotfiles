@@ -15,7 +15,8 @@ export PATH="$HOME/.local/bin:$PATH"
 # this is slow, you can use source $NVM_DIR/nvm.sh to load manually
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-export PS1="%~ $ "
+export PS1="%1~ $ "
+RPROMPT="%~"
 
 # export PATH="$PATH:`yarn global bin`"
 # Path to your oh-my-zsh installation.
@@ -138,7 +139,7 @@ function zle-line-init zle-keymap-select {
 		(main|viins) VI_MODE="$" ;;
 		(*)          VI_MODE="$" ;;
 	esac
-	PS1="%~ $VI_MODE "
+	PS1="%1~ $VI_MODE "
 	zle reset-prompt
 }
 

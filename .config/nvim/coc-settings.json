@@ -3,13 +3,24 @@
     "diagnostic.warningSign": "W",
     "diagnostic.infoSign": "I",
     "diagnostic.hintSign": "H",
-    "coc.preferences.enableFloatHighlight": false,
+    "coc.preferences.enableFloatHighlight": true,
     "suggest.acceptSuggestionOnCommitCharacter": true,
     "suggest.enablePreview": true,
     "suggest.echodocSupport": true,
     "codeLens.enable": false,
     "rust-analyzer.inlayHints.chainingHints": false,
     "diagnostic.virtualText": false,
+    "explorer.previewAction.onHover": false,
+    "explorer.sources": [
+        {
+            "name": "file",
+            "expand": true
+        }
+    ],
+    "explorer.file.root.template":"[fullpath]",
+    "explorer.file.column.indent.indentLine": true,
+    "explorer.file.autoReveal": false,
+    "explorer.file.child.template": "[indent][icon | 1][selection | clip] [filename omitCenter 1] [git & 1][diagnosticError & 1][modified][readonly][linkIcon & 1]",
     "languageserver": {
         "haskell": {
             "command": "hie-wrapper",
@@ -33,3 +44,4 @@
         }
     }
 }
+

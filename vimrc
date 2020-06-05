@@ -52,6 +52,9 @@ set backupdir=/tmp//
 set directory=/tmp//
 set undodir=/tmp//
 
+" helps gf to find files
+set path+=**
+
 set backup		" keep a backup file (restore to previous version)
 if has('persistent_undo')
     set undofile	" keep an undo file (undo changes after closing)

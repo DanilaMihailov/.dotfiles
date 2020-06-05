@@ -226,6 +226,8 @@ map <Leader>cp :CocFzfList<CR>
 
 map <Leader>r :source ~/.config/nvim/init.vim<CR>
 
+command! Bonly execute '%bd|e#|bd#'
+
 " ignore files for NERDTree
 let NERDTreeIgnore = ['\.pyc$']
 let NERDTreeMinimalUI = 1

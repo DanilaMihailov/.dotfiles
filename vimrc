@@ -234,6 +234,10 @@ map <Leader>cp :CocFzfList<CR>
 
 map <Leader>r :source ~/.config/nvim/init.vim<CR>
 
+" Ctrl+h to stop searching
+vnoremap <C-h> :nohlsearch<cr>
+nnoremap <C-h> :nohlsearch<cr>
+
 command! Bonly execute '%bd|e#|bd#'
 
 " ignore files for NERDTree

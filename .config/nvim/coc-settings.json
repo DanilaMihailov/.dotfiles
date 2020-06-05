@@ -11,6 +11,8 @@
     "rust-analyzer.inlayHints.chainingHints": false,
     "diagnostic.virtualText": false,
     "explorer.previewAction.onHover": false,
+    "explorer.floating.border.enable": false,
+    "explorer.icon.enableNerdfont": true,
     "explorer.sources": [
         {
             "name": "file",
@@ -20,7 +22,7 @@
     "explorer.file.root.template":"[fullpath]",
     "explorer.file.column.indent.indentLine": true,
     "explorer.file.autoReveal": false,
-    "explorer.file.child.template": "[indent][icon | 1][selection | clip] [filename omitCenter 1] [git & 1][diagnosticError & 1][modified][readonly][linkIcon & 1]",
+    "explorer.file.child.template": "[indent] [icon | 1][selection | clip] [filename omitCenter 1] [git & 1][diagnosticError & 1][modified][readonly][linkIcon & 1]",
     "languageserver": {
         "haskell": {
             "command": "hie-wrapper",
@@ -44,4 +46,3 @@
         }
     }
 }
-

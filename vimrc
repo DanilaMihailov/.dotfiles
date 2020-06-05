@@ -171,6 +171,7 @@ Plug 'https://github.com/machakann/vim-highlightedyank' " Highlight yanked text
 Plug 'mhinz/vim-mix-format' " format elixir files on save
 Plug 'majutsushi/tagbar' " show ctags in sidebar
 Plug 'antoinemadec/coc-fzf'
+Plug 'Asheq/close-buffers.vim' " Bdelete [other, hidden, this]
 call plug#end()
 
 " theme

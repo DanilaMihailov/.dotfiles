@@ -155,7 +155,7 @@ Plug 'easymotion/vim-easymotion' " Space+Space+Motion
 Plug 'tpope/vim-surround' " Surrond with braces ysB
 Plug 'tpope/vim-repeat' " enable repeat for tpope's plugins
 Plug 'tomtom/tcomment_vim' " gcc to comment line
-Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired' " ]b for next buffer, ]e for exchange line
 Plug 'jiangmiao/auto-pairs' " auto pair open brackets
 Plug 'bkad/CamelCaseMotion' " move by camel case words with Space + Motion
 

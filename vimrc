@@ -201,6 +201,12 @@ hi EndOfBuffer ctermbg=bg ctermfg=bg
 let $FZF_DEFAULT_OPTS = '--reverse --no-info --cycle'
 let g:coc_fzf_opts = ['--reverse', '--no-info', '--cycle']
 
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit'}
+
 "Open FZF and choose floating window
 let g:fzf_layout = { 'window': { 'width': 0.5, 'height': 0.4, 'yoffset': 0 } }
 

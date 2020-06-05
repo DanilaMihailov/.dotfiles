@@ -172,6 +172,7 @@ Plug 'mhinz/vim-mix-format' " format elixir files on save
 Plug 'majutsushi/tagbar' " show ctags in sidebar
 Plug 'antoinemadec/coc-fzf'
 Plug 'Asheq/close-buffers.vim' " Bdelete [other, hidden, this]
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 " theme
@@ -280,15 +281,31 @@ let g:lightline = {
 	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'filename', 'modified', 'cocstatus' ] ]
+	\             [ 'gitbranch', 'readonly', 'filetype', 'modified', 'cocstatus' ] ]
 	\ },
 	\ 'component_function': {
+    \   'filetype': 'MyFiletype',
 	\   'gitbranch': 'fugitive#head',
 	\   'cocstatus': 'coc#status'
 	\ },
+	\ 'tab_component_function': {
+    \   'filetype': 'MyFiletype'
+    \ }
 	\ }
 
+" show icon folowed by file name
+function! MyFiletype(...)
+    let name = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+    let ft = strlen(&filetype) ?  WebDevIconsGetFileTypeSymbol() : ''
+
+    return strlen(ft) ? ft . ' ' . name : name
+endfunction
+
 let g:lightline.subseparator = { 'left': '⎜', 'right': '⎜' }
+
+let g:lightline.tab = {
+    \ 'active': [ 'tabnum', 'filetype', 'modified' ],
+    \ 'inactive': [ 'tabnum', 'filetype', 'modified' ] }
 
 " hide close button in the tabline
 let g:lightline.tabline = {

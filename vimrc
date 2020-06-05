@@ -53,7 +53,10 @@ set directory=/tmp//
 set undodir=/tmp//
 
 " helps gf to find files
-set path+=**
+" ** - all files from root
+" .  - relative from current
+" ,, - relative from current in same dir
+set path+=**,.,,
 
 set backup		" keep a backup file (restore to previous version)
 if has('persistent_undo')

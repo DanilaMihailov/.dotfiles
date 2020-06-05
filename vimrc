@@ -216,6 +216,10 @@ let g:fzf_layout = { 'window': { 'width': 0.5, 'height': 0.4, 'yoffset': 0 } }
 " Empty value to disable preview window altogether
 let g:fzf_preview_window = ''
 
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+
 " jump to existing window if possible
 let g:fzf_buffers_jump = 1
 

@@ -229,8 +229,9 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 let g:fzf_buffers_jump = 1
 
 " Ctrl+P open search for git files
-map <C-p> :GFiles<CR>
-map <C-[> :Buffers<CR>
+nmap <C-p> :GFiles<CR>
+" Ctrl+B open buffer list
+nmap <C-b> :Buffers<CR>
 
 " Space+P search for commands
 map <Leader>p :Commands<CR>
@@ -238,10 +239,14 @@ map <Leader>cp :CocFzfList<CR>
 
 map <Leader>r :source ~/.config/nvim/init.vim<CR>
 
-" Ctrl+h to stop searching
+" Ctrl+h to stop search highlight
 vnoremap <C-h> :nohlsearch<cr>
 nnoremap <C-h> :nohlsearch<cr>
 
+" delete all buffers, except current one
+" %bd - delete all buffers
+" e#  - open previous buffer
+" bd# - delete previous buffer (no name buffer)
 command! Bonly execute '%bd|e#|bd#'
 
 " ignore files for NERDTree
@@ -320,8 +325,8 @@ let g:lightline.tabline = {
 " this extensions will be installed
 let g:coc_global_extensions = ["coc-rust-analyzer", "coc-tsserver", "coc-json", "coc-html", "coc-css", "coc-python", "coc-angular", "coc-elixir", "coc-eslint", "coc-yaml", "coc-explorer", "coc-emmet"]
 
-" Ctrl+B show explorer
-nmap <C-b> :CocCommand explorer<CR>
+" Ctrl+f show explorer
+nmap <C-f> :CocCommand explorer<CR>
 
 " correct comment highlight for jsonc
 autocmd FileType json syntax match Comment +\/\/.\+$+

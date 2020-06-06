@@ -323,7 +323,7 @@ let g:lightline.tabline = {
 " COC.VIM CONFIG
 
 " this extensions will be installed
-let g:coc_global_extensions = ["coc-rust-analyzer", "coc-tsserver", "coc-json", "coc-html", "coc-css", "coc-python", "coc-angular", "coc-elixir", "coc-eslint", "coc-yaml", "coc-explorer", "coc-emmet"]
+let g:coc_global_extensions = ["coc-rust-analyzer", "coc-tsserver", "coc-json", "coc-html", "coc-css", "coc-python", "coc-angular", "coc-elixir", "coc-eslint", "coc-yaml", "coc-explorer", "coc-emmet", "coc-vimlsp"]
 
 hi CocExplorerNormalFloatBorder ctermbg=bg ctermbg=bg
 hi CocExplorerNormalFloat ctermbg=bg

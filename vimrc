@@ -325,8 +325,11 @@ let g:lightline.tabline = {
 " this extensions will be installed
 let g:coc_global_extensions = ["coc-rust-analyzer", "coc-tsserver", "coc-json", "coc-html", "coc-css", "coc-python", "coc-angular", "coc-elixir", "coc-eslint", "coc-yaml", "coc-explorer", "coc-emmet"]
 
+hi CocExplorerNormalFloatBorder ctermbg=bg ctermbg=bg
+hi CocExplorerNormalFloat ctermbg=bg
+
 " Ctrl+f show explorer
-nmap <C-f> :CocCommand explorer<CR>
+nmap <C-f> :CocCommand explorer --position=floating<CR>
 
 " correct comment highlight for jsonc
 autocmd FileType json syntax match Comment +\/\/.\+$+

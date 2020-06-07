@@ -6,6 +6,8 @@ set iminsert=0
 set imsearch=0
 set cursorline " show cursor line
 
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+
 set winwidth=100 " current window should be atleast 100 columns wide
 set winminwidth=40 " other windows minimum width  
 set winheight=10

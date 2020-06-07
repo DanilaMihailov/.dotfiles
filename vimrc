@@ -6,7 +6,10 @@ set iminsert=0
 set imsearch=0
 set cursorline " show cursor line
 
-set t_Co=256
+set winwidth=100 " current window should be atleast 100 columns wide
+set winminwidth=40 " other windows minimum width  
+set winheight=50
+set winminheight=10
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.

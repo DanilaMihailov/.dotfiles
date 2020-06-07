@@ -8,8 +8,8 @@ set cursorline " show cursor line
 
 set winwidth=100 " current window should be atleast 100 columns wide
 set winminwidth=40 " other windows minimum width  
-set winheight=50
-set winminheight=10
+set winheight=10
+set winminheight=2
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.

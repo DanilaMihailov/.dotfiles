@@ -71,6 +71,10 @@ endif
 
 set shell=/bin/zsh " use zsh as default shell
 
+if executable('rg') 
+	set grepprg=rg\ --vimgrep\ --hidden
+endif
+
 " Search results centered please
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz

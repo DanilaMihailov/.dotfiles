@@ -63,7 +63,7 @@ set smartcase     " use case sensitive, if have different cases in search string
 set path+=**,.,,
 
 set mouse=a " enable mouse for all modes
-"
+
 " mouse support (scrolling and other stuff)
 if !has('nvim')
     set ttymouse=xterm2 " this option only affects vim

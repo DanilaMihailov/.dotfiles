@@ -6,6 +6,7 @@ set iminsert=0
 set imsearch=0
 set cursorline " show cursor line
 
+" allows using motions in russian language
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
 set winwidth=100 " current window should be atleast 100 columns wide
@@ -13,30 +14,34 @@ set winminwidth=40 " other windows minimum width
 set winheight=10
 set winminheight=2
 
+set splitbelow splitright " when splitting windows, they will appear to the right, or below
+
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-" do not redrow while macros execute
-set lazyredraw
+set lazyredraw " do not redrow while macros execute
 
 set scrolloff=8
 
-" Better display for messages
-set cmdheight=2
-
-" Search results centered please
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
+set cmdheight=2 " Better display for messages
+set showtabline=2 " always show tab line
+set noshowmode " do not show mode, as it i shown by light line
 
 set updatetime=100 " delay for vim update (used by gitgutter and coc.vim)
-set hidden " TextEdit might fail if hidden is not set.
+set hidden " allow hidden buffers (TextEdit might fail if hidden is not set)
 
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
+set shortmess+=c " Don't pass messages to |ins-completion-menu|.
+
+" backups and undo dirs
+set backupdir=/tmp//
+set directory=/tmp//
+set undodir=/tmp//
+set backup		" keep a backup file (restore to previous version)
+
+if has('persistent_undo')
+    set undofile	" keep an undo file (undo changes after closing)
+endif
 
 " indentation rules
 set tabstop=4
@@ -46,16 +51,10 @@ set expandtab " use spaces instead of tabs
 set autoindent
 filetype plugin indent on
 
-" Jump to last edit position on opening file
-if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-" backups and undo dirs
-set backupdir=/tmp//
-set directory=/tmp//
-set undodir=/tmp//
+" Make searching better
+set gdefault      " Never have to type /g at the end of search / replace again
+set ignorecase    " case insensitive searching (unless specified)
+set smartcase     " use case sensitive, if have different cases in search string
 
 " helps gf to find files
 " ** - all files from root
@@ -63,9 +62,26 @@ set undodir=/tmp//
 " ,, - relative from current in same dir
 set path+=**,.,,
 
-set backup		" keep a backup file (restore to previous version)
-if has('persistent_undo')
-    set undofile	" keep an undo file (undo changes after closing)
+set mouse=a " enable mouse for all modes
+"
+" mouse support (scrolling and other stuff)
+if !has('nvim')
+    set ttymouse=xterm2 " this option only affects vim
+endif
+
+set shell=/bin/zsh " use zsh as default shell
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" Jump to last edit position on opening file
+if has("autocmd")
+  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " leader key, mostly used for plugins
@@ -75,11 +91,6 @@ let mapleader = " "
 nnoremap <leader>hi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-" Make searching better
-set gdefault      " Never have to type /g at the end of search / replace again
-set ignorecase    " case insensitive searching (unless specified)
-set smartcase     " use case sensitive, if have different cases in search string
 
 " Jump to start and end of line using the home row keys
 map H ^
@@ -107,24 +118,12 @@ noremap Y y$
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
 
-" when splitting windows, they will appear to the right, or below
-set splitbelow splitright
-
 " highlight yanking region
 if has('nvim')
 	set inccommand=split
 	highlight HighlightedyankRegion cterm=reverse gui=reverse
 	let g:highlightedyank_highlight_duration = 300
 endif
-
-" mouse support (scrolling and other stuff)
-if !has('nvim')
-    set ttymouse=xterm2 " this option only affects vim
-endif
-set mouse=a
-
-" use zsh as default shell
-set shell=/bin/zsh
 
 " auto install vim plug if it is not installed
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -254,14 +253,6 @@ nnoremap <C-h> :nohlsearch<cr>
 " bd# - delete previous buffer (no name buffer)
 command! Bonly execute '%bd|e#|bd#'
 
-" ignore files for NERDTree
-let NERDTreeIgnore = ['\.pyc$']
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-" hide sign column in nerd tree buffer
-autocmd BufWinEnter NERD_tree* setlocal signcolumn=no
-
 " highlight libs
 let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jquery'
 " disable concealing for json files
@@ -282,12 +273,6 @@ let g:rustfmt_autosave = 1
 let g:camelcasemotion_key = '<leader>'
 " elixir, format files on save
 let g:mix_format_on_save = 1
-
-" Status line settings
-set noshowmode " do not show mode, as it i shown by light line
-
-" always show tab line
-set showtabline=2
 
 let g:lightline = {
 	\ 'enable': { 'tabline': 1 },

@@ -299,9 +299,6 @@ let g:lightline = {
 	\   'gitbranch': 'fugitive#head',
 	\   'cocstatus': 'coc#status'
 	\ },
-	\ 'tab_component_function': {
-    \   'filetype': 'MyFiletype'
-    \ }
 	\ }
 
 " show icon folowed by file name
@@ -313,10 +310,6 @@ function! MyFiletype(...)
 endfunction
 
 let g:lightline.subseparator = { 'left': '⎜', 'right': '⎜' }
-
-let g:lightline.tab = {
-    \ 'active': [ 'tabnum', 'filetype', 'modified' ],
-    \ 'inactive': [ 'tabnum', 'filetype', 'modified' ] }
 
 " hide close button in the tabline
 let g:lightline.tabline = {

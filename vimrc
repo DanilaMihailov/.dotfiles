@@ -1,3 +1,7 @@
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Basic options
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 set number " show line numbers
 set relativenumber " show relative line numbers (may be slow)
 set clipboard=unnamed " copy to system clipboard
@@ -65,6 +69,10 @@ set path+=**,.,,
 
 set mouse=a " enable mouse for all modes
 
+if has('nvim')
+    set inccommand=split " show split with results when substitute
+endif
+
 " mouse support (scrolling and other stuff)
 if !has('nvim')
     set ttymouse=xterm2 " this option only affects vim
@@ -76,30 +84,21 @@ if executable('rg')
 	set grepprg=rg\ --vimgrep\ --hidden
 endif
 
-" Search results centered please
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Basic maps
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-" Jump to last edit position on opening file
-if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
+" reload vim config
+map <Leader>r :source ~/.config/nvim/init.vim<CR>
 
-" leader key, mostly used for plugins
-let mapleader = " "
+" Ctrl+h to stop search highlight
+vnoremap <C-h> :nohlsearch<cr>
+nnoremap <C-h> :nohlsearch<cr>
 
 " show vim highlight group under cursor
 nnoremap <leader>hi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-" Jump to start and end of line using the home row keys
-map H ^
-map L $
 
 " Movement in insert mode (not really working)
 inoremap <C-h> <C-o>h
@@ -123,9 +122,28 @@ noremap Y y$
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
 
+" Jump to start and end of line using the home row keys
+map H ^
+map L $
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" Jump to last edit position on opening file
+if has("autocmd")
+  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" leader key, mostly used for plugins
+let mapleader = " "
+
 " highlight yanking region
 if has('nvim')
-	set inccommand=split
 	highlight HighlightedyankRegion cterm=reverse gui=reverse
 	let g:highlightedyank_highlight_duration = 300
 endif
@@ -246,17 +264,11 @@ nmap <C-b> :Buffers<CR>
 map <Leader>p :Commands<CR>
 map <Leader>cp :CocFzfList<CR>
 
-map <Leader>r :source ~/.config/nvim/init.vim<CR>
-
-" Ctrl+h to stop search highlight
-vnoremap <C-h> :nohlsearch<cr>
-nnoremap <C-h> :nohlsearch<cr>
-
 " delete all buffers, except current one
-" %bd - delete all buffers
+" %bd - delete all buffers (puts you in empty buffer)
 " e#  - open previous buffer
-" bd# - delete previous buffer (no name buffer)
-command! Bonly execute '%bd|e#|bd#'
+" bd# - delete previous buffer (deletes empty buffer)
+command! Bonly %bd <Bar> e# <Bar> bd#
 
 " highlight libs
 let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jquery'

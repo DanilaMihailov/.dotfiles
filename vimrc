@@ -9,10 +9,11 @@ set cursorline " show cursor line
 " allows using motions in russian language
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
-set winwidth=100 " current window should be atleast 100 columns wide
-set winminwidth=40 " other windows minimum width  
-set winheight=10
-set winminheight=2
+" TODO: only active for non floating windows
+" set winwidth=100 " current window should be atleast 100 columns wide
+" set winminwidth=40 " other windows minimum width  
+" set winheight=10
+" set winminheight=2
 
 set splitbelow splitright " when splitting windows, they will appear to the right, or below
 

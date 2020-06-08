@@ -225,6 +225,16 @@ let g:startify_bookmarks = [ {'c': '~/.dotfiles/vimrc'}, '~/.dotfiles/zshrc', '~
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1
 let g:startify_fortune_use_unicode = 1
+let g:startify_files_number = 5
+
+let g:startify_lists = [
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ { 'type': 'dir',       'header': ['   Recent '. getcwd()] },
+      \ { 'type': 'files',     'header': ['   Recent']            },
+      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ ]
+
 
 autocmd User Startified setlocal cursorline
 

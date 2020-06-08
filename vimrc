@@ -103,7 +103,7 @@ endif
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 " reload vim config
-map <Leader>r :source ~/.config/nvim/init.vim<CR>
+nmap <leader>r :source ~/.config/nvim/init.vim<CR>
 
 " Ctrl+h to stop search highlight
 vnoremap <C-h> :nohlsearch<cr>
@@ -137,8 +137,8 @@ nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
 
 " Jump to start and end of line using the home row keys
-map H ^
-map L $
+nmap H ^
+nmap L $
 
 " Search results centered please
 nnoremap <silent> n nzz

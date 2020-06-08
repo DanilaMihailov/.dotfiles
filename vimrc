@@ -172,6 +172,7 @@ Plug 'airblade/vim-gitgutter' " gutters
 
 " Languages
 Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'keith/swift.vim'

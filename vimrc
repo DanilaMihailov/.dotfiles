@@ -9,6 +9,17 @@ set keymap=russian-jcukenwin " allow use russian keys for moves and stuff
 set iminsert=0
 set imsearch=0
 set cursorline " show cursor line
+set backspace=indent,eol,start " backspace over indent, eol, start
+
+set encoding=utf-8
+
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j " Delete comment character when joining commented lines
+endif
 
 " TODO fix lightline colors
 " set termguicolors

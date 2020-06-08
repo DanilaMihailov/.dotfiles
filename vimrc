@@ -218,7 +218,15 @@ Plug 'majutsushi/tagbar' " show ctags in sidebar
 Plug 'antoinemadec/coc-fzf'
 Plug 'Asheq/close-buffers.vim' " Bdelete [other, hidden, this]
 Plug 'ryanoasis/vim-devicons'
+Plug 'mhinz/vim-startify'
 call plug#end()
+
+let g:startify_bookmarks = [ {'c': '~/.dotfiles/vimrc'}, '~/.dotfiles/zshrc', '~/.dotfiles/tmux.conf' ]
+let g:startify_session_persistence = 1
+let g:startify_change_to_vcs_root = 1
+let g:startify_fortune_use_unicode = 1
+
+autocmd User Startified setlocal cursorline
 
 " theme
 set background=dark

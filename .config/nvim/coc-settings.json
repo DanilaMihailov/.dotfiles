@@ -1,4 +1,5 @@
 {
+    "coc.preferences.useQuickfixForLocations": true,
     "diagnostic.errorSign": "E",
     "diagnostic.warningSign": "W",
     "diagnostic.infoSign": "I",
@@ -12,9 +13,12 @@
     "diagnostic.virtualText": false,
     "explorer.previewAction.onHover": false,
     "explorer.floating.border.enable": true,
+    "explorer.floating.border.title": "",
     "explorer.icon.enableNerdfont": true,
-    "explorer.floating.position": "center",
-    "explorer.floating.width": -100,
+    "explorer.floating.position": "center-top",
+    "explorer.floating.hideOnCocList": false,
+    "explorer.openAction.strategy": "previousBuffer",
+    "explorer.floating.width": 100,
     "explorer.floating.height": 40,
     "explorer.sources": [
         {

@@ -10,6 +10,9 @@ set iminsert=0
 set imsearch=0
 set cursorline " show cursor line
 
+" TODO fix lightline colors
+" set termguicolors
+
 " allows using motions in russian language
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
@@ -211,25 +214,25 @@ set background=dark
 colorscheme gruvbox
 
 " change folds colors
-hi Folded ctermbg=NONE cterm=bold
+hi Folded ctermbg=NONE cterm=bold guibg=NONE
  
 " Fix background for signs
-hi SignColumn ctermbg=bg
-hi GruvboxGreenSign ctermbg=bg
-hi GruvboxRedSign ctermbg=bg
-hi GruvboxBlueSign ctermbg=bg
-hi GruvboxAquaSign ctermbg=bg
-hi GruvboxYellowSign ctermbg=bg
-hi GruvboxOrangeSign ctermbg=bg
-hi CursorLineNr ctermbg=bg
+hi SignColumn ctermbg=bg guibg=bg
+hi GruvboxGreenSign ctermbg=bg guibg=bg
+hi GruvboxRedSign ctermbg=bg guibg=bg
+hi GruvboxBlueSign ctermbg=bg guibg=bg
+hi GruvboxAquaSign ctermbg=bg guibg=bg
+hi GruvboxYellowSign ctermbg=bg guibg=bg
+hi GruvboxOrangeSign ctermbg=bg guibg=bg
+hi CursorLineNr ctermbg=bg guibg=bg
 
-hi CocInfoSign ctermfg=blue
+hi CocInfoSign ctermfg=blue guifg=blue
 
 " fix cursorline highlight breaking on operators
-hi Operator ctermbg=NONE
+hi Operator ctermbg=NONE guibg=NONE
 
 " hide end of buffer '~' symbol
-hi EndOfBuffer ctermbg=bg ctermfg=bg
+hi EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
 
 " File plugins settings
 "

@@ -13,6 +13,8 @@ set backspace=indent,eol,start " backspace over indent, eol, start
 
 set encoding=utf-8
 
+let g:man_hardwrap = $MANWIDTH
+
 if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif

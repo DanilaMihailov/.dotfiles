@@ -201,6 +201,8 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neovimhaskell/haskell-vim'
 
 " Motion and helpers
+Plug 'wellle/targets.vim'
+Plug 'andymass/vim-matchup'
 Plug 'easymotion/vim-easymotion' " Space+Space+Motion
 Plug 'tpope/vim-surround' " Surrond with braces ysB
 Plug 'tpope/vim-repeat' " enable repeat for tpope's plugins

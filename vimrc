@@ -107,9 +107,6 @@ endif
 " leader key, mostly used for plugins
 let mapleader = " "
 
-" reload vim config
-nmap <leader>r :source ~/.config/nvim/init.vim<CR>
-
 " Ctrl+h to stop search highlight
 vnoremap <C-h> :nohlsearch<cr>
 nnoremap <C-h> :nohlsearch<cr>
@@ -224,7 +221,87 @@ Plug 'Asheq/close-buffers.vim' " Bdelete [other, hidden, this]
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhinz/vim-startify'
 Plug 'mattn/emmet-vim'
+Plug 'voldikss/vim-translator'
+Plug 'skywind3000/vim-quickui'
+Plug 'voldikss/vim-floaterm'
 call plug#end()
+
+
+" clear all the menus
+call quickui#menu#reset()
+
+" install a 'File' menu, use [text, command] to represent an item.
+call quickui#menu#install('&File', [
+			\ ['&Preferences', 'tabe ~/.dotfiles/vimrc', 'Edit vimrc'],
+			\ ['&Reload vimrc', 'source ~/.config/nvim/init.vim | echo "vimrc reloaded"', 'source ~/.config/nvim/init.vim'],
+            \ ])
+
+call quickui#menu#install("&Windows", [
+            \ [ "Open &Files", "Files", "Files" ],
+            \ [ "Open &Git Files\tCtrl-p", "GFiles", "GFiles" ],
+            \ [ "&Buffers\tCtrl-b", "Buffers", "Buffers" ],
+			\ ['--',''],
+            \ [ "&Commands\tSpace-p", "Commands", "Commands" ],
+            \ [ "C&oC Commands\tSpace-cp", "CocFzfList", "CocFzfList" ],
+			\ ['--',''],
+            \ [ "Floating &Terminal\tCtrl-t", "FloatermToggle", "FloatermToggle" ],
+            \ ])
+
+" script inside %{...} will be evaluated and expanded in the string
+call quickui#menu#install("&Option", [
+			\ ['Set &Spell %{&spell? "Off":"On"}', 'set spell!', 'Enable spell checking'],
+			\ ['Set L&ist %{&list? "Off":"On"}', 'set list!', 'Show hidden characters'],
+			\ ['Set &Background %{&background == "dark" ? "Light":"Dark"}', 'set background=dark', 'Show hidden characters'],
+			\ ])
+
+" register HELP menu with weight 10000
+call quickui#menu#install('H&elp', [
+			\ ["&Cheatsheet", 'help index', ''],
+			\ ['T&ips', 'help tips', ''],
+			\ ['--',''],
+			\ ["&Tutorial", 'help tutor', ''],
+			\ ['&Quick Reference', 'help quickref', ''],
+			\ ['&Summary', 'help summary', ''],
+			\ ], 10000)
+
+let content = [
+            \ ["Re&name\t<space>rn", 'normal 1 rn' ],
+            \ ["&Actions\t<space>a", 'normal 1 a' ],
+            \ ["&Quick fix\t<space>qf", 'normal 1 qf' ],
+            \ ['-'],
+            \ ["&Go to Defintion\tgd", 'normal gd' ],
+            \ ["Show &References\tgr", 'normal gr'],
+            \ ["Show &Implementation\tgi", 'normal gi'],
+            \ ["Show T&ype Defintion\tgy", 'normal gy'],
+            \ ['-'],
+            \ ["&Translate", 'TranslateW'],
+            \ ["&Find in Project", 'exec "silent! grep " . expand("<cword>") | copen' ],
+            \ ['-'],
+            \ ["&Documentation\tK", 'normal K' ],
+            \ ]
+
+" set cursor to the last position
+let opts = {'index':g:quickui#context#cursor}
+
+nmap <C-k> :call quickui#context#open(content, opts)<CR>
+
+let g:quickui_color_scheme = 'gruvbox'
+let g:quickui_border_style = 2
+
+" enable to display tips in the cmdline
+let g:quickui_show_tip = 1
+
+" hit space twice to open menu
+noremap <leader>m :call quickui#menu#open()<cr>
+
+
+let g:translator_target_lang = 'ru'
+let g:translator_window_max_width = 0.4
+
+let g:floaterm_position = 'top'
+let g:floaterm_autoinsert = 0
+
+nmap <C-t> :FloatermToggle<CR>
 
 " Use a floating window to show the off-screen match.
 let g:matchup_matchparen_offscreen = {'method': 'popup'}

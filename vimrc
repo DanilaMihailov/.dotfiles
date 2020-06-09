@@ -226,6 +226,11 @@ Plug 'mhinz/vim-startify'
 Plug 'mattn/emmet-vim'
 call plug#end()
 
+" Use a floating window to show the off-screen match.
+let g:matchup_matchparen_offscreen = {'method': 'popup'}
+" only the tag name will be highlighted, not the rest of the line
+let g:matchup_matchpref = {'html': {'tagnameonly': 1}}
+
 let g:startify_bookmarks = [ {'c': '~/.dotfiles/vimrc'}, '~/.dotfiles/zshrc', '~/.dotfiles/tmux.conf', '~/projects/kkrm', '~/projects/invitro_store', '~/projects/review_kkrm' ]
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1

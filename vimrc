@@ -224,7 +224,11 @@ Plug 'skywind3000/vim-quickui'
 Plug 'voldikss/vim-floaterm'
 call plug#end()
 
-command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -a', 'sink': 'Git checkout'}, <bang>0))
+function! GitCheckoutBranch(branch)
+   execute "Git checkout ".a:branch 
+endfunction
+
+command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -a', 'sink': function('GitCheckoutBranch')}, <bang>0))
 
 " clear all the menus
 call quickui#menu#reset()
@@ -289,7 +293,7 @@ call quickui#menu#install("&Git", [
             \ [ "Changed &Files\t:GFiles?", "GFiles?", "Git fzf files" ],
 			\ ['--',''],
             \ [ "Create &branch", "call feedkeys(':Git checkout -b ')", "" ],
-            \ [ "Ch&eckout branch", "call feedkeys(':Git checkout ')", "" ],
+            \ [ "Ch&eckout branch\t:Gbranch", "Gbranch", "Show list of branches" ],
             \ [ "Set upstream branch", "execute 'Git push origin -u '.fugitive#head()", "Git push" ],
 			\ ['--',''],
             \ [ "&Write and Commit", "call feedkeys(':Gwrite\<cr>:Gcommit\<cr>')", "Git write and then commit" ],

@@ -180,7 +180,6 @@ Plug 'junegunn/fzf.vim' " Ctrl+P fuzzy file search
 " Git plugins
 Plug 'tpope/vim-dispatch' " needed for fugitive
 Plug 'tpope/vim-fugitive' " git status, blame, history, etc
-Plug 'idanarye/vim-merginal' " git branches, merge conflicts
 Plug 'airblade/vim-gitgutter' " gutters
 
 " Languages
@@ -200,7 +199,6 @@ Plug 'neovimhaskell/haskell-vim'
 " Motion and helpers
 Plug 'wellle/targets.vim'
 Plug 'andymass/vim-matchup'
-Plug 'easymotion/vim-easymotion' " Space+Space+Motion
 Plug 'tpope/vim-surround' " Surrond with braces ysB
 Plug 'tpope/vim-repeat' " enable repeat for tpope's plugins
 Plug 'tomtom/tcomment_vim' " gcc to comment line
@@ -288,11 +286,6 @@ call quickui#menu#install("&Git", [
             \ [ "Co&mmits\t:Commits", "Commits!", "Git commits with fzf" ],
             \ ])
 
-function! GitWriteCommit()
-    execute "Gwrite"
-    execute "Gcommit"
-endfunction
-
 " script inside %{...} will be evaluated and expanded in the string
 call quickui#menu#install("&Option", [
 			\ ["Set &Spell \t%{&spell? 'Off':'On'}", 'set spell!', 'Enable spell checking'],
@@ -365,7 +358,7 @@ let g:quickui_show_tip = 1
 
 " hit space twice to open menu
 noremap <leader>m :call quickui#menu#open()<cr>
-
+noremap <leader><leader> :call quickui#menu#open()<cr>
 
 let g:translator_target_lang = 'ru'
 let g:translator_window_max_width = 0.4

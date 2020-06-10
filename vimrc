@@ -224,6 +224,7 @@ Plug 'skywind3000/vim-quickui'
 Plug 'voldikss/vim-floaterm'
 call plug#end()
 
+command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -a', 'sink': 'Git checkout'}, <bang>0))
 
 " clear all the menus
 call quickui#menu#reset()

@@ -259,7 +259,6 @@ call quickui#menu#install("&Buffers", [
 call quickui#menu#install("&Windows", [
             \ [ "&Zoom window\tSpace+-", "normal 1 -", "" ],
             \ [ "&Re-balance windows\tSpace+=", "normal 1 =", "" ],
-            \ [ "&Move to tab\tCtrl-w T", "wincmd T", "" ],
 			\ ['--',''],
             \ [ "Move to the left\tCtrl-w H", "wincmd H", "" ],
             \ [ "Move to the right\tCtrl-w L", "wincmd L", "" ],
@@ -268,7 +267,9 @@ call quickui#menu#install("&Windows", [
 			\ ['--',''],
             \ [ "&New window\tCtrl-w n", "wincmd n", "" ],
             \ [ "New tab\t:tabnew", "tabnew", "" ],
+			\ ['--',''],
             \ [ "&Exchange windows\tCtrl-w x", "wincmd x", "" ],
+            \ [ "&Move to tab\tCtrl-w T", "wincmd T", "" ],
 			\ ['--',''],
             \ [ "Close other &tabs\t:tabo", "tabo", "" ],
             \ [ "Close other &windows\t<Ctrl-w> o", "wincmd o", "" ],

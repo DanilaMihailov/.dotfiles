@@ -233,7 +233,7 @@ call quickui#menu#reset()
 " install a 'File' menu, use [text, command] to represent an item.
 call quickui#menu#install('&File', [
 			\ ['&Preferences', 'tabe ~/.dotfiles/vimrc', 'Edit vimrc'],
-			\ ['&Reload vimrc', 'source ~/.config/nvim/init.vim | echo "vimrc reloaded"', 'source ~/.config/nvim/init.vim'],
+			\ ['&Reload vimrc', 'silent! call ReloadConfig()', 'source ~/.config/nvim/init.vim'],
             \ ])
 
 call quickui#menu#install("&Windows", [
@@ -251,8 +251,31 @@ call quickui#menu#install("&Windows", [
 call quickui#menu#install("&Option", [
 			\ ['Set &Spell %{&spell? "Off":"On"}', 'set spell!', 'Enable spell checking'],
 			\ ['Set L&ist %{&list? "Off":"On"}', 'set list!', 'Show hidden characters'],
-			\ ['Set &Background %{&background == "dark" ? "Light":"Dark"}', 'set background=dark', 'Show hidden characters'],
+			\ ['Set &Background %{&background == "dark" ? "Light":"Dark"}', 'call ToggleBackground()', 'Change background'],
 			\ ])
+
+function! ReloadConfig()
+    let local_bg = &background
+    source ~/.config/nvim/init.vim
+    if local_bg == "dark"
+        set background=dark
+        call QuickThemeChange("gruvbox")
+    else
+        set background=light
+        call QuickThemeChange("gruvbox light")
+    endif
+    echo "vimrc reloaded"
+endfunction
+
+function! ToggleBackground()
+    if &background == "dark"
+        set background=light
+        call QuickThemeChange("gruvbox light")
+    else
+        set background=dark
+        call QuickThemeChange("gruvbox")
+    endif
+endfunction
 
 " register HELP menu with weight 10000
 call quickui#menu#install('H&elp', [

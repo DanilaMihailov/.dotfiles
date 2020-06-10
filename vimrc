@@ -232,15 +232,29 @@ call quickui#menu#reset()
 
 " install a 'File' menu, use [text, command] to represent an item.
 call quickui#menu#install('&File', [
+            \ [ "&Open\t:Files", "Files", "Files" ],
+            \ [ "Open &Git Files\tCtrl-p", "GFiles", "GFiles" ],
+            \ [ "&Explore\tCtrl-f", "CocCommand explorer --position=floating", "CoC explorer" ],
+			\ ['--',''],
 			\ ['&Preferences', 'tabe ~/.dotfiles/vimrc', 'Edit vimrc'],
 			\ ['&Reload vimrc', 'silent! call ReloadConfig()', 'source ~/.config/nvim/init.vim'],
             \ ])
 
-call quickui#menu#install("&Windows", [
-            \ [ "Open &Files", "Files", "Files" ],
-            \ [ "Open &Git Files\tCtrl-p", "GFiles", "GFiles" ],
-            \ [ "&Buffers\tCtrl-b", "Buffers", "Buffers" ],
+call quickui#menu#install("&Buffers", [
+            \ [ "L&ist\tCtrl-b", "Buffers", "Buffers" ],
 			\ ['--',''],
+            \ [ "Close &other buffers\t:Bonly", "Bonly", "" ],
+            \ [ "Close hidd&en buffers\t:Bdelete hidden", "Bdelete hidden", "" ],
+            \ [ "Close &this buffer\t:Bdelete this", "Bdelete this", "" ],
+            \ ])
+call quickui#menu#install("&Windows", [
+            \ [ "&Zoom window\tSpace+-", "normal 1 -", "" ],
+            \ [ "&Re-balance windows\tSpace+=", "normal 1 =", "" ],
+			\ ['--',''],
+            \ [ "Close other &tabs\t:tabo", "tabo", "" ],
+            \ [ "Close other &windows\t<Ctrl-w><Ctrl-o>", "wincmd o", "" ],
+            \ ])
+call quickui#menu#install("&Commands", [
             \ [ "&Commands\tSpace-p", "Commands", "Commands" ],
             \ [ "C&oC Commands\tSpace-cp", "CocFzfList", "CocFzfList" ],
 			\ ['--',''],

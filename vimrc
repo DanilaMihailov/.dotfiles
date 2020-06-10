@@ -230,9 +230,11 @@ call quickui#menu#reset()
 
 " install a 'File' menu, use [text, command] to represent an item.
 call quickui#menu#install('&File', [
-            \ [ "&Open\t:Files", "Files", "Files" ],
+            \ [ "&Open...\t:Files", "Files", "Files" ],
             \ [ "&Explore\tCtrl-f", "CocCommand explorer --position=floating", "CoC explorer" ],
             \ [ "&Welcome screen\t:Startify", "Startify", "Show startify" ],
+			\ [ '--','' ],
+			\ [ "&Save as\t:saveas", "call feedkeys(':saveas ')", "Safe file with new name" ],
 			\ [ '--','' ],
 			\ [ "&Preferences", "tabe ~/.dotfiles/vimrc", "Edit vimrc" ],
 			\ [ "&Coc Config\t:CocConfig", "CocConfig", "Edit coc-config.json" ],
@@ -244,7 +246,7 @@ call quickui#menu#install('&File', [
 call quickui#menu#install("&Buffers", [
             \ [ "L&ist\tCtrl-b", "Buffers", "Buffers" ],
 			\ ['--',''],
-            \ [ "Close &other buffers\t:Bonly", "Bonly", "" ],
+            \ [ "Close &other buffers\t:Bdelete other", "Bdelete other", "" ],
             \ [ "Close hidd&en buffers\t:Bdelete hidden", "Bdelete hidden", "" ],
             \ [ "Close &this buffer\t:Bdelete this", "Bdelete this", "" ],
             \ ])
@@ -257,6 +259,10 @@ call quickui#menu#install("&Windows", [
             \ [ "Move to the right\tCtrl-w L", "wincmd L", "" ],
             \ [ "Move to the bottom\tCtrl-w J", "wincmd J", "" ],
             \ [ "Move to the top\tCtrl-w K", "wincmd K", "" ],
+			\ ['--',''],
+            \ [ "&New window\tCtrl-w n", "wincmd n", "" ],
+            \ [ "New tab\t:tabnew", "tabnew", "" ],
+            \ [ "&Exchange windows\tCtrl-w x", "wincmd x", "" ],
 			\ ['--',''],
             \ [ "Close other &tabs\t:tabo", "tabo", "" ],
             \ [ "Close other &windows\t<Ctrl-w> o", "wincmd o", "" ],
@@ -275,15 +281,21 @@ call quickui#menu#install("&Commands", [
 
 call quickui#menu#install("&Git", [
             \ [ "&Status\t:G", "G", "Git fugitive" ],
+            \ [ "Pu&ll\t:Gpull", "Gpull", "Git pull" ],
+            \ [ "P&ush\t:Gpush", "Gpush", "Git push" ],
 			\ ['--',''],
             \ [ "&Open Files\tCtrl-p", "GFiles", "GFiles" ],
             \ [ "Changed &Files\t:GFiles?", "GFiles?", "Git fzf files" ],
 			\ ['--',''],
+            \ [ "Create &branch", "call feedkeys(':Git checkout -b ')", "" ],
+            \ [ "Ch&eckout branch", "call feedkeys(':Git checkout ')", "" ],
+            \ [ "Set upstream branch", "execute 'Git push origin -u '.fugitive#head()", "Git push" ],
+			\ ['--',''],
             \ [ "&Write and Commit", "call feedkeys(':Gwrite\<cr>:Gcommit\<cr>')", "Git write and then commit" ],
             \ [ "&Commit\t:Gcommit", "Gcommit", "Git commit" ],
 			\ ['--',''],
-            \ [ "&Blame\t:Gblame", "Gblame", "Git blame" ],
-            \ [ "Co&mmits\t:Commits", "Commits!", "Git commits with fzf" ],
+            \ [ "Blame\t:Gblame", "Gblame", "Git blame" ],
+            \ [ "Commits\t:Commits", "Commits!", "Git commits with fzf" ],
             \ ])
 
 " script inside %{...} will be evaluated and expanded in the string

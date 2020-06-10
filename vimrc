@@ -23,17 +23,10 @@ if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
-" TODO fix lightline colors
-" set termguicolors
+set termguicolors
 
 " allows using motions in russian language
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
-
-" TODO: only active for non floating windows
-" set winwidth=100 " current window should be atleast 100 columns wide
-" set winminwidth=40 " other windows minimum width  
-" set winheight=10
-" set winminheight=2
 
 set splitbelow splitright " when splitting windows, they will appear to the right, or below
 

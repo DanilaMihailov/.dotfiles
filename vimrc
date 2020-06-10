@@ -250,9 +250,15 @@ call quickui#menu#install("&Buffers", [
 call quickui#menu#install("&Windows", [
             \ [ "&Zoom window\tSpace+-", "normal 1 -", "" ],
             \ [ "&Re-balance windows\tSpace+=", "normal 1 =", "" ],
+            \ [ "&Move to tab\tCtrl-w T", "wincmd T", "" ],
+			\ ['--',''],
+            \ [ "Move to the left\tCtrl-w H", "wincmd H", "" ],
+            \ [ "Move to the right\tCtrl-w L", "wincmd L", "" ],
+            \ [ "Move to the bottom\tCtrl-w J", "wincmd J", "" ],
+            \ [ "Move to the top\tCtrl-w K", "wincmd K", "" ],
 			\ ['--',''],
             \ [ "Close other &tabs\t:tabo", "tabo", "" ],
-            \ [ "Close other &windows\t<Ctrl-w><Ctrl-o>", "wincmd o", "" ],
+            \ [ "Close other &windows\t<Ctrl-w> o", "wincmd o", "" ],
             \ ])
 call quickui#menu#install("&Commands", [
             \ [ "&Commands\tSpace-p", "Commands", "Commands" ],
@@ -261,12 +267,38 @@ call quickui#menu#install("&Commands", [
             \ [ "Floating &Terminal\tCtrl-t", "FloatermToggle", "FloatermToggle" ],
             \ ])
 
+call quickui#menu#install("&Git", [
+            \ [ "&Status\t:G", "G", "Git fugitive" ],
+            \ [ "Changed &Files\t:GFiles?", "GFiles?", "Git fzf files" ],
+            \ [ "&Write and Commit\t:Gwrite", "call GitWriteCommit()", "Git write and then commit" ],
+            \ [ "&Commit\t:Gcommit", "Gcommit", "Git commit" ],
+            \ [ "&Blame\t:Gblame", "Gblame", "Git blame" ],
+            \ [ "C&ommits\t:Commits", "Commits!", "Git commits with fzf" ],
+            \ ])
+
+function! GitWriteCommit()
+    execute "Gwrite"
+    execute "Gcommit"
+endfunction
+
 " script inside %{...} will be evaluated and expanded in the string
 call quickui#menu#install("&Option", [
 			\ ['Set &Spell %{&spell? "Off":"On"}', 'set spell!', 'Enable spell checking'],
 			\ ['Set L&ist %{&list? "Off":"On"}', 'set list!', 'Show hidden characters'],
 			\ ['Set &Background %{&background == "dark" ? "Light":"Dark"}', 'call ToggleBackground()', 'Change background'],
+			\ ['--',''],
+            \ [ "List &all\t:options", "vert options", ":options" ],
 			\ ])
+
+" register HELP menu with weight 10000
+call quickui#menu#install('H&elp', [
+			\ ["&Cheatsheet", 'vert help index', ''],
+			\ ['T&ips', 'vert help tips', ''],
+			\ ['--',''],
+			\ ["&Tutorial", 'vert help tutor', ''],
+			\ ['&Quick Reference', 'vert help quickref', ''],
+			\ ['&Summary', 'vert help summary', ''],
+			\ ], 10000)
 
 function! ReloadConfig()
     let local_bg = &background
@@ -290,16 +322,6 @@ function! ToggleBackground()
         call QuickThemeChange("gruvbox")
     endif
 endfunction
-
-" register HELP menu with weight 10000
-call quickui#menu#install('H&elp', [
-			\ ["&Cheatsheet", 'help index', ''],
-			\ ['T&ips', 'help tips', ''],
-			\ ['--',''],
-			\ ["&Tutorial", 'help tutor', ''],
-			\ ['&Quick Reference', 'help quickref', ''],
-			\ ['&Summary', 'help summary', ''],
-			\ ], 10000)
 
 let content = [
             \ ["Re&name\t<space>rn", 'normal 1 rn' ],
@@ -534,7 +556,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
+    execute 'vert h '.expand('<cword>')
   else
     call CocAction('doHover')
   endif

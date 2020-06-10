@@ -495,18 +495,34 @@ let g:lightline = {
 	\ 'enable': { 'tabline': 1 },
 	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'filetype', 'modified', 'cocstatus' ] ]
+	\   'left': [ [ 'gitbranch' ],
+	\             [ 'readonly', 'filename'], ['modified'] ],
+    \ 'right': [ [ 'filetype' ],
+    \            [ 'percent' ],
+    \            ['cocstatus' ]]
 	\ },
 	\ 'component_function': {
-    \   'filetype': 'MyFiletype',
+    \   'filetype': 'MyFileType',
+    \   'filename': 'MyFileName',
 	\   'gitbranch': 'fugitive#head',
 	\   'cocstatus': 'coc#status'
 	\ },
 	\ }
 
+let g:lightline.inactive = {
+    \ 'left': [ ['gitbranch'], [ 'filename' ] ],
+    \ 'right': [ [ 'filetype' ],
+    \            [ 'percent' ] ] }
+
 " show icon folowed by file name
-function! MyFiletype(...)
+function! MyFileType(...)
+    let ft = strlen(&filetype) ?  WebDevIconsGetFileTypeSymbol() : ''
+
+    return strlen(ft) ? ft . ' ' . &filetype : &filetype
+endfunction
+
+" show icon folowed by file name
+function! MyFileName(...)
     let name = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
     let ft = strlen(&filetype) ?  WebDevIconsGetFileTypeSymbol() : ''
 

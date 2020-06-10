@@ -213,7 +213,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim' " Status line
 Plug 'https://github.com/machakann/vim-highlightedyank' " Highlight yanked text
 Plug 'mhinz/vim-mix-format' " format elixir files on save
-Plug 'majutsushi/tagbar' " show ctags in sidebar
 Plug 'antoinemadec/coc-fzf'
 Plug 'Asheq/close-buffers.vim' " Bdelete [other, hidden, this]
 Plug 'ryanoasis/vim-devicons'
@@ -395,15 +394,11 @@ let g:matchup_matchpref = {'html': {'tagnameonly': 1}}
 let g:startify_bookmarks = [ {'c': '~/.dotfiles/vimrc'}, '~/.dotfiles/zshrc', '~/.dotfiles/tmux.conf', '~/projects/kkrm', '~/projects/invitro_store', '~/projects/review_kkrm' ]
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1
-let g:startify_fortune_use_unicode = 1
-let g:startify_files_number = 5
-
+let g:startify_custom_header = []
+let g:startify_enable_unsafe = 1
 let g:startify_lists = [
       \ { 'type': 'sessions',  'header': ['   Sessions']       },
       \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-      \ { 'type': 'dir',       'header': ['   Recent '. getcwd()] },
-      \ { 'type': 'files',     'header': ['   Recent']            },
-      \ { 'type': 'commands',  'header': ['   Commands']       },
       \ ]
 
 

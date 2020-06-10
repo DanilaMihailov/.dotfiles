@@ -225,10 +225,10 @@ Plug 'voldikss/vim-floaterm'
 call plug#end()
 
 function! GitCheckoutBranch(branch)
-    execute "Git checkout ".split(a:branch, "/", 1)[-1]
+    echo "Git checkout ".split(split(trim(a:branch), "", 1)[0], "/", 1)[-1]
 endfunction
 
-command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -a', 'sink': function('GitCheckoutBranch')}, <bang>0))
+command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -avv', 'sink': function('GitCheckoutBranch')}, <bang>0))
 
 " clear all the menus
 call quickui#menu#reset()
@@ -236,7 +236,7 @@ call quickui#menu#reset()
 " install a 'File' menu, use [text, command] to represent an item.
 call quickui#menu#install('&File', [
             \ [ "&Open...\t:Files", "Files", "Files" ],
-            \ [ "&Explore\tCtrl-f", "CocCommand explorer --position=floating", "CoC explorer" ],
+            \ [ "&Explore\tCtrl-f", "CocCommand explorer --position=floating", "Coc explorer" ],
             \ [ "&Welcome screen\t:Startify", "Startify", "Show startify" ],
 			\ [ '--','' ],
 			\ [ "&Save as\t:saveas", "call feedkeys(':saveas ')", "Safe file with new name" ],

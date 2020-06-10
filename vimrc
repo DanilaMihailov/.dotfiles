@@ -228,7 +228,7 @@ function! GitCheckoutBranch(branch)
     execute "Git checkout ".split(split(trim(a:branch), "", 1)[0], "/", 1)[-1]
 endfunction
 
-command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -avv', 'sink': function('GitCheckoutBranch')}, <bang>0))
+command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -avv --color', 'sink': function('GitCheckoutBranch'), 'options': '--ansi'}, <bang>0))
 
 " clear all the menus
 call quickui#menu#reset()

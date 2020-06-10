@@ -233,11 +233,14 @@ call quickui#menu#reset()
 " install a 'File' menu, use [text, command] to represent an item.
 call quickui#menu#install('&File', [
             \ [ "&Open\t:Files", "Files", "Files" ],
-            \ [ "Open &Git Files\tCtrl-p", "GFiles", "GFiles" ],
             \ [ "&Explore\tCtrl-f", "CocCommand explorer --position=floating", "CoC explorer" ],
-			\ ['--',''],
-			\ ['&Preferences', 'tabe ~/.dotfiles/vimrc', 'Edit vimrc'],
-			\ ['&Reload vimrc', 'silent! call ReloadConfig()', 'source ~/.config/nvim/init.vim'],
+            \ [ "&Welcome screen\t:Startify", "Startify", "Show startify" ],
+			\ [ '--','' ],
+			\ [ "&Preferences", "tabe ~/.dotfiles/vimrc", "Edit vimrc" ],
+			\ [ "&Coc Config\t:CocConfig", "CocConfig", "Edit coc-config.json" ],
+			\ [ "&Reload vimrc", "silent! call ReloadConfig()", "source ~/.config/nvim/init.vim" ],
+			\ [ '--','' ],
+			\ [ "&Quit\t:qa", "qa", "Quit vim" ],
             \ ])
 
 call quickui#menu#install("&Buffers", [
@@ -261,19 +264,28 @@ call quickui#menu#install("&Windows", [
             \ [ "Close other &windows\t<Ctrl-w> o", "wincmd o", "" ],
             \ ])
 call quickui#menu#install("&Commands", [
-            \ [ "&Commands\tSpace-p", "Commands", "Commands" ],
+            \ [ "&Search Commands\tSpace-p", "Commands", "Commands" ],
             \ [ "C&oC Commands\tSpace-cp", "CocFzfList", "CocFzfList" ],
+			\ ['--',''],
+            \ [ "&Save session\t:SSave", "SSave", "" ],
+            \ [ "&Load session\t:SLoad", "SLoad", "" ],
+            \ [ "&Close session\t:SClose", "SClose", "" ],
+            \ [ "&Delete session\t:SDelete", "SDelete", "" ],
 			\ ['--',''],
             \ [ "Floating &Terminal\tCtrl-t", "FloatermToggle", "FloatermToggle" ],
             \ ])
 
 call quickui#menu#install("&Git", [
             \ [ "&Status\t:G", "G", "Git fugitive" ],
+			\ ['--',''],
+            \ [ "&Open Files\tCtrl-p", "GFiles", "GFiles" ],
             \ [ "Changed &Files\t:GFiles?", "GFiles?", "Git fzf files" ],
-            \ [ "&Write and Commit\t:Gwrite", "call GitWriteCommit()", "Git write and then commit" ],
+			\ ['--',''],
+            \ [ "&Write and Commit", "call feedkeys(':Gwrite\<cr>:Gcommit\<cr>')", "Git write and then commit" ],
             \ [ "&Commit\t:Gcommit", "Gcommit", "Git commit" ],
+			\ ['--',''],
             \ [ "&Blame\t:Gblame", "Gblame", "Git blame" ],
-            \ [ "C&ommits\t:Commits", "Commits!", "Git commits with fzf" ],
+            \ [ "Co&mmits\t:Commits", "Commits!", "Git commits with fzf" ],
             \ ])
 
 function! GitWriteCommit()
@@ -283,21 +295,22 @@ endfunction
 
 " script inside %{...} will be evaluated and expanded in the string
 call quickui#menu#install("&Option", [
-			\ ['Set &Spell %{&spell? "Off":"On"}', 'set spell!', 'Enable spell checking'],
-			\ ['Set L&ist %{&list? "Off":"On"}', 'set list!', 'Show hidden characters'],
-			\ ['Set &Background %{&background == "dark" ? "Light":"Dark"}', 'call ToggleBackground()', 'Change background'],
+			\ ["Set &Spell \t%{&spell? 'Off':'On'}", 'set spell!', 'Enable spell checking'],
+			\ ["Set L&ist \t%{&list? 'Off':'On'}", 'set list!', 'Show hidden characters'],
+			\ ["Set &Background \t%{&background == 'dark' ? 'Light':'Dark'}", 'call ToggleBackground()', 'Change background'],
 			\ ['--',''],
             \ [ "List &all\t:options", "vert options", ":options" ],
 			\ ])
 
 " register HELP menu with weight 10000
 call quickui#menu#install('H&elp', [
-			\ ["&Cheatsheet", 'vert help index', ''],
-			\ ['T&ips', 'vert help tips', ''],
+			\ ["&Search help\t:helpgrep", 'call feedkeys(":helpgrep ")', ''],
 			\ ['--',''],
-			\ ["&Tutorial", 'vert help tutor', ''],
-			\ ['&Quick Reference', 'vert help quickref', ''],
-			\ ['&Summary', 'vert help summary', ''],
+			\ ["&Cheatsheet\t:help index", 'vert help index', ''],
+			\ ["T&ips\t:help tips", 'vert help tips', ''],
+			\ ['--',''],
+			\ ["&Tutorial\t:help tutor", 'vert help tutor', ''],
+			\ ["&Quick Reference\t:help quickref", 'vert help quickref', ''],
 			\ ], 10000)
 
 function! ReloadConfig()

@@ -225,7 +225,7 @@ Plug 'voldikss/vim-floaterm'
 call plug#end()
 
 function! GitCheckoutBranch(branch)
-    echo "Git checkout ".split(split(trim(a:branch), "", 1)[0], "/", 1)[-1]
+    execute "Git checkout ".split(split(trim(a:branch), "", 1)[0], "/", 1)[-1]
 endfunction
 
 command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -avv', 'sink': function('GitCheckoutBranch')}, <bang>0))

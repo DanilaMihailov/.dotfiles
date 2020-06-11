@@ -120,6 +120,13 @@ nnoremap <leader>hi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") 
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+" change terminal mode to normal as in vim
+tnoremap <C-W>N <C-\><C-n>
+tnoremap <C-W>n <C-\><C-n>
+
+" move out of terminal as if it is just a window
+tnoremap <C-W> <C-\><C-N><C-w>
+
 " Movement in insert mode (not really working)
 inoremap <C-h> <C-o>h
 inoremap <C-l> <C-o>a
@@ -397,8 +404,9 @@ let g:translator_target_lang = 'ru'
 let g:translator_window_max_width = 0.4
 
 let g:floaterm_position = 'top'
-let g:floaterm_autoinsert = 0
+let g:floaterm_autoinsert = 1
 
+tnoremap <C-t> <C-\><C-N> :FloatermToggle<CR>
 nmap <C-t> :FloatermToggle<CR>
 
 " Use a floating window to show the off-screen match.

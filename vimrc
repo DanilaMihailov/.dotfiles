@@ -242,6 +242,12 @@ call quickui#menu#install('&File', [
 			\ [ "&Quit\t:qa", "qa", "Quit vim" ],
             \ ])
 
+call quickui#menu#install("&Edit", [
+            \ [ "&Format file\t:Format", "Format", "Format file using Coc" ],
+            \ [ "Fo&ld\t:Fold", "Fold", "Fold file using Coc" ],
+            \ [ "&Organize imports\t:OR", "OR", "Organize imports file using Coc" ],
+            \ ])
+
 call quickui#menu#install("&Buffers", [
             \ [ "L&ist\tCtrl-b", "Buffers", "Buffers" ],
 			\ ['--',''],
@@ -308,7 +314,7 @@ call quickui#menu#install("&Option", [
 			\ ])
 
 " register HELP menu with weight 10000
-call quickui#menu#install('H&elp', [
+call quickui#menu#install('Hel&p', [
 			\ ["&Search help\t:helpgrep", 'call feedkeys(":helpgrep ")', ''],
 			\ ['--',''],
 			\ ["&Cheatsheet\t:help index", 'vert help index', ''],

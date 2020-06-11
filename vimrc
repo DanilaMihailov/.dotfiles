@@ -527,17 +527,6 @@ let g:lightline.inactive = {
     \ 'right': [ [ 'filetype' ],
     \            [ 'percent' ] ] }
 
-call lightline#init()
-call lightline#colorscheme()
-call lightline#update()
-let g:lightline#colorscheme#gruvbox#palette.inactive.middle = [['#a89984', '#504945', '246', '239']]
-let g:lightline#colorscheme#gruvbox#palette.inactive.left = [['#a89984', '#504945', '246', '239']]
-let g:lightline#colorscheme#gruvbox#palette.inactive.right = [['#a89984', '#504945', '246', '239']]
-let g:lightline#colorscheme#gruvbox#palette.normal.middle = [['#a89984', 'bg', '246', 'bg']]
-let g:lightline#colorscheme#gruvbox#palette.replace.middle = [['#a89984', 'bg', '246', 'bg']]
-let g:lightline#colorscheme#gruvbox#palette.visual.middle = [['#a89984', 'bg', '246', 'bg']]
-let g:lightline#colorscheme#gruvbox#palette.insert.middle = [['#a89984', 'bg', '246', 'bg']]
-
 " show icon folowed by file name
 function! MyFileType(...)
     let ft = strlen(&filetype) ?  WebDevIconsGetFileTypeSymbol() : ''
@@ -560,6 +549,20 @@ let g:lightline.tabline = {
     \ 'left': [ [ 'tabs' ] ],
     \ 'right': [ [] ] }
 
+let g:coc_status_error_sign = 'E'
+let g:coc_status_warning_sign = 'W'
+
+call lightline#init()
+call lightline#colorscheme()
+call lightline#update()
+let g:lightline#colorscheme#gruvbox#palette.inactive.middle = [['#a89984', '#504945', '246', '239']]
+let g:lightline#colorscheme#gruvbox#palette.inactive.left = [['#a89984', '#504945', '246', '239']]
+let g:lightline#colorscheme#gruvbox#palette.inactive.right = [['#a89984', '#504945', '246', '239']]
+let g:lightline#colorscheme#gruvbox#palette.normal.middle = [['#a89984', 'bg', '246', 'bg']]
+let g:lightline#colorscheme#gruvbox#palette.replace.middle = [['#a89984', 'bg', '246', 'bg']]
+let g:lightline#colorscheme#gruvbox#palette.visual.middle = [['#a89984', 'bg', '246', 'bg']]
+let g:lightline#colorscheme#gruvbox#palette.insert.middle = [['#a89984', 'bg', '246', 'bg']]
+
 " COC.VIM CONFIG
 
 " this extensions will be installed
@@ -573,9 +576,6 @@ nmap <C-f> :CocCommand explorer --position=floating<CR>
 
 " correct comment highlight for jsonc
 autocmd FileType json syntax match Comment +\/\/.\+$+
-
-let g:coc_status_error_sign = 'E'
-let g:coc_status_warning_sign = 'W'
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by

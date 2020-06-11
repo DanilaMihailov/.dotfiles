@@ -257,6 +257,7 @@ call quickui#menu#install("&Edit", [
             \ [ "&Format file\t:Format", "Format", "Format file using Coc" ],
             \ [ "Fo&ld\t:Fold", "Fold", "Fold file using Coc" ],
             \ [ "&Organize imports\t:OR", "OR", "Organize imports file using Coc" ],
+            \ [ "&Wrap with emmet\tCtrl+y ,", "norm gv\<C-y>,", "Wrap with emmet abbriviation" ],
             \ ])
 
 call quickui#menu#install("&Buffers", [

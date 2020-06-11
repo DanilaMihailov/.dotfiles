@@ -5,6 +5,8 @@
 " * fix theme switching (move it to function)
 " * make vim compatible
 " * make Gbranch search only branch name, show some preview?
+" * add check lang for tansation
+" * add check for fzf floating window
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Basic options
@@ -502,6 +504,8 @@ let g:mix_format_on_save = 1
 
 let g:lightline = {
 	\ 'enable': { 'tabline': 1 },
+    \ 'tabline_separator': { 'left': "", 'right': "" },
+    \ 'tabline_subseparator': { 'left': "", 'right': "" },
 	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
 	\   'left': [ [ 'gitbranch' ],
@@ -522,6 +526,17 @@ let g:lightline.inactive = {
     \ 'left': [ ['gitbranch'], [ 'filename' ] ],
     \ 'right': [ [ 'filetype' ],
     \            [ 'percent' ] ] }
+
+call lightline#init()
+call lightline#colorscheme()
+call lightline#update()
+let g:lightline#colorscheme#gruvbox#palette.inactive.middle = [['#a89984', '#504945', '246', '239']]
+let g:lightline#colorscheme#gruvbox#palette.inactive.left = [['#a89984', '#504945', '246', '239']]
+let g:lightline#colorscheme#gruvbox#palette.inactive.right = [['#a89984', '#504945', '246', '239']]
+let g:lightline#colorscheme#gruvbox#palette.normal.middle = [['#a89984', 'bg', '246', 'bg']]
+let g:lightline#colorscheme#gruvbox#palette.replace.middle = [['#a89984', 'bg', '246', 'bg']]
+let g:lightline#colorscheme#gruvbox#palette.visual.middle = [['#a89984', 'bg', '246', 'bg']]
+let g:lightline#colorscheme#gruvbox#palette.insert.middle = [['#a89984', 'bg', '246', 'bg']]
 
 " show icon folowed by file name
 function! MyFileType(...)

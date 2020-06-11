@@ -225,6 +225,7 @@ Plug 'mattn/emmet-vim' " Ctrl+y , to trigger
 Plug 'voldikss/vim-translator' " use google translate (:Translate)
 Plug 'skywind3000/vim-quickui'
 Plug 'voldikss/vim-floaterm'
+Plug 'tweekmonster/helpful.vim' " :HelpfulVersion
 call plug#end()
 
 function! GitCheckoutBranch(branch)
@@ -373,6 +374,7 @@ let content = [
             \ ["&Find in Project", 'exec "silent! grep " . expand("<cword>") | copen' ],
             \ ['-'],
             \ ["&Documentation\tK", 'normal K' ],
+            \ ["&Helpfull version", 'exec "HelpfulVersion ".expand("<cword>")', 'vim' ],
             \ ]
 
 " set cursor to the last position

@@ -301,17 +301,17 @@ call quickui#menu#install("&Commands", [
 call quickui#menu#install("&Git", [
             \ [ "&Status\t:G", "G", "Git fugitive" ],
             \ [ "Pu&ll\t:Gpull", "Gpull", "Git pull" ],
-            \ [ "P&ush\t:Gpush", "Gpush", "Git push" ],
+            \ [ "&Push\t:Gpush", "Gpush", "Git push" ],
 			\ ['--',''],
             \ [ "&Open Files\tCtrl-p", "GFiles", "GFiles" ],
             \ [ "Changed &Files\t:GFiles?", "GFiles?", "Git fzf files" ],
 			\ ['--',''],
             \ [ "Create &branch", "call feedkeys(':Git checkout -b ')", "" ],
-            \ [ "Ch&eckout branch\t:Gbranch", "Gbranch", "Show list of branches" ],
+            \ [ "&Checkout branch\t:Gbranch", "Gbranch", "Show list of branches" ],
             \ [ "Set upstream branch", "execute 'Git push origin -u '.fugitive#head()", "Git push" ],
 			\ ['--',''],
             \ [ "&Write and Commit", "call feedkeys(':Gwrite\<cr>:Gcommit\<cr>')", "Git write and then commit" ],
-            \ [ "&Commit\t:Gcommit", "Gcommit", "Git commit" ],
+            \ [ "Co&mmit\t:Gcommit", "Gcommit", "Git commit" ],
 			\ ['--',''],
             \ [ "Blame\t:Gblame", "Gblame", "Git blame" ],
             \ [ "Commits\t:Commits", "Commits!", "Git commits with fzf" ],
@@ -422,6 +422,9 @@ autocmd User Startified setlocal cursorline
 " theme
 set background=dark
 colorscheme gruvbox
+
+" quick ui menu background
+highlight QuickBG guibg=bg ctermbg=bg
 
 " change folds colors
 hi Folded ctermbg=NONE cterm=bold guibg=NONE

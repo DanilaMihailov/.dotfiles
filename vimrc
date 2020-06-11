@@ -1,3 +1,11 @@
+" TODO
+" * add folding
+" * add checks for features
+" * move autocommands to augroups
+" * fix theme switching (move it to function)
+" * make vim compatible
+" * make Gbranch search only branch name, show some preview?
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Basic options
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -23,7 +31,7 @@ if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
-set termguicolors
+set termguicolors " use gui colors, allows to support 24bit color
 
 " allows using motions in russian language
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
@@ -89,6 +97,7 @@ endif
 
 set shell=/bin/zsh " use zsh as default shell
 
+" use ripgrep for :grep command
 if executable('rg') 
 	set grepprg=rg\ --vimgrep\ --hidden
 endif
@@ -190,12 +199,12 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neovimhaskell/haskell-vim'
 
 " Motion and helpers
-Plug 'wellle/targets.vim'
-Plug 'andymass/vim-matchup'
+Plug 'wellle/targets.vim' " make bracets motions find closest bracket and more
+Plug 'andymass/vim-matchup' " better brackets highlihgts and motion
 Plug 'tpope/vim-surround' " Surrond with braces ysB
 Plug 'tpope/vim-repeat' " enable repeat for tpope's plugins
 Plug 'tomtom/tcomment_vim' " gcc to comment line
-Plug 'tpope/vim-unimpaired' " ]b for next buffer, ]e for exchange line
+Plug 'tpope/vim-unimpaired' " ]b for next buffer, ]e for exchange line, etc
 Plug 'jiangmiao/auto-pairs' " auto pair open brackets
 Plug 'bkad/CamelCaseMotion' " move by camel case words with Space + Motion
 
@@ -209,9 +218,9 @@ Plug 'mhinz/vim-mix-format' " format elixir files on save
 Plug 'antoinemadec/coc-fzf'
 Plug 'Asheq/close-buffers.vim' " Bdelete [other, hidden, this]
 Plug 'ryanoasis/vim-devicons'
-Plug 'mhinz/vim-startify'
-Plug 'mattn/emmet-vim'
-Plug 'voldikss/vim-translator'
+Plug 'mhinz/vim-startify' " session management, start screen
+Plug 'mattn/emmet-vim' " Ctrl+y , to trigger
+Plug 'voldikss/vim-translator' " use google translate (:Translate)
 Plug 'skywind3000/vim-quickui'
 Plug 'voldikss/vim-floaterm'
 call plug#end()
@@ -367,6 +376,7 @@ let content = [
 let opts = {'index':g:quickui#context#cursor}
 
 nmap <C-k> :call quickui#context#open(content, opts)<CR>
+vmap <C-k> :call quickui#context#open(content, opts)<CR>
 
 let g:quickui_color_scheme = 'gruvbox'
 let g:quickui_border_style = 2
@@ -421,7 +431,7 @@ hi GruvboxYellowSign ctermbg=bg guibg=bg
 hi GruvboxOrangeSign ctermbg=bg guibg=bg
 hi CursorLineNr ctermbg=bg guibg=bg
 
-hi CocInfoSign ctermfg=blue guifg=blue
+hi CocInfoSign ctermfg=cyan guifg=cyan
 
 " fix cursorline highlight breaking on operators
 hi Operator ctermbg=NONE guibg=NONE

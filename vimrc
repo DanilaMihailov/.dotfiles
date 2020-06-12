@@ -235,13 +235,20 @@ Plug 'voldikss/vim-floaterm'
 Plug 'tweekmonster/helpful.vim' " :HelpfulVersion
 call plug#end()
 
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
 function! GitCheckoutBranch(branch)
     let l:name = split(split(trim(a:branch), "", 1)[0], "/", 1)[-1]
     echo "checking out ".l:name."\n"
     execute "Git checkout ".l:name
 endfunction
 
-command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -avv --color', 'sink': function('GitCheckoutBranch'), 'options': '--ansi'}, <bang>0))
+command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -avv --color', 'sink': function('GitCheckoutBranch'), 'options': '--ansi --nth=1'}, <bang>0))
 
 " clear all the menus
 call quickui#menu#reset()
@@ -463,6 +470,7 @@ let g:coc_fzf_opts = ['--reverse', '--no-info', '--cycle']
 
 " This is the default extra key bindings
 let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-s': 'split',
   \ 'ctrl-v': 'vsplit'}

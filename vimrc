@@ -103,6 +103,8 @@ if executable('rg')
 	set grepprg=rg\ --vimgrep\ --hidden
 endif
 
+au TermOpen * setlocal norelativenumber nonumber signcolumn=no nocursorline
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Basic maps
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

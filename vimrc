@@ -234,7 +234,13 @@ Plug 'voldikss/vim-translator' " use google translate (:Translate)
 Plug 'skywind3000/vim-quickui'
 Plug 'voldikss/vim-floaterm'
 Plug 'tweekmonster/helpful.vim' " :HelpfulVersion
+Plug 'takac/vim-hardtime'
 call plug#end()
+
+let g:hardtime_default_on = 1
+let g:hardtime_showmsg = 1
+let g:hardtime_ignore_buffer_patterns = ["coc-explorer", "fugitive"]
+let g:hardtime_ignore_quickfix = 1
 
 " An action can be a reference to a function that processes selected lines
 function! s:build_quickfix_list(lines)

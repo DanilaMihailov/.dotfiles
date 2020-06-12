@@ -4,7 +4,6 @@
 " * move autocommands to augroups
 " * fix theme switching (move it to function)
 " * make vim compatible
-" * make Gbranch search only branch name, show some preview?
 " * add check lang for tansation
 " * add check for fzf floating window
 
@@ -501,7 +500,9 @@ map <Leader>cp :CocFzfList<CR>
 " %bd - delete all buffers (puts you in empty buffer)
 " e#  - open previous buffer
 " bd# - delete previous buffer (deletes empty buffer)
-command! Bonly %bd <Bar> e# <Bar> bd#
+" command! Bonly %bd <Bar> e# <Bar> bd#
+" Same as tabonly, but for buffers
+command! Bonly Bdelete other
 
 " highlight libs
 let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jquery'

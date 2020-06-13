@@ -103,7 +103,9 @@ if executable('rg')
 	set grepprg=rg\ --vimgrep\ --hidden
 endif
 
-au TermOpen * setlocal norelativenumber nonumber signcolumn=no nocursorline
+if v:version >= 802
+    au TermOpen * setlocal norelativenumber nonumber signcolumn=no nocursorline
+endif
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Basic maps
@@ -483,7 +485,9 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit'}
 
 "Open FZF and choose floating window
-let g:fzf_layout = { 'window': { 'width': 0.5, 'height': 0.4, 'yoffset': 0 } }
+if v:version >= 802
+    let g:fzf_layout = { 'window': { 'width': 0.5, 'height': 0.4, 'yoffset': 0 } }
+endif
 
 " Empty value to disable preview window altogether
 let g:fzf_preview_window = ''

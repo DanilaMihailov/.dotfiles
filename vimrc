@@ -284,6 +284,7 @@ call quickui#menu#install("&Edit", [
             \ [ "Fo&ld\t:Fold", "Fold", "Fold file using Coc" ],
             \ [ "&Organize imports\t:OR", "OR", "Organize imports file using Coc" ],
             \ [ "&Wrap with emmet\tCtrl+y ,", "norm gv\<C-y>,", "Wrap with emmet abbriviation" ],
+            \ [ "Rewrap document\tgggqG", "norm gggqG", "Runs gggqG" ],
             \ ])
 
 call quickui#menu#install("&Buffers", [

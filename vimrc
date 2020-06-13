@@ -103,7 +103,7 @@ if executable('rg')
 	set grepprg=rg\ --vimgrep\ --hidden
 endif
 
-if v:version >= 802
+if has('nvim')
     au TermOpen * setlocal norelativenumber nonumber signcolumn=no nocursorline
 endif
 
@@ -488,7 +488,7 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit'}
 
 "Open FZF and choose floating window
-if v:version >= 802
+if v:version >= 802 || has('nvim')
     let g:fzf_layout = { 'window': { 'width': 0.5, 'height': 0.4, 'yoffset': 0 } }
 endif
 

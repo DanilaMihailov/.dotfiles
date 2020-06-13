@@ -243,7 +243,7 @@ let g:hardtime_maxcount = 2
 let g:hardtime_allow_different_key = 1
 let g:hardtime_default_on = 1
 let g:hardtime_showmsg = 1
-let g:hardtime_ignore_buffer_patterns = ["coc-explorer", "fugitive"]
+let g:hardtime_ignore_buffer_patterns = ["coc-explorer", "fugitive", "help"]
 let g:hardtime_ignore_quickfix = 1
 
 " An action can be a reference to a function that processes selected lines

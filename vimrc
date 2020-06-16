@@ -237,6 +237,7 @@ Plug 'skywind3000/vim-quickui'
 Plug 'voldikss/vim-floaterm'
 Plug 'tweekmonster/helpful.vim' " :HelpfulVersion
 Plug 'takac/vim-hardtime'
+Plug 'danilamihailov/vim-wiki-tips'
 call plug#end()
 
 let g:hardtime_maxcount = 2
@@ -433,6 +434,7 @@ let g:matchup_matchparen_offscreen = {'method': 'popup'}
 " only the tag name will be highlighted, not the rest of the line
 let g:matchup_matchpref = {'html': {'tagnameonly': 1}}
 
+let g:startify_disable_at_vimenter = 1
 let g:startify_bookmarks = [ {'c': '~/.dotfiles/vimrc'}, '~/.dotfiles/zshrc', '~/.dotfiles/tmux.conf', '~/projects/kkrm', '~/projects/invitro_store', '~/projects/review_kkrm' ]
 let g:startify_session_persistence = 1
 let g:startify_change_to_vcs_root = 1

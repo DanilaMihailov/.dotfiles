@@ -238,6 +238,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'tweekmonster/helpful.vim' " :HelpfulVersion
 " Plug 'danilamihailov/vim-wiki-tips'
 Plug '~/personal/vim-tips-wiki'
+Plug 'tmux-plugins/vim-tmux'
 call plug#end()
 
 " An action can be a reference to a function that processes selected lines

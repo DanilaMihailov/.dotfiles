@@ -189,6 +189,7 @@ Plug 'morhetz/gruvbox'
 " Files plugins
 Plug 'junegunn/fzf', { 'do': './install --all' } " --all makes it awailable to the system
 Plug 'junegunn/fzf.vim' " Ctrl+P fuzzy file search
+Plug 'stsewd/fzf-checkout.vim'
 " Using coc-explorer, with Ctrl+B
 
 " Git plugins
@@ -356,6 +357,8 @@ call quickui#menu#install('Hel&p', [
 			\ ['--',''],
 			\ ["&Tutorial\t:help tutor", 'vert help tutor', ''],
 			\ ["&Quick Reference\t:help quickref", 'vert help quickref', ''],
+			\ ['--',''],
+			\ ["&Randow Tip\t:RandomVimTip", ':RandomVimTip', 'show random Vim Wiki Tip'],
 			\ ], 10000)
 
 function! ReloadConfig()

@@ -1,7 +1,6 @@
 " TODO
 " * add folding
 " * add checks for features
-" * move autocommands to augroups
 " * fix theme switching (move it to function)
 " * make vim compatible
 " * add check lang for tansation
@@ -104,7 +103,10 @@ if executable('rg')
 endif
 
 if has('nvim')
-    au TermOpen * setlocal norelativenumber nonumber signcolumn=no nocursorline
+    augroup mygroup
+        autocmd!
+        au TermOpen * setlocal norelativenumber nonumber signcolumn=no nocursorline
+    augroup end
 endif
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,7 +168,10 @@ nnoremap <silent> g* g*zz
 " Jump to last edit position on opening file
 if has("autocmd")
   " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    augroup mygroup
+        autocmd!
+        au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    augroup end
 endif
 
 " highlight yanking region
@@ -443,7 +448,10 @@ let g:startify_lists = [
       \ ]
 
 
-autocmd User Startified setlocal cursorline
+augroup mygroup
+    autocmd!
+    autocmd User Startified setlocal cursorline
+augroup end
 
 " theme
 set background=dark
@@ -515,9 +523,6 @@ command! Bonly Bdelete other
 let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jquery'
 " disable concealing for json files
 let g:vim_json_syntax_conceal = 0
-
-autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
-autocmd BufNewFile,BufRead *.json.ejs set filetype=json
 
 " run dispatch only in headless mode
 let g:dispatch_handlers = ['headless']
@@ -593,9 +598,6 @@ hi CocExplorerNormalFloat ctermbg=bg
 " Ctrl+f show explorer
 nmap <C-f> :CocCommand explorer --position=floating<CR>
 
-" correct comment highlight for jsonc
-autocmd FileType json syntax match Comment +\/\/.\+$+
-
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -651,6 +653,11 @@ nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
+  " detect filetypes
+  autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
+  autocmd BufNewFile,BufRead *.json.ejs set filetype=json
+  " correct comment highlight for jsonc
+  autocmd FileType json syntax match Comment +\/\/.\+$+
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.

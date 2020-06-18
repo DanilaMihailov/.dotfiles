@@ -394,22 +394,22 @@ let content = [
             \ ["&Quick fix\t<space>qf", 'normal 1 qf' ],
             \ ['-'],
             \ ["&Go to Defintion\tgd", 'normal gd' ],
-            \ ["Show &References\tgr", 'normal gr'],
-            \ ["Show &Implementation\tgi", 'normal gi'],
-            \ ["Show T&ype Defintion\tgy", 'normal gy'],
+            \ ["Show &References\t<space>gr", 'normal 1 gr'],
+            \ ["Show &Implementation\t<space>gi", 'normal 1 gi'],
+            \ ["Show T&ype Defintion\t<space>gy", 'normal 1 gy'],
             \ ['-'],
             \ ["&Translate", 'TranslateW'],
             \ ["&Find in Project", 'exec "silent! grep " . expand("<cword>") | copen' ],
             \ ['-'],
             \ ["&Documentation\tK", 'normal K' ],
-            \ ["&Helpfull version", 'exec "HelpfulVersion ".expand("<cword>")', 'vim' ],
+            \ ["&Helpfull version", 'exec "HelpfulVersion ".expand("<cword>")', '', 'vim' ],
             \ ]
 
 " set cursor to the last position
 let opts = {'index':g:quickui#context#cursor}
 
-nmap <C-k> :call quickui#context#open(content, opts)<CR>
-vmap <C-k> :call quickui#context#open(content, opts)<CR>
+nmap <C-k> :call quickui#tools#clever_context('k', content, opts)<CR>
+vmap <C-k> :call quickui#tools#clever_context('k', content, opts)<CR>
 
 let g:quickui_color_scheme = 'gruvbox'
 let g:quickui_border_style = 2
@@ -474,6 +474,8 @@ hi Operator ctermbg=NONE guibg=NONE
 
 " hide end of buffer '~' symbol
 hi EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
+
+hi Quote ctermbg=NONE ctermfg=NONE
 
 " File plugins settings
 "
@@ -630,9 +632,9 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <leader>gy <Plug>(coc-type-definition)
+nmap <leader>gi <Plug>(coc-implementation)
+nmap <leader>gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>

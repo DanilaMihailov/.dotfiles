@@ -333,7 +333,7 @@ call quickui#menu#install("&Git", [
             \ [ "Changed &Files\t:GFiles?", "GFiles?", "Git fzf files" ],
 			\ ['--',''],
             \ [ "Create &branch", "call feedkeys(':Git checkout -b ')", "" ],
-            \ [ "&Checkout branch\t:Gbranch", "Gbranch", "Show list of branches" ],
+            \ [ "&Checkout branch\t:GCheckout", "GCheckout", "Show list of branches" ],
             \ [ "Set upstream branch", "execute 'Git push origin -u '.fugitive#head()", "Git push" ],
 			\ ['--',''],
             \ [ "&Write and Commit", "call feedkeys(':Gwrite\<cr>:Gcommit\<cr>')", "Git write and then commit" ],

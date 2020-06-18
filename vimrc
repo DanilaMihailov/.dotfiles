@@ -1,15 +1,12 @@
 " TODO
-" * add folding
 " * add checks for features
-" * fix theme switching (move it to function)
 " * make vim compatible
 " * add check lang for tansation
 " * add check for fzf floating window
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Basic options
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Section: Basic options
 
+set modelineexpr
 set number " show line numbers
 set relativenumber " show relative line numbers (may be slow)
 set clipboard=unnamed " copy to system clipboard
@@ -109,9 +106,7 @@ if has('nvim')
     augroup end
 endif
 
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Basic maps
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Section: Basic maps
 
 " leader key, mostly used for plugins
 let mapleader = " "
@@ -187,6 +182,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Section: Plugin list
+
 call plug#begin()
 " Theme
 Plug 'morhetz/gruvbox'
@@ -261,6 +258,8 @@ function! GitCheckoutBranch(branch)
 endfunction
 
 command! -bang Gbranch call fzf#run(fzf#wrap({'source': 'git branch -avv --color', 'sink': function('GitCheckoutBranch'), 'options': '--ansi --nth=1'}, <bang>0))
+
+" Section: Quickmenu
 
 " clear all the menus
 call quickui#menu#reset()
@@ -421,6 +420,8 @@ let g:quickui_show_tip = 1
 " hit space twice to open menu
 noremap <leader>m :call quickui#menu#open()<cr>
 noremap <leader><leader> :call quickui#menu#open()<cr>
+
+" Section: Plugin options
 
 let g:translator_target_lang = 'ru'
 let g:translator_window_max_width = 0.4
@@ -587,7 +588,7 @@ let g:lightline.tabline = {
 let g:coc_status_error_sign = 'E'
 let g:coc_status_warning_sign = 'W'
 
-" COC.VIM CONFIG
+" Section: COC.VIM CONFIG
 
 " this extensions will be installed
 let g:coc_global_extensions = ["coc-rust-analyzer", "coc-tsserver", "coc-json", "coc-html", "coc-css", "coc-python", "coc-angular", "coc-elixir", "coc-eslint", "coc-yaml", "coc-explorer", "coc-emmet", "coc-vimlsp"]
@@ -709,3 +710,5 @@ nnoremap <silent> <space>s  :<C-u>CocFzfList symbols<cr>
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+
+" vim:set foldmethod=expr foldexpr=getline(v\:lnum)=~'^\"\ Section\:'?'>1'\:'=':

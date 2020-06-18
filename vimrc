@@ -447,6 +447,8 @@ autocmd User Startified setlocal cursorline
 
 " theme
 set background=dark
+let g:gruvbox_sign_column = "bg0"
+let g:gruvbox_invert_selection = 0
 colorscheme gruvbox
 
 " quick ui menu background
@@ -454,15 +456,8 @@ highlight QuickBG guibg=bg ctermbg=bg
 
 " change folds colors
 hi Folded ctermbg=NONE cterm=bold guibg=NONE
- 
-" Fix background for signs
-hi SignColumn ctermbg=bg guibg=bg
-hi GruvboxGreenSign ctermbg=bg guibg=bg
-hi GruvboxRedSign ctermbg=bg guibg=bg
-hi GruvboxBlueSign ctermbg=bg guibg=bg
-hi GruvboxAquaSign ctermbg=bg guibg=bg
-hi GruvboxYellowSign ctermbg=bg guibg=bg
-hi GruvboxOrangeSign ctermbg=bg guibg=bg
+
+" do not show backgroun in current cursor line number
 hi CursorLineNr ctermbg=bg guibg=bg
 
 " fix cursorline highlight breaking on operators

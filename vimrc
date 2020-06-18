@@ -48,7 +48,7 @@ set lazyredraw " do not redrow while macros execute
 set scrolloff=8
 
 set cmdheight=2 " Better display for messages
-set showtabline=2 " always show tab line
+set showtabline=1 " always show tab line
 set noshowmode " do not show mode, as it i shown by light line
 
 set updatetime=100 " delay for vim update (used by gitgutter and coc.vim)
@@ -313,7 +313,7 @@ call quickui#menu#install("&Commands", [
             \ [ "C&oC Commands\tSpace-cp", "CocFzfList", "CocFzfList" ],
 			\ ['--',''],
             \ [ "&Save session\t:SSave", "SSave", "" ],
-            \ [ "&Load session\t:SLoad", "SLoad", "" ],
+            \ [ "L&oad session\t:SLoad", "SLoad", "" ],
             \ [ "&Close session\t:SClose", "SClose", "" ],
             \ [ "&Delete session\t:SDelete", "SDelete", "" ],
 			\ ['--',''],
@@ -465,8 +465,6 @@ hi GruvboxYellowSign ctermbg=bg guibg=bg
 hi GruvboxOrangeSign ctermbg=bg guibg=bg
 hi CursorLineNr ctermbg=bg guibg=bg
 
-hi CocInfoSign ctermfg=cyan guifg=cyan
-
 " fix cursorline highlight breaking on operators
 hi Operator ctermbg=NONE guibg=NONE
 
@@ -588,17 +586,6 @@ let g:lightline.tabline = {
 
 let g:coc_status_error_sign = 'E'
 let g:coc_status_warning_sign = 'W'
-
-call lightline#init()
-call lightline#colorscheme()
-call lightline#update()
-let g:lightline#colorscheme#gruvbox#palette.inactive.middle = [['#a89984', '#504945', '246', '239']]
-let g:lightline#colorscheme#gruvbox#palette.inactive.left = [['#a89984', '#504945', '246', '239']]
-let g:lightline#colorscheme#gruvbox#palette.inactive.right = [['#a89984', '#504945', '246', '239']]
-let g:lightline#colorscheme#gruvbox#palette.normal.middle = [['#a89984', 'bg', '246', 'bg']]
-let g:lightline#colorscheme#gruvbox#palette.replace.middle = [['#a89984', 'bg', '246', 'bg']]
-let g:lightline#colorscheme#gruvbox#palette.visual.middle = [['#a89984', 'bg', '246', 'bg']]
-let g:lightline#colorscheme#gruvbox#palette.insert.middle = [['#a89984', 'bg', '246', 'bg']]
 
 " COC.VIM CONFIG
 

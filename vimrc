@@ -472,6 +472,9 @@ hi! link rustFuncCall GruvboxBlue
 hi! link rustCommentLineDoc GruvboxFg3
 hi! link rustLifetime GruvboxAqua
 
+" made change hunk color blue
+hi! link GitGutterChange GruvboxBlue
+
 " quick ui menu background
 highlight QuickBG guibg=bg ctermbg=bg
 

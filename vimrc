@@ -467,6 +467,11 @@ let g:gruvbox_sign_column = "bg0"
 let g:gruvbox_invert_selection = 0
 colorscheme gruvbox
 
+" fix rust colors until https://github.com/morhetz/gruvbox/pull/334
+hi! link rustFuncCall GruvboxBlue
+hi! link rustCommentLineDoc GruvboxFg3
+hi! link rustLifetime GruvboxAqua
+
 " quick ui menu background
 highlight QuickBG guibg=bg ctermbg=bg
 

@@ -429,6 +429,13 @@ let g:translator_window_max_width = 0.4
 let g:floaterm_position = 'top'
 let g:floaterm_autoinsert = 1
 
+" xcode like git gutter signs
+let g:gitgutter_sign_added = '┃'
+let g:gitgutter_sign_modified = '┃'
+let g:gitgutter_sign_modified_removed = '┃'
+let g:gitgutter_sign_removed = '•'
+let g:gitgutter_sign_removed_first_line = '•' 
+
 tnoremap <C-t> <C-\><C-N> :FloatermToggle<CR>
 nmap <C-t> :FloatermToggle<CR>
 

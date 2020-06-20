@@ -1,8 +1,6 @@
 " TODO
-" * add checks for features
-" * make vim compatible
 " * add check lang for tansation
-" * add check for fzf floating window
+" * add session selector
 
 " Section: Basic options
 
@@ -447,6 +445,7 @@ let g:matchup_matchpref = {'html': {'tagnameonly': 1}}
 let g:startify_disable_at_vimenter = 1
 let g:startify_bookmarks = [ {'c': '~/.dotfiles/vimrc'}, '~/.dotfiles/zshrc', '~/.dotfiles/tmux.conf', '~/projects/kkrm', '~/projects/invitro_store', '~/projects/review_kkrm' ]
 let g:startify_session_persistence = 1
+let g:startify_session_autoload = 1
 let g:startify_change_to_vcs_root = 1
 let g:startify_custom_header = []
 let g:startify_enable_unsafe = 1

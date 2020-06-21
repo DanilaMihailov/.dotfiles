@@ -40,7 +40,7 @@
 (show-paren-mode t)
 
 ;; small fringe
-(fringe-mode '(2 . 0))
+(fringe-mode '(0 . 0))
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
@@ -71,6 +71,13 @@
 ;; highlight the current line
 (global-hl-line-mode +1)
 
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+(require 'ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -86,9 +93,8 @@
  '(git-gutter:added-sign "┃")
  '(git-gutter:deleted-sign "•")
  '(git-gutter:modified-sign "┃")
- '(git-gutter:window-width 2)
+ '(git-gutter:window-width 1)
  '(global-git-gutter-mode t)
- '(line-number-mode t)
  '(package-selected-packages
    (quote
     (evil-collection git-gutter smooth-scrolling evil-tabs flycheck exec-path-from-shell company lsp-ui rust-mode lsp-mode magit ## evil gruvbox-theme gru which-key beacon)))

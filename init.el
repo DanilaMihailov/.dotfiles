@@ -73,10 +73,17 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+;; autocomplete everywhere
 (require 'ido)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode t)
+
+(require 'icomplete)
+(icomplete-mode 1)
+
+(require 'ido-completing-read+)
+(ido-ubiquitous-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -97,7 +104,7 @@
  '(global-git-gutter-mode t)
  '(package-selected-packages
    (quote
-    (evil-collection git-gutter smooth-scrolling evil-tabs flycheck exec-path-from-shell company lsp-ui rust-mode lsp-mode magit ## evil gruvbox-theme gru which-key beacon)))
+    (ido-completing-read+ evil-collection git-gutter smooth-scrolling evil-tabs flycheck exec-path-from-shell company lsp-ui rust-mode lsp-mode magit ## evil gruvbox-theme gru which-key beacon)))
  '(pdf-view-midnight-colors (quote ("#282828" . "#fbf1c7"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

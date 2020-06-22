@@ -147,16 +147,16 @@ noremap Y y$
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
 
-" Jump to start and end of line using the home row keys
-nmap H ^
-nmap L $
-
 " Search results centered please
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
+
+" Open new file adjacent to current file like emacs
+set wildmode=longest:full,list:longest,full
+nnoremap <C-x><C-f> :e <C-R>=expand("%:p:h") . "/" <CR>
 
 " Jump to last edit position on opening file
 if has("autocmd")
@@ -195,6 +195,8 @@ Plug 'stsewd/fzf-checkout.vim'
 " Git plugins
 Plug 'tpope/vim-dispatch' " needed for fugitive
 Plug 'tpope/vim-fugitive' " git status, blame, history, etc
+Plug 'fugitive-gitlab.vim' " extension for :Gbrowse
+Plug 'christoomey/vim-conflicted'
 Plug 'airblade/vim-gitgutter' " gutters
 
 " Languages
@@ -420,6 +422,8 @@ noremap <leader>m :call quickui#menu#open()<cr>
 noremap <leader><leader> :call quickui#menu#open()<cr>
 
 " Section: Plugin options
+
+let g:fugitive_gitlab_domains = ['https://git.crona.local']
 
 let g:translator_target_lang = 'ru'
 let g:translator_window_max_width = 0.4

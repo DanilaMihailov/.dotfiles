@@ -83,6 +83,7 @@
 (global-hl-line-mode +1)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(setq display-line-numbers 'relative)
 
 ;; autocomplete everywhere
 (require 'ido)
@@ -117,7 +118,6 @@
  '(custom-safe-themes
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "aded61687237d1dff6325edb492bde536f40b048eab7246c61d5c6643c696b7f" "e1d09f1b2afc2fed6feb1d672be5ec6ae61f84e058cb757689edb669be926896" default)))
- '(display-line-numbers (quote relative))
  '(git-gutter:added-sign "┃")
  '(git-gutter:deleted-sign "•")
  '(git-gutter:modified-sign "┃")

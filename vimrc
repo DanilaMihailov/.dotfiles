@@ -98,7 +98,7 @@ if executable('rg')
 endif
 
 if has('nvim')
-    augroup mygroup
+    augroup mytermgroup
         autocmd!
         au TermOpen * setlocal norelativenumber nonumber signcolumn=no nocursorline
     augroup end
@@ -163,7 +163,7 @@ nnoremap <C-x><C-f> :e <C-R>=expand("%:p:h") . "/" <CR>
 " Jump to last edit position on opening file
 if has("autocmd")
   " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-    augroup mygroup
+    augroup mygrouplastposition
         autocmd!
         au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     augroup end
@@ -461,7 +461,7 @@ let g:startify_lists = [
       \ ]
 
 
-augroup mygroup
+augroup mygroupstartify
     autocmd!
     autocmd User Startified setlocal cursorline
 augroup end
@@ -674,7 +674,7 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup mygroup
+augroup mygroupft
   autocmd!
   " detect filetypes
   autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript

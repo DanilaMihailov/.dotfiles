@@ -104,6 +104,9 @@ if has('nvim')
     augroup end
 endif
 
+set wildmode=longest:full,list:longest,full " complete longest string
+set wildignorecase " ignore file names and dirs case when completing
+
 " Section: Basic maps
 
 " leader key, mostly used for plugins
@@ -155,7 +158,6 @@ nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
 " Open new file adjacent to current file like emacs
-set wildmode=longest:full,list:longest,full
 nnoremap <C-x><C-f> :e <C-R>=expand("%:p:h") . "/" <CR>
 
 " Jump to last edit position on opening file
@@ -438,8 +440,8 @@ let g:gitgutter_sign_modified_removed = '┃'
 let g:gitgutter_sign_removed = '•'
 let g:gitgutter_sign_removed_first_line = '•' 
 
-tnoremap <C-t> <C-\><C-N> :FloatermToggle<CR>
-nmap <C-t> :FloatermToggle<CR>
+tnoremap <C-x><C-t> <C-\><C-N> :FloatermToggle<CR>
+nmap <C-x><C-t> :FloatermToggle<CR>
 
 " Use a floating window to show the off-screen match.
 let g:matchup_matchparen_offscreen = {'method': 'popup'}
@@ -589,10 +591,12 @@ function! MyFileType(...)
 
     return strlen(ft) ? ft . ' ' . &filetype : &filetype
 endfunction
-
+function! LightlineFilename()
+  return expand('%:t') !=# '' ? @% : '[No Name]'
+endfunction
 " show icon folowed by file name
 function! MyFileName(...)
-    let name = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+    let name = expand('%:t') !=# '' ? @% : '[No Name]'
     let ft = strlen(&filetype) ?  WebDevIconsGetFileTypeSymbol() : ''
 
     return strlen(ft) ? ft . ' ' . name : name
@@ -677,6 +681,7 @@ augroup mygroup
   " detect filetypes
   autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
   autocmd BufNewFile,BufRead *.json.ejs set filetype=json
+  autocmd BufNewFile,BufRead *.html.ejs set filetype=html
   " correct comment highlight for jsonc
   autocmd FileType json syntax match Comment +\/\/.\+$+
   " Setup formatexpr specified filetype(s).

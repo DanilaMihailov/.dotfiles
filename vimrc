@@ -591,9 +591,7 @@ function! MyFileType(...)
 
     return strlen(ft) ? ft . ' ' . &filetype : &filetype
 endfunction
-function! LightlineFilename()
-  return expand('%:t') !=# '' ? @% : '[No Name]'
-endfunction
+
 " show icon folowed by file name
 function! MyFileName(...)
     let name = expand('%:t') !=# '' ? @% : '[No Name]'

@@ -53,6 +53,7 @@
 (fringe-mode '(0 . 0))
 
 (global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x p") 'fzf-git-files)
 
 (require 'smooth-scrolling)
 (smooth-scrolling-mode 1)
@@ -85,9 +86,13 @@
 
 ;; autocomplete everywhere
 (require 'ido)
+(require 'flx-ido)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode t)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-use-faces nil)
 
 (require 'icomplete)
 (icomplete-mode 1)
@@ -121,7 +126,7 @@
  '(line-number-mode nil)
  '(package-selected-packages
    (quote
-    (rich-minority smart-mode-line ido-completing-read+ evil-collection git-gutter smooth-scrolling evil-tabs flycheck exec-path-from-shell company lsp-ui rust-mode lsp-mode magit ## evil gruvbox-theme gru which-key beacon)))
+    (fzf flx-ido rich-minority smart-mode-line ido-completing-read+ evil-collection git-gutter smooth-scrolling evil-tabs flycheck exec-path-from-shell company lsp-ui rust-mode lsp-mode magit ## evil gruvbox-theme gru which-key beacon)))
  '(pdf-view-midnight-colors (quote ("#282828" . "#fbf1c7"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

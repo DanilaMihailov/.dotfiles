@@ -1,6 +1,8 @@
 " TODO
 " * add check lang for tansation
 " * add session selector
+" * move to init.vim
+" * move plugins (maybe new plugin manager)
 
 " Section: Basic options
 
@@ -186,7 +188,7 @@ endif
 
 call plug#begin()
 " Theme
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 
 " Files plugins
 Plug 'junegunn/fzf', { 'do': './install --all' } " --all makes it awailable to the system
@@ -243,6 +245,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'tweekmonster/helpful.vim' " :HelpfulVersion
 " Plug 'danilamihailov/vim-wiki-tips'
 Plug '~/personal/vim-tips-wiki'
+Plug '~/personal/beacon.nvim'
 Plug 'tmux-plugins/vim-tmux'
 call plug#end()
 
@@ -299,6 +302,7 @@ call quickui#menu#install("&Buffers", [
             \ [ "Close &other buffers\t:Bdelete other", "Bdelete other", "" ],
             \ [ "Close hidd&en buffers\t:Bdelete hidden", "Bdelete hidden", "" ],
             \ [ "Close &this buffer\t:Bdelete this", "Bdelete this", "" ],
+            \ [ "Close &nameless buffers\t:Bdelete nameless", "Bdelete nameless", "" ],
             \ ])
 call quickui#menu#install("&Windows", [
             \ [ "&Zoom window\tSpace+-", "normal 1 -", "" ],

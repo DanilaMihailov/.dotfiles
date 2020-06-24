@@ -168,6 +168,8 @@ if has("autocmd")
     augroup mygrouplastposition
         autocmd!
         au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+        au WinEnter * setlocal cursorline
+        au WinLeave * setlocal nocursorline
     augroup end
 endif
 

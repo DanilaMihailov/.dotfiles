@@ -5,6 +5,9 @@
 ;; try orgmode
 ;; fix slow auto complete
 
+;; Use Emacs terminfo, not system terminfo
+;;(setq system-uses-terminfo nil)
+
 ;; add packages repo
 (require 'package)
 (add-to-list 'package-archives
@@ -68,6 +71,8 @@
 (require 'lsp-mode)
 (setq lsp-rust-server 'rust-analyzer)
 (add-hook 'rust-mode-hook #'lsp)
+(add-hook 'python-mode-hook #'lsp)
+(add-hook 'js-mode-hook #'lsp)
 
 ;;(global-evil-tabs-mode t)
 (scroll-bar-mode -1)
@@ -98,6 +103,10 @@
 (require 'icomplete)
 (icomplete-mode 1)
 
+(require 'company-box)
+(add-hook 'company-mode-hook 'company-box-mode)
+(setq company-minimum-prefix-length 1)
+
 (require 'ido-completing-read+)
 (ido-ubiquitous-mode 1)
 
@@ -126,7 +135,7 @@
  '(line-number-mode nil)
  '(package-selected-packages
    (quote
-    (fzf flx-ido rich-minority smart-mode-line ido-completing-read+ evil-collection git-gutter smooth-scrolling evil-tabs flycheck exec-path-from-shell company lsp-ui rust-mode lsp-mode magit ## evil gruvbox-theme gru which-key beacon)))
+    (vterm company-box fzf flx-ido rich-minority smart-mode-line ido-completing-read+ evil-collection git-gutter smooth-scrolling evil-tabs flycheck exec-path-from-shell company lsp-ui rust-mode lsp-mode magit ## evil gruvbox-theme gru which-key beacon)))
  '(pdf-view-midnight-colors (quote ("#282828" . "#fbf1c7"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

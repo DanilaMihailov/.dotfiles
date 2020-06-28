@@ -620,6 +620,12 @@ let g:lightline.tabline = {
 let g:coc_status_error_sign = 'E'
 let g:coc_status_warning_sign = 'W'
 
+call lightline#init()
+call lightline#colorscheme()
+call lightline#update()
+
+let g:lightline#colorscheme#gruvbox#palette.tabline.middle = [['#282828', '#282828', '235', '243']]
+
 " Section: COC.VIM CONFIG
 
 " this extensions will be installed

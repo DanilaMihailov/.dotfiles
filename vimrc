@@ -28,7 +28,9 @@ if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
-set termguicolors " use gui colors, allows to support 24bit color
+if has("nvim")
+    set termguicolors " use gui colors, allows to support 24bit color
+endif
 
 " allows using motions in russian language
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz

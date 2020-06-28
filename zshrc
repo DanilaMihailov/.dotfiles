@@ -100,8 +100,8 @@ alias cd.='cd ..'
 alias cd..='cd ..'
 alias l='ls -alF'
 alias ll='ls -l'
-alias vi='nvim'
-alias vim='nvim'
+# alias vi='nvim'
+# alias vim='nvim'
 # vim
 alias e="$EDITOR"
 

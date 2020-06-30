@@ -249,6 +249,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'tweekmonster/helpful.vim' " :HelpfulVersion
 " Plug 'danilamihailov/vim-wiki-tips'
 Plug '~/personal/vim-tips-wiki'
+" Plug 'danilamihailov/beacon.nvim'
 Plug '~/personal/beacon.nvim'
 Plug 'tmux-plugins/vim-tmux'
 call plug#end()

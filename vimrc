@@ -348,7 +348,7 @@ call quickui#menu#install("&Git", [
             \ [ "Changed &Files\t:GFiles?", "GFiles?", "Git fzf files" ],
 			\ ['--',''],
             \ [ "Create &branch", "call feedkeys(':Git checkout -b ')", "" ],
-            \ [ "&Checkout branch\t:GCheckout", "GCheckout", "Show list of branches" ],
+            \ [ "&Checkout branch\t:GBranches", "GBranches", "Show list of branches" ],
             \ [ "Set upstream branch", "execute 'Git push origin -u '.fugitive#head()", "Git push" ],
 			\ ['--',''],
             \ [ "&Write and Commit", "call feedkeys(':Gwrite\<cr>:Gcommit\<cr>')", "Git write and then commit" ],
@@ -362,6 +362,7 @@ call quickui#menu#install("&Git", [
 call quickui#menu#install("&Option", [
 			\ ["Set &Spell \t%{&spell? 'Off':'On'}", 'set spell!', 'Enable spell checking'],
 			\ ["Set L&ist \t%{&list? 'Off':'On'}", 'set list!', 'Show hidden characters'],
+			\ ["Set &Wrap \t%{&wrap? 'Off':'On'}", 'set wrap!', 'Wrap lines'],
 			\ ["Set &Background \t%{&background == 'dark' ? 'Light':'Dark'}", 'call ToggleBackground()', 'Change background'],
 			\ ['--',''],
             \ [ "List &all\t:options", "vert options", ":options" ],

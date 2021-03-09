@@ -100,6 +100,7 @@ alias cd.='cd ..'
 alias cd..='cd ..'
 alias l='ls -alF'
 alias ll='ls -l'
+alias localip="ipconfig getifaddr en0"
 # alias vi='nvim'
 # alias vim='nvim'
 # vim
@@ -107,3 +108,8 @@ alias e="$EDITOR"
 
 # haskell stuff
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+
+pyclean () {
+        find . -type f -name "*.py[co]" -delete
+        find . -type d -name "__pycache__" -delete
+}

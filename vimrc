@@ -341,8 +341,8 @@ call quickui#menu#install("&Commands", [
 
 call quickui#menu#install("&Git", [
             \ [ "&Status\t:G", "G", "Git fugitive" ],
-            \ [ "Pu&ll\t:Gpull", "Gpull", "Git pull" ],
-            \ [ "&Push\t:Gpush", "Gpush", "Git push" ],
+            \ [ "P&ull\t:Git pull", "Git pull", "Git pull" ],
+            \ [ "&Push\t:Git push", "Git push", "Git push" ],
 			\ ['--',''],
             \ [ "&Open Files\tCtrl-p", "GFiles", "GFiles" ],
             \ [ "Changed &Files\t:GFiles?", "GFiles?", "Git fzf files" ],

@@ -1,3 +1,6 @@
+# Do not run update on every command wtf
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export TOOLCHAINS=swift

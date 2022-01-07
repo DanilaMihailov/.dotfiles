@@ -203,7 +203,7 @@ Plug 'stsewd/fzf-checkout.vim'
 " Git plugins
 Plug 'tpope/vim-dispatch' " needed for fugitive
 Plug 'tpope/vim-fugitive' " git status, blame, history, etc
-Plug 'fugitive-gitlab.vim' " extension for :Gbrowse
+" Plug 'fugitive-gitlab.vim' " extension for :Gbrowse
 Plug 'christoomey/vim-conflicted'
 Plug 'airblade/vim-gitgutter' " gutters
 
@@ -220,6 +220,7 @@ Plug 'burnettk/vim-angular'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'neovimhaskell/haskell-vim'
+Plug 'habamax/vim-godot'
 
 " Motion and helpers
 Plug 'wellle/targets.vim' " make bracets motions find closest bracket and more
@@ -336,7 +337,7 @@ call quickui#menu#install("&Commands", [
             \ [ "&Close session\t:SClose", "SClose", "" ],
             \ [ "&Delete session\t:SDelete", "SDelete", "" ],
 			\ ['--',''],
-            \ [ "Floating &Terminal\tCtrl-t", "FloatermToggle", "FloatermToggle" ],
+            \ [ "Floating &Terminal\tCtrl-x Ctrl-t", "FloatermToggle", "FloatermToggle" ],
             \ ])
 
 call quickui#menu#install("&Git", [
@@ -572,7 +573,7 @@ let g:rustfmt_autosave = 1
 " Use leader ket for camel case
 let g:camelcasemotion_key = '<leader>'
 " elixir, format files on save
-let g:mix_format_on_save = 1
+let g:mix_format_on_save = 0
 
 let g:lightline = {
 	\ 'enable': { 'tabline': 1 },
@@ -630,7 +631,26 @@ call lightline#update()
 
 let g:lightline#colorscheme#gruvbox#palette.tabline.middle = [['#282828', '#282828', '235', '243']]
 
+let g:godot_executable = '/Applications/Godot.app'
+
 " Section: COC.VIM CONFIG
+"
+"
+"
+"
+" Start by building a binary of ElixirLS from its source:
+
+" git clone https://github.com/elixir-lsp/elixir-ls.git ~/.elixir-ls
+" cd ~/.elixir-ls
+" mix deps.get && mix compile && mix elixir_ls.release -o release
+" Afterwards, create or update your coc-settings file and add this line:
+" 
+" {
+"   "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh"
+" }
+" To open your coc-settings file directly from Vim or Nvim, you can use this command:
+" 
+" :CocConfig
 
 " this extensions will be installed
 let g:coc_global_extensions = ["coc-rust-analyzer", "coc-tsserver", "coc-json", "coc-html", "coc-css", "coc-python", "coc-angular", "coc-elixir", "coc-eslint", "coc-yaml", "coc-explorer", "coc-emmet", "coc-vimlsp"]

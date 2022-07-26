@@ -42,7 +42,7 @@ ZSH_THEME=""
 # gruvbox colors for iterm
 source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh"
 
-plugins=(osx docker zsh-syntax-highlighting)
+plugins=(macos docker zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 

@@ -2,29 +2,37 @@ live_config_reload: true
 
 window:
     dynamic_padding: true
+    padding: 
+        x: 0
+        y: 1
 
 font:
     # size: 15.0 # for old monitor
     size: 12.0
+    use_thin_strokes: true
 
     normal:
         family: "Hack Nerd Font Mono"
+        style: Regular
 
     bold:
         family: "Hack Nerd Font Mono"
+        style: Bold
 
     italic:
         family: "Hack Nerd Font Mono"
+        style: Italic
+
+    bold_italic:
+        family: "Hack Nerd Font Mono"
+        style: Bold Italic
 
 mouse:
     hide_when_typing: true
-    url:
-        modifiers: Command
 
 key_bindings:
     - { key: Key6,      mods: Control, chars: "\x1e"                                               }
-    # open new instance as work around for lack of windows (https://github.com/alacritty/alacritty/issues/607)
-    - { key: N,         mods: Command, command: { program: "open", args: ["-nb", "io.alacritty"] } }
+    - { key: N,         mods: Command,   action: CreateNewWindow }
     - { key: A,         mods: Alt,       chars: "\x1ba"                                            }
     - { key: B,         mods: Alt,       chars: "\x1bb"                                            }
     - { key: C,         mods: Alt,       chars: "\x1bc"                                            }
@@ -102,6 +110,9 @@ key_bindings:
     - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                                            } # Alt + |
 
 # Colors (Gruvbox dark)
+
+draw_bold_text_with_bright_colors: false
+
 colors:
   # Default colors
   primary:

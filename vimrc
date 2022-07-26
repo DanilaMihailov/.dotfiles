@@ -28,8 +28,9 @@ if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
-if has("nvim")
-    set termguicolors " use gui colors, allows to support 24bit color
+" use gui colors, allows to support 24bit color
+if exists('+termguicolors')
+  " set termguicolors
 endif
 
 " allows using motions in russian language
@@ -350,7 +351,7 @@ call quickui#menu#install("&Git", [
 			\ ['--',''],
             \ [ "Create &branch", "call feedkeys(':Git checkout -b ')", "" ],
             \ [ "&Checkout branch\t:GBranches", "GBranches", "Show list of branches" ],
-            \ [ "Set upstream branch", "execute 'Git push origin -u '.fugitive#head()", "Git push" ],
+            \ [ "Set upstream branch", "execute 'Git push origin -u '.fugitive#Head()", "Git push" ],
 			\ ['--',''],
             \ [ "&Write and Commit", "call feedkeys(':Gwrite\<cr>:Gcommit\<cr>')", "Git write and then commit" ],
             \ [ "Co&mmit\t:Gcommit", "Gcommit", "Git commit" ],
@@ -457,6 +458,8 @@ let g:gitgutter_sign_removed_first_line = '•'
 
 tnoremap <C-x><C-t> <C-\><C-N> :FloatermToggle<CR>
 nmap <C-x><C-t> :FloatermToggle<CR>
+nmap <C-x><C-n> :FloatermNext<CR>
+nmap <C-x><C-n> :FloatermPrev<CR>
 
 " Use a floating window to show the off-screen match.
 let g:matchup_matchparen_offscreen = {'method': 'popup'}
@@ -590,7 +593,7 @@ let g:lightline = {
 	\ 'component_function': {
     \   'filetype': 'MyFileType',
     \   'filename': 'MyFileName',
-	\   'gitbranch': 'fugitive#head',
+	\   'gitbranch': 'fugitive#Head',
 	\   'cocstatus': 'coc#status'
 	\ },
 	\ }

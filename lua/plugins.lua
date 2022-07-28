@@ -58,4 +58,15 @@ use {
   requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 }
 use 'arkav/lualine-lsp-progress'
+
+-- Motion and helpers
+use 'wellle/targets.vim' -- make bracets motions find closest bracket and more
+use 'andymass/vim-matchup' -- better brackets highlihgts and motion
+use 'tpope/vim-surround' -- Surrond with braces ysB
+use 'tpope/vim-repeat' -- enable repeat for tpope's plugins
+use 'tomtom/tcomment_vim' -- gcc to comment line
+use 'tpope/vim-unimpaired' -- ]b for next buffer, ]e for exchange line, etc
+use 'jiangmiao/auto-pairs' -- auto pair open brackets
+use 'bkad/CamelCaseMotion' -- move by camel case words with Space + Motion
+
 end)

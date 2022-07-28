@@ -41,3 +41,5 @@ vim.keymap.set("n", "#", "#zz", { silent = true, desc = "#, but centered"})
 vim.keymap.set("n", "g*", "g*zz", { silent = true, desc = "g*, but centered"})
 
 vim.keymap.set("n", "<C-x><C-f>", ':e <C-R>=expand("%:p:h") . "/" <CR>', { desc = "Open new file adjacent to current file like emacs"})
+
+vim.keymap.set("n", "<leader>p", ":Telescope commands<CR>", {desc = "Search commands"})

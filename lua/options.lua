@@ -11,6 +11,8 @@ vim.o.imsearch = 0
 vim.o.cursorline = true -- show cursor line
 vim.o.backspace = 'indent,eol,start' -- backspace over indent, eol, start
 
+vim.o.laststatus = 3 -- global status line
+
 vim.o.background = 'dark'
 
 vim.o.encoding = 'utf-8'

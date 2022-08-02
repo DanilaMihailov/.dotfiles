@@ -19,7 +19,7 @@ return require('packer').startup(function(use)
         run = ':TSUpdate',
     }
 
-    use { "tpope/vim-fugitive", requires = "tpope/vim-dispatch"}
+    use { "tpope/vim-fugitive", requires = "tpope/vim-dispatch" }
     use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
     use {
         'lewis6991/gitsigns.nvim',
@@ -87,6 +87,30 @@ return require('packer').startup(function(use)
                 'confirm_done',
                 cmp_autopairs.on_confirm_done()
             )
+        end
+    }
+    use 'skywind3000/vim-quickui'
+    use {
+        'goolord/alpha-nvim',
+        config = function()
+            require 'alpha'.setup(require 'alpha-theme'.config)
+        end
+    }
+    use {
+        'Shatur/neovim-session-manager',
+        config = function()
+            local cfg = require('session_manager.config')
+            require('session_manager').setup({
+                autoload_mode = cfg.AutoloadMode.Disabled
+            })
+        end,
+        requires = { { 'nvim-lua/plenary.nvim' } },
+    }
+    use {
+        'nvim-telescope/telescope-ui-select.nvim',
+        after = "telescope.nvim",
+        config = function()
+            require("telescope").load_extension("ui-select")
         end
     }
 end)

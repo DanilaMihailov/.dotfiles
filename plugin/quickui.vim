@@ -11,19 +11,17 @@ call quickui#menu#install('&File', [
 			\ [ '--','' ],
 			\ [ "&Save as\t:saveas", "call feedkeys(':saveas ')", "Safe file with new name" ],
 			\ [ '--','' ],
-			\ [ "&Preferences", "tabe ~/.dotfiles/vimrc", "Edit vimrc" ],
-			\ [ "&Coc Config\t:CocConfig", "CocConfig", "Edit coc-config.json" ],
-			\ [ "&Reload vimrc", "silent! call ReloadConfig()", "source ~/.config/nvim/init.vim" ],
+			\ [ "&Preferences", "tabe ~/.dotfiles/init.lua", "Edit init.lua" ],
+			\ [ "&Reload vimrc", "silent! call ReloadConfig()", "source ~/.config/nvim/init.lua" ],
 			\ [ '--','' ],
 			\ [ "&Quit\t:qa", "qa", "Quit vim" ],
             \ ])
 
 call quickui#menu#install("&Edit", [
-            \ [ "&Format file\t:Format", "Format", "Format file using Coc" ],
+            \ [ "&Format file\t:SPC f", "normal 1  f", "Format file using Coc" ],
             \ [ "Fo&ld\t:Fold", "Fold", "Fold file using Coc" ],
             \ [ "&Organize imports\t:OR", "OR", "Organize imports file using Coc" ],
 			\ [ '--','' ],
-            \ [ "&Wrap with emmet\tCtrl+y ,", "norm gv\<C-y>,", "Wrap with emmet abbriviation" ],
             \ [ "Rewrap document\tgggqG", "norm gggqG", "Runs gggqG" ],
 			\ [ '--','' ],
             \ [ "&Expand all folds\tzR", "norm zR", "Epands all folds" ],
@@ -31,7 +29,7 @@ call quickui#menu#install("&Edit", [
             \ ])
 
 call quickui#menu#install("&Buffers", [
-            \ [ "L&ist\tCtrl-b", "Buffers", "Buffers" ],
+            \ [ "L&ist\tCtrl-b", "Telescope buffers", "Buffers" ],
 			\ ['--',''],
             \ [ "Close &other buffers\t:Bdelete other", "Bdelete other", "" ],
             \ [ "Close hidd&en buffers\t:Bdelete hidden", "Bdelete hidden", "" ],

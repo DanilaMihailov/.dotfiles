@@ -113,4 +113,5 @@ return require('packer').startup(function(use)
             require("telescope").load_extension("ui-select")
         end
     }
+    use 'Asheq/close-buffers.vim' -- Bdelete [other, hidden, this]
 end)

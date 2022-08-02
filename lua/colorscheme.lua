@@ -9,10 +9,10 @@ vim.cmd("hi! link rustCommentLineDoc GruvboxFg3")
 vim.cmd("hi! link rustLifetime GruvboxAqua")
 
 -- made change hunk color blue
-vim.cmd("hi! link GitGutterChange GruvboxBlue")
+-- vim.cmd("hi! link GitGutterChange GruvboxBlue")
 
 -- quick ui menu background
-vim.cmd("highlight QuickBG guibg=bg ctermbg=bg")
+-- vim.cmd("highlight QuickBG guibg=bg ctermbg=bg")
 
 -- change folds colors
 vim.cmd("hi Folded ctermbg=NONE cterm=bold guibg=NONE")

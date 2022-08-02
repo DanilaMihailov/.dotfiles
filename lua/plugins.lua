@@ -9,6 +9,7 @@ end
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+    use 'lewis6991/impatient.nvim'
   use 'gruvbox-community/gruvbox'
 
   -- Highlights
@@ -52,7 +53,7 @@ use {
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
     }
   }
-
+use { "nvim-telescope/telescope-file-browser.nvim" }
 use {
   'nvim-lualine/lualine.nvim',
   requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -64,7 +65,13 @@ use 'wellle/targets.vim' -- make bracets motions find closest bracket and more
 use 'andymass/vim-matchup' -- better brackets highlihgts and motion
 use 'tpope/vim-surround' -- Surrond with braces ysB
 use 'tpope/vim-repeat' -- enable repeat for tpope's plugins
-use 'tomtom/tcomment_vim' -- gcc to comment line
+
+use { -- gcc to comment line
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+}
 use 'tpope/vim-unimpaired' -- ]b for next buffer, ]e for exchange line, etc
 use 'jiangmiao/auto-pairs' -- auto pair open brackets
 use 'bkad/CamelCaseMotion' -- move by camel case words with Space + Motion

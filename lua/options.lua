@@ -10,6 +10,7 @@ vim.o.iminsert = 0
 vim.o.imsearch = 0
 vim.o.cursorline = true -- show cursor line
 vim.o.backspace = 'indent,eol,start' -- backspace over indent, eol, start
+vim.opt.termguicolors = true
 
 vim.o.laststatus = 3 -- global status line
 
@@ -78,7 +79,7 @@ vim.o.inccommand = 'split' -- show split with results when substitute
 vim.o.shell = '/bin/zsh' -- use zsh as default shell
 
 -- use ripgrep for :grep command
-if vim.fn.executable('rg') == 1 then 
+if vim.fn.executable('rg') == 1 then
     vim.o.grepprg = 'rg --vimgrep --hidden'
 end
 
@@ -105,10 +106,12 @@ if has("autocmd")
     augroup mygrouplastposition
         autocmd!
         au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-        au WinEnter * setlocal cursorline
-        au WinLeave * setlocal nocursorline
     augroup end
 endif
+]]
+
+vim.cmd [[
+ au TextYankPost * silent! lua vim.highlight.on_yank()
 ]]
 
 vim.cmd [[
@@ -118,7 +121,5 @@ augroup mygroupft
   autocmd BufNewFile,BufRead *.js.ejs set filetype=javascript
   autocmd BufNewFile,BufRead *.json.ejs set filetype=json
   autocmd BufNewFile,BufRead *.html.ejs set filetype=html
-  " correct comment highlight for jsonc
-  autocmd FileType json syntax match
 augroup end
 ]]

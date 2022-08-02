@@ -1,4 +1,4 @@
-local servers = {'sumneko_lua', 'rust_analyzer', 'tsserver'}
+local servers = {'sumneko_lua', 'rust_analyzer', 'tsserver', "emmet_ls"}
 
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -6,14 +6,21 @@ require("mason-lspconfig").setup({
     automatic_installation = true,
 })
 
+local function extend(origin, new)
+    for key, val in ipairs(new) do
+        origin[key] = val
+    end
+    return origin
+end
+
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, extend(opts, {desc = "Show diagnostic float"}))
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, extend(opts, {desc = "Go to previous diagnostic"}))
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, extend(opts, {desc = "Go to next diagnostic"}))
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, extend(opts, {desc = "Set location list with diagnostic"}))
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer

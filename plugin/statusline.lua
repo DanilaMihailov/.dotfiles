@@ -7,6 +7,7 @@ custom_gruvbox.command = custom_gruvbox.normal
 
 require('lualine').setup({
     options = {
+        globalstatus = true,
         theme = custom_gruvbox,
         icons_enabled = false,
         component_separators = { left = '', right = ''},

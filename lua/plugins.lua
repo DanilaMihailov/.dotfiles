@@ -57,6 +57,32 @@ return require('packer').startup(function(use)
     }
     use { "nvim-telescope/telescope-file-browser.nvim" }
     use {
+        'kyazdani42/nvim-tree.lua',
+        requires = {
+            'kyazdani42/nvim-web-devicons', -- optional, for file icons
+        },
+        config = function ()
+            local nvim_tree = require("nvim-tree")
+            local nvim_tree_api = require("nvim-tree.api")
+            nvim_tree.setup({
+                view = {
+                    adaptive_size = true,
+                    float = {
+                        enable = false,
+                        open_win_config = {
+                            width = 50,
+                            height = 50
+                        }
+                    }
+                }
+            })
+
+            vim.keymap.set("n", "<C-f>", function ()
+                nvim_tree_api.tree.toggle(true)
+            end)
+        end
+    }
+    use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     }

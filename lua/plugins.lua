@@ -11,7 +11,8 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
     use 'lewis6991/impatient.nvim'
-    use 'gruvbox-community/gruvbox'
+    -- use 'gruvbox-community/gruvbox'
+    use { "ellisonleao/gruvbox.nvim" }
 
     -- Highlights
     use {
@@ -74,6 +75,9 @@ return require('packer').startup(function(use)
                             height = 50
                         }
                     }
+                },
+                renderer = {
+                    symlink_destination = false
                 }
             })
 

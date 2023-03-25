@@ -1,7 +1,20 @@
-vim.g.gruvbox_sign_column = "bg0"
-vim.g.gruvbox_invert_selection = false
-vim.cmd("colorscheme gruvbox")
+local theme = require("gruvbox")
+local colors = require("gruvbox.palette").get_base_colors(vim.o.background, theme.config.contrast)
 
+theme.setup({
+    overrides = {
+        SignColumn = { bg = "NONE"},
+        GruvboxRedSign = { bg = "NONE" },
+        GruvboxYellowSign = { bg = "NONE" },
+        GruvboxBlueSign = { bg = "NONE" },
+        GruvboxAquaSign = { bg = "NONE" },
+        GruvboxGreenSign = { bg = "NONE" },
+
+        -- hide end of buffer '~' symbol
+        EndOfBuffer = { fg = colors.bg0}
+    }
+})
+vim.cmd("colorscheme gruvbox")
 
 -- fix rust colors until https://github.com/morhetz/gruvbox/pull/334
 vim.cmd("hi! link rustFuncCall GruvboxBlue")
@@ -18,12 +31,9 @@ vim.cmd("hi! link rustLifetime GruvboxAqua")
 vim.cmd("hi Folded ctermbg=NONE cterm=bold guibg=NONE")
 
 -- do not show backgroun in current cursor line number
-vim.cmd("hi CursorLineNr ctermbg=bg guibg=bg")
+vim.cmd("hi CursorLineNr ctermbg=NONE guibg=NONE")
 
 -- fix cursorline highlight breaking on operators
 vim.cmd("hi Operator ctermbg=NONE guibg=NONE")
-
--- hide end of buffer '~' symbol
-vim.cmd("hi EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg")
 
 vim.cmd("hi Quote ctermbg=NONE guibg=NONE")

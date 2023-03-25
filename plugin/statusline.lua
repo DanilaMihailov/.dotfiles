@@ -16,7 +16,7 @@ require('lualine').setup({
     sections = {
         lualine_a = {'branch'},
         lualine_b = {'diagnostics'},
-        lualine_c = {'filename'},
+        lualine_c = {{'filename', path = 1}},
         lualine_x = {'lsp_progress', 'encoding', 'fileformat', 'filetype'},
         lualine_y = {'progress'},
         lualine_z = {'location'}

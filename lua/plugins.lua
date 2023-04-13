@@ -77,7 +77,12 @@ return require('packer').startup(function(use)
                     }
                 },
                 renderer = {
-                    symlink_destination = false
+                    symlink_destination = false,
+                    indent_markers = {
+                        enable = true,
+                        icons = { corner = "└", edge = "│", item = "│", bottom = "─", none = " ", },
+                        inline_arrows = true
+                    }
                 }
             })
 

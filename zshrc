@@ -40,7 +40,7 @@ bindkey -v
 ZSH_THEME=""
 
 # gruvbox colors for iterm
-source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh"
+# source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh"
 
 plugins=(macos docker zsh-syntax-highlighting)
 
@@ -102,7 +102,7 @@ alias ......='cd ../../../../..'
 alias cd.='cd ..'
 alias cd..='cd ..'
 alias l='ls -alF'
-alias ll='ls -l'
+alias ll='ls -lh'
 alias localip="ipconfig getifaddr en0"
 # alias vi='nvim'
 # alias vim='nvim'
@@ -117,4 +117,4 @@ pyclean () {
         find . -type d -name "__pycache__" -delete
 }
 
-. /usr/local/opt/asdf/asdf.sh
+. /opt/homebrew/opt/asdf/libexec/asdf.sh

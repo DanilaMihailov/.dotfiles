@@ -1,5 +1,5 @@
 -- local servers = { 'sumneko_lua', 'rust_analyzer', 'tsserver', "emmet_ls", "elixirls", "cssls", "html", "jsonls", "yamlls", "eslint", "bashls", "omnisharp_mono" }
-local servers = { 'rust_analyzer', 'tsserver', "emmet_ls", "elixirls", "cssls", "html", "jsonls", "yamlls", "eslint", "bashls", "omnisharp_mono" }
+local servers = { 'rust_analyzer', 'tsserver', "emmet_ls", "elixirls", "cssls", "html", "jsonls", "yamlls", "eslint", "bashls", "omnisharp_mono", "svelte" }
 
 require("mason").setup({
     ui = {

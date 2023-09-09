@@ -33,6 +33,7 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim', branch = '0.1.x',
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
 
     -- LSP
@@ -40,6 +41,18 @@ return require('packer').startup(function(use)
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "neovim/nvim-lspconfig",
+    }
+
+    use { 
+        'mhartington/formatter.nvim',
+        config = function ()
+            require("formatter").setup {
+              filetype = {
+                python = { require("formatter.filetypes.python").black },
+
+              }
+            }
+        end
     }
 
     -- Completion

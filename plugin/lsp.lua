@@ -1,5 +1,5 @@
 -- local servers = { 'sumneko_lua', 'rust_analyzer', 'tsserver', "emmet_ls", "elixirls", "cssls", "html", "jsonls", "yamlls", "eslint", "bashls", "omnisharp_mono" }
-local servers = { 'rust_analyzer', 'tsserver', "emmet_ls", "elixirls", "cssls", "html", "jsonls", "yamlls", "eslint", "bashls", "omnisharp_mono", "svelte" }
+local servers = { 'rust_analyzer', 'tsserver', "emmet_ls", "elixirls", "cssls", "html", "jsonls", "yamlls", "eslint", "bashls", "omnisharp_mono", "svelte", "pyright" }
 
 require("mason").setup({
     ui = {
@@ -52,7 +52,10 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, extend(bufopts, { desc = "Rename" }))
     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, extend(bufopts, { desc = "Code action" }))
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, extend(bufopts, { desc = "Show references" }))
-    vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, extend(bufopts, { desc = "Format" }))
+    -- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, extend(bufopts, { desc = "Format" }))
+    vim.keymap.set('n', '<space>f', function()
+          vim.lsp.buf.format { async = true }
+        end, extend(bufopts, {desc = "Format"}))
 end
 
 for _i, serv in ipairs(servers) do

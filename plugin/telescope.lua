@@ -24,6 +24,7 @@ require('telescope').setup({
 })
 
 require("telescope").load_extension "file_browser"
+require('telescope').load_extension('fzf')
 
 local telescope = require('telescope.builtin')
 vim.keymap.set("n", "<C-p>", telescope.git_files, { desc = "Search files with telescope" })

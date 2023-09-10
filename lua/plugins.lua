@@ -21,7 +21,7 @@ return require('packer').startup(function(use)
     }
 
     use { "tpope/vim-fugitive", requires = "tpope/vim-dispatch" }
-    use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+    use { 'NeogitOrg/neogit', requires = 'nvim-lua/plenary.nvim', config = function() require("neogit").setup() end }
     use {
         'lewis6991/gitsigns.nvim',
         config = function()
@@ -53,6 +53,12 @@ return require('packer').startup(function(use)
               }
             }
         end
+    }
+
+    use { 'simrat39/symbols-outline.nvim',
+        config = function() 
+            require("symbols-outline").setup()
+        end 
     }
 
     -- Completion

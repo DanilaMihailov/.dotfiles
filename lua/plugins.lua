@@ -47,9 +47,14 @@ return require('packer').startup(function(use)
         'mhartington/formatter.nvim',
         config = function ()
             require("formatter").setup {
+              -- Enable or disable logging
+              logging = true,
+              -- Set the log level
+              log_level = vim.log.levels.DEBUG,
               filetype = {
-                python = { require("formatter.filetypes.python").black },
-
+                javascript = { require("formatter.filetypes.javascript").standard },
+                python = { require("formatter.filetypes.python").autopep8, require("formatter.filetypes.python").docformatter },
+                markdown = { require("formatter.filetypes.markdown").prettier },
               }
             }
         end

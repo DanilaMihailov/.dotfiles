@@ -70,6 +70,7 @@ call quickui#menu#install("&Git", [
             \ [ "&Status\t:G", "G", "Git fugitive" ],
             \ [ "P&ull\t:Git pull", "Git pull", "Git pull" ],
             \ [ "&Push\t:Git push", "Git push", "Git push" ],
+            \ [ "&Integrate\t:Git pull origin master --rebase", "Git pull origin master --rebase", "Git pull origin master --rebase" ],
 			\ ['--',''],
             \ [ "&Open Files\tCtrl-p", "Telescope git_files", "Search git files" ],
             \ [ "Changed &Files", "Telescope git_status", "Git status files" ],

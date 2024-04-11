@@ -1,5 +1,4 @@
 local theme = require("gruvbox")
-local colors = require("gruvbox.palette").get_base_colors(vim.o.background, theme.config.contrast)
 
 theme.setup({
     overrides = {
@@ -11,7 +10,7 @@ theme.setup({
         GruvboxGreenSign = { bg = "NONE" },
 
         -- hide end of buffer '~' symbol
-        EndOfBuffer = { fg = colors.bg0}
+        EndOfBuffer = { fg = theme.palette.dark0}
     }
 })
 vim.cmd("colorscheme gruvbox")

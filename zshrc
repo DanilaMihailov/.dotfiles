@@ -108,6 +108,8 @@ alias localip="ipconfig getifaddr en0"
 # alias vim='nvim'
 # vim
 alias e="$EDITOR"
+# alias to love
+alias love="/Applications/love.app/Contents/MacOS/love"
 
 # haskell stuff
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"

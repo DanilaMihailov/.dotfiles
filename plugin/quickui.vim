@@ -126,7 +126,7 @@ endfunction
 
 let content = [
             \ ["Re&name\t<space>rn", 'normal 1 rn' ],
-            \ ["&Actions\t<space>a", 'normal 1 a' ],
+            \ ["&Actions\t<space>ca", 'normal 1 ca' ],
             \ ["&Quick fix\t<space>qf", 'normal 1 qf' ],
             \ ['-'],
             \ ["&Go to Defintion\tgd", 'normal gd' ],

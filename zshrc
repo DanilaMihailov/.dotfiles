@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Do not run update on every command wtf
 export HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -13,46 +20,57 @@ export ANDROID_HOME=/Users/$USER/Library/Android/sdk
 export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools/platform-tools
 
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
-export NVM_DIR="$HOME/.nvm"
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# this is slow, you can use source $NVM_DIR/nvm.sh to load manually
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+  # If you're using macOS, you'll want this enabled
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
-# show last folder on the left
-export PS1="%1~ $ "
+# Set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# show full path in the right prompt
-RPROMPT="%~"
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
 
-# export PATH="$PATH:`yarn global bin`"
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Add in Powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# Add in snippets
+zinit snippet OMZP::git
+zinit snippet OMZP::brew
+zinit snippet OMZP::command-not-found
+
+# docker completion not working :(
+# zi ice as"completion"
+# zi snippet OMZP::docker/_docker
+
+# Load completions
+autoload -Uz compinit && compinit
+
+zinit cdreplay -q
 
 # vim mode
 bindkey -v
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME=""
-
-# gruvbox colors for iterm
-# source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh"
-
-plugins=(macos docker zsh-syntax-highlighting)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
-export MANPAGER='nvim +Man!'
 
+export MANPAGER='nvim +Man!'
 export EDITOR='nvim'
+
 # run this command on ssh login 
 if [[ -n $SSH_CONNECTION ]]; then
     if [ -z $TMUX ]; then
@@ -71,48 +89,42 @@ zstyle ':completion:*' matcher-list '' \
   'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
 
-bindkey -v
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# show vim mod in left prompt
-function zle-line-init zle-keymap-select {
-	case ${KEYMAP} in
-		(vicmd)      VI_MODE="#" ;;
-		(main|viins) VI_MODE="$" ;;
-		(*)          VI_MODE="$" ;;
-	esac
-	PS1="%1~ $VI_MODE "
-	zle reset-prompt
-}
-
-zle -N zle-line-init
-zle -N zle-keymap-select
-export KEYTIMEOUT=1
+bindkey '^y' autosuggest-accept
+bindkey '^n' history-search-forward
+bindkey '^p' history-search-backward
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Options to fzf command
-export FZF_DEFAULT_OPTS="--reverse --no-info"
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
+
 alias cd.='cd ..'
 alias cd..='cd ..'
+
+alias ls='ls --color'
 alias l='ls -alF'
 alias ll='ls -lh'
 alias localip="ipconfig getifaddr en0"
-# alias vi='nvim'
-# alias vim='nvim'
+
 # vim
 alias e="$EDITOR"
+alias em="$EDITOR -u ~/.config/nvim/minimal.lua"
+
 # alias to love
 alias love="/Applications/love.app/Contents/MacOS/love"
 
 # haskell stuff
-[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+# [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
 
 pyclean () {
         find . -type f -name "*.py[co]" -delete
@@ -120,3 +132,6 @@ pyclean () {
 }
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -54,6 +54,12 @@ chars = "\u001E"
 key = "Key6"
 mods = "Control"
 
+# fix Control-/
+[[keyboard.bindings]]
+chars = "\u001F"
+key = "Slash"
+mods = "Control"
+
 [[keyboard.bindings]]
 action = "CreateNewWindow"
 key = "N"

@@ -52,11 +52,17 @@ zinit light Aloxaf/fzf-tab
 # Add in snippets
 zinit snippet OMZP::git
 zinit snippet OMZP::brew
+zinit snippet OMZP::asdf
+zinit snippet OMZP::mosh
+zinit snippet OMZP::npm
+# zinit snippet OMZP::poetry
+zinit snippet OMZP::tmux
 zinit snippet OMZP::command-not-found
 
-# docker completion not working :(
-# zi ice as"completion"
-# zi snippet OMZP::docker/_docker
+zinit wait lucid is-snippet as"completion" for \
+  OMZP::docker/completions/_docker \
+  OMZP::docker-compose/_docker-compose \
+  OMZP::mix/_mix \
 
 # Load completions
 autoload -Uz compinit && compinit

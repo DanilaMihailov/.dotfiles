@@ -5,6 +5,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+export GITLAB_URL="https://gitlab.clabs.net/"
+
 # Do not run update on every command wtf
 export HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -125,6 +127,9 @@ alias localip="ipconfig getifaddr en0"
 # vim
 alias e="$EDITOR"
 alias em="$EDITOR -u ~/.config/nvim/minimal.lua"
+alias lazyvim="NVIM_APPNAME=lazynvim $EDITOR"
+alias nvchad="NVIM_APPNAME=nvchad $EDITOR"
+alias nvimrocks="NVIM_APPNAME=nvimrocks $EDITOR"
 
 # alias to love
 alias love="/Applications/love.app/Contents/MacOS/love"
@@ -141,3 +146,7 @@ pyclean () {
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source ~/secrets.sh
+
+alias emacs='exec $(brew --prefix)/opt/emacs-mac/Emacs.app/Contents/MacOS/Emacs.sh "$@"'

@@ -16,7 +16,7 @@ apple_logo=(
   icon.font="$FONT:Black:14.0"
   icon.color=$ACCENT_COLOR
   icon.padding_right=10
-  padding_left=-5
+  padding_left=-8
   label.drawing=off
   click_script="$POPUP_CLICK_SCRIPT"
 )

@@ -5,6 +5,7 @@
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 ITEM_DIR="$CONFIG_DIR/items"
+FONT="SF Pro"
 
 source "$CONFIG_DIR/colors.sh"
 
@@ -25,8 +26,8 @@ sketchybar --bar position=top height=36 blur_radius=30 color=$BAR_COLOR
 default=(
   padding_left=5
   padding_right=5
-  icon.font="SF Pro:Semibold:14.0"
-  label.font="SF Pro:Semibold:14.0"
+  icon.font="$FONT:Semibold:14.0"
+  label.font="$FONT:Semibold:14.0"
   icon.color=$WHITE
   label.color=$WHITE
   background.color=$ITEM_BG_COLOR
@@ -43,6 +44,7 @@ sketchybar --default "${default[@]}"
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
 
+source "$ITEM_DIR/apple.sh"
 source "$ITEM_DIR/spaces.sh"
 source "$ITEM_DIR/front_app.sh"
 

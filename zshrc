@@ -150,3 +150,7 @@ pyclean () {
 source ~/secrets.sh
 
 alias emacs='exec $(brew --prefix)/opt/emacs-mac/Emacs.app/Contents/MacOS/Emacs.sh "$@"'
+
+DISABLE_AUTO_TITLE="true"
+precmd () { echo -ne "\e]1;$PWD\a" } # title bar prompt
+

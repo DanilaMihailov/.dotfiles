@@ -2,10 +2,10 @@
 ctrl + alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # focus window
-alt - h : yabai -m window --focus west || yabai -m space --focus prev
-alt - j : yabai -m window --focus stack.next || yabai -m window --focus stack.first || yabai -m window --focus south
-alt - k : yabai -m window --focus stack.prev || yabai -m window --focus stack.last || yabai -m window --focus north
-alt - l : yabai -m window --focus east || yabai -m space --focus next
+alt - h : yabai -m window --focus west || yabai -m display --focus west
+alt - j : yabai -m window --focus stack.next || yabai -m window --focus south || yabai -m display --focus south
+alt - k : yabai -m window --focus stack.prev || yabai -m window --focus north || yabai -m display --focus north
+alt - l : yabai -m window --focus east || yabai -m display --focus east
 
 # prev/next window
 alt - tab : yabai -m window --focus stack.next || yabai -m window --focus stack.first || yabai -m window --focus next || yabai -m window --focus first
@@ -30,12 +30,12 @@ ctrl + shift + alt - h : yabai -m window --stack west
 ctrl + shift + alt - l : yabai -m window --stack east
 
 # change focus between external displays (left and right)
-alt - w: yabai -m display --focus west
-alt - e: yabai -m display --focus east
+alt - w: yabai -m display --focus prev
+alt - e: yabai -m display --focus next
 
 # move window to display left and right
-shift + alt - w : yabai -m window --display west; yabai -m display --focus west;
-shift + alt - e : yabai -m window --display east; yabai -m display --focus east;
+shift + alt - w : yabai -m window --display prev; yabai -m display --focus prev;
+shift + alt - e : yabai -m window --display next; yabai -m display --focus next;
 
 # rotate layout clockwise
 shift + alt - r : yabai -m space --rotate 270
@@ -76,7 +76,7 @@ alt - 9 : yabai -m space --focus 9
 alt - 0 : yabai -m space --focus 10
 
 # add on enter for default mode
-:: default : yabai -m config window_animation_duration 0.1
+:: default : yabai -m config window_animation_duration 0.0
 
 # define mode resize (disable animation on enter)
 :: resize @ : yabai -m config window_animation_duration 0.0
@@ -108,6 +108,7 @@ ctrl + alt - x : yabai -m space --mirror x-axis
 # create desktop, follow focus
 shift + cmd - n : yabai -m space --create && \
                   index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+                  yabai -m window --space "${index}" && \
                   yabai -m space --focus "${index}"
 
 shift + cmd - d : yabai -m space --destroy
@@ -160,7 +161,7 @@ alt - f : yabai -m window --toggle zoom-fullscreen
 alt - s : yabai -m window --toggle split
 
 # close window
-alt - q : yabai -m window --close
+alt - q : yabai -m window --close; yabai -m window --focus first
 
 # float / unfloat window and center on screen
 alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2

@@ -1,8 +1,9 @@
 ## Using GNU stow
 
 ```sh
-cd ~/dotfiles
-stow -vn --dotfiles kitty skhd yabai
+git clone git@github.com:DanilaMihailov/.dotfiles.git dotfiles
+cd dotfiles
+stow -v --dotfiles */
 ```
 
 `-n` - will run in simulation mode

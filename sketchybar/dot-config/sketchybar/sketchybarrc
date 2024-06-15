@@ -62,6 +62,27 @@ source "$ITEM_DIR/front_app.sh"
 source "$ITEM_DIR/calendar.sh"
 source "$ITEM_DIR/battery.sh"
 
+# sketchybar --add alias "Control Center,WiFi" right
+
+# TODO: maybe write shell script to show lang
+sketchybar --add alias "TextInputMenuAgent,Item-0" right \
+           --set "TextInputMenuAgent,Item-0" label.padding_right=-5 \
+           --set "TextInputMenuAgent,Item-0" icon.padding_left=-5
+
+sketchybar --add alias "Mattermost,Item-0" right \
+           --set "Mattermost,Item-0" label.padding_right=-5 \
+           --set "Mattermost,Item-0" icon.padding_left=-5
+
+sketchybar --add alias "Amphetamine,Amphetamine" right \
+           --set "Amphetamine,Amphetamine" label.padding_right=-5 \
+           --set "Amphetamine,Amphetamine" icon.padding_left=-5
+
+# TODO: show it via shell
+sketchybar --add alias "Tunnelblick,Item-0" right \
+           --set "Tunnelblick,Item-0" label.padding_right=-5 \
+           --set "Tunnelblick,Item-0" icon.padding_left=-5
+        , 
+
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update

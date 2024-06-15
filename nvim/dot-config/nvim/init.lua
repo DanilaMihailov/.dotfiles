@@ -573,6 +573,7 @@ require('lazy').setup({
       )
     end,
   },
+  { 'fladson/vim-kitty' },
 }, {
   -- defaults = {
   --   lazy = true,

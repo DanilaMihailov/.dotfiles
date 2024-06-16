@@ -165,6 +165,7 @@ alt - q : yabai -m window --close; yabai -m window --focus first
 
 # float / unfloat window and center on screen
 alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+shift + alt - t : yabai -m window --toggle float --grid 1:1:1:1:1:1
 
 # toggle sticky(+float), picture-in-picture
 # alt - p : yabai -m window --toggle sticky --toggle pip

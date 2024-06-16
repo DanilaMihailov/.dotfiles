@@ -18,7 +18,7 @@ do
 done
 
 sketchybar --add bracket spaces '/space\..*/'               \
-           --set         spaces background.color=$ITEM_BG_COLOR \
+           --set         spaces background.color=$BRACKET_BG_COLOR \
                                 background.corner_radius=4  \
                                 # background.height=20
 

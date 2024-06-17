@@ -120,8 +120,7 @@ alias cd.='cd ..'
 alias cd..='cd ..'
 
 alias ls='ls --color'
-alias l='ls -alF'
-alias ll='ls -lh'
+alias ll='eza -l --icons=auto --group-directories-first'
 alias localip="ipconfig getifaddr en0"
 
 # vim

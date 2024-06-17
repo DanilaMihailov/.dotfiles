@@ -67,6 +67,11 @@ return {
         lualine_x = line_x,
         lualine_y = {
           'progress',
+          {
+            require('lazy.status').updates,
+            cond = require('lazy.status').has_updates,
+            color = { fg = '#ff9e64' },
+          },
         },
         lualine_z = {
           {

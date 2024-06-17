@@ -634,5 +634,61 @@ require('lazy').setup({
   },
 })
 
+-- check for plugins updates, lualine shows counter
+require('lazy').check {
+  show = false,
+}
+
+local icons = {
+  E = '󰅚 ',
+  W = '󰀪 ',
+  H = '󰋽 ',
+  I = '󰌶 ',
+}
+
+vim.diagnostic.config {
+  underline = true,
+  update_in_insert = false,
+  virtual_text = {
+    spacing = 0,
+    source = 'if_many',
+    -- show icons in prefix
+    prefix = function(diagnostic)
+      for d, icon in pairs(icons) do
+        if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+          return icon
+        end
+      end
+      return '●'
+    end,
+  },
+  jump = {
+    float = true,
+  },
+  float = {
+    border = 'rounded',
+    severity_sort = true,
+    source = 'if_many',
+    -- show icons in prefix
+    prefix = function(diagnostic)
+      for d, icon in pairs(icons) do
+        if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+          return icon
+        end
+      end
+      return '●'
+    end,
+  },
+  severity_sort = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = icons.E,
+      [vim.diagnostic.severity.WARN] = icons.W,
+      [vim.diagnostic.severity.HINT] = icons.H,
+      [vim.diagnostic.severity.INFO] = icons.I,
+    },
+  },
+}
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

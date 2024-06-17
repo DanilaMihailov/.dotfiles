@@ -537,6 +537,15 @@ require('lazy').setup({
     build = function()
       vim.fn['mkdp#util#install']()
     end,
+    init = function()
+      -- open preview in little arc
+      vim.cmd [[
+        function OpenMarkdownPreview (url)
+          execute "silent ! osascript -e 'tell application \"Arc\"' -e 'make new tab with properties {URL:\"" . a:url . "\"}' -e 'activate' -e 'end tell'"
+        endfunction
+        let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+        ]]
+    end,
   },
   {
     'mikesmithgh/kitty-scrollback.nvim',

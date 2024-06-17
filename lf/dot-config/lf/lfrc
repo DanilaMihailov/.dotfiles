@@ -1,6 +1,9 @@
 # display icons
 set icons
 
+# draw borders
+set drawbox
+
 # show stats via eza
 cmd on-select &{{
     lf -remote "send $id set statfmt \"$(eza -ld --color=always "$f")\""
@@ -20,3 +23,16 @@ cmd fzf_jump ${{
     fi
 }}
 map <c-f> :fzf_jump
+
+# use kitty to preview images (and bat for others)
+set previewer ~/.config/lf/lf_kitty_preview
+set cleaner ~/.config/lf/lf_kitty_clean
+
+
+cmd move-parent &{{
+    dironly="setlocal '$(dirname "$PWD")' dironly"
+    lf -remote "send $id :updir; $dironly true; $1; $dironly false; open"
+}}
+
+map J move-parent down
+map K move-parent up

@@ -207,9 +207,6 @@ vim.opt.foldtext = '' -- "transparent folds - just text with syntax highlight"
 vim.opt.fillchars = 'fold: '
 vim.opt.fillchars = 'eob: ' -- hide end of buffer '~' symbol
 
--- require 'mihd.git-commands'
--- require 'mihd.beacon'
-
 -- Switch between tabs
 vim.keymap.set('n', '<A-l>', function()
   vim.api.nvim_feedkeys('gt', 'n', true)
@@ -294,6 +291,11 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'danilamihailov/vim-tips-wiki',
+
+  {
+    dir = '~/personal/nvim-plugins/beacon.nvim/',
+    config = true,
+  },
 
   -- 'tpope/vim-surround', -- Surrond with braces ysB
   'tpope/vim-repeat', -- enable repeat for tpope's plugins

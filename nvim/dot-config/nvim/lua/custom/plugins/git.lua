@@ -24,6 +24,9 @@ return {
     },
     ---@type NeogitConfig
     opts = {
+      filewatcher = {
+        enabled = false, -- workoaround https://github.com/NeogitOrg/neogit/issues/1377
+      },
       disable_hint = true,
       git_services = {
         ['gitlab.clabs.net'] = 'https://gitlab.clabs.net/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}&merge_request[target_branch]=master',

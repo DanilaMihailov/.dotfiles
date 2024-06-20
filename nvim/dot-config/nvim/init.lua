@@ -294,6 +294,14 @@ require('lazy').setup({
 
   {
     dir = '~/personal/nvim-plugins/beacon.nvim/',
+    opts = {
+      enabled = function()
+        if vim.bo.ft:find 'Neogit' then
+          return false
+        end
+        return true
+      end,
+    },
     config = true,
   },
 

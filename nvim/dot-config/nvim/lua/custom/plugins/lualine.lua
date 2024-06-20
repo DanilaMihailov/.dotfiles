@@ -102,7 +102,7 @@ return {
       --     { 'tabs', mode = 2, max_length = vim.o.columns, separator = { left = '', right = '' } },
       --   },
       -- },
-      extensions = { 'quickfix', 'fugitive', 'nvim-tree' },
+      extensions = { 'quickfix', 'fugitive', 'nvim-tree', 'oil', 'mason', 'lazy', 'man', 'trouble' },
       -- winbar = {
       --   lualine_a = { 'filename', 'diagnostics' },
       -- },

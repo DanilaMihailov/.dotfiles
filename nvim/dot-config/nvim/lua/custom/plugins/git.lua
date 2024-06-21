@@ -1,7 +1,7 @@
 -- all git integrations live here (signs, status, diffview)
 return {
   -- keeping for git blame
-  { 'tpope/vim-fugitive', cmd = { 'Git' } },
+  -- { 'tpope/vim-fugitive', cmd = { 'Fugitive' } },
 
   { -- better diff/merge tool
     'sindrets/diffview.nvim',

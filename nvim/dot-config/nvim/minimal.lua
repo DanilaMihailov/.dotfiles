@@ -53,7 +53,8 @@ augroup mygroupft
 augroup end
 ]]
 
-vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+vim.o.sessionoptions =
+  'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
 vim.cmd.colorscheme 'retrobox' -- default colorscheme, overriden by plugins
 
@@ -133,7 +134,12 @@ vim.diagnostic.config {
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set(
+  'n',
+  '<leader>q',
+  vim.diagnostic.setloclist,
+  { desc = 'Open diagnostic [Q]uickfix list' }
+)
 vim.keymap.set('n', '<leader>td', function()
   vim.g.show_diagnostic_virutal_text = not vim.g.show_diagnostic_virutal_text
   vim.diagnostic.config { virtual_text = vim.g.show_diagnostic_virutal_text }
@@ -183,9 +189,6 @@ vim.opt.foldenable = false -- do not fold by default
 vim.opt.foldtext = '' -- "transparent folds - just text with syntax highlight"
 vim.opt.fillchars = 'fold: '
 
--- require 'mihd.git-commands'
-require 'mihd.beacon'
-
 -- Switch between tabs
 vim.keymap.set('n', '<A-l>', function()
   vim.api.nvim_feedkeys('gt', 'n', true)
@@ -222,7 +225,12 @@ augroup end
 
 vim.keymap.set('t', '<C-W>N', '<C-\\><C-n>', { desc = 'Change terminal mode to normal as in vim' })
 vim.keymap.set('t', '<C-W>n', '<C-\\><C-n>', { desc = 'Change terminal mode to normal as in vim' })
-vim.keymap.set('t', '<C-W>', '<C-\\><C-N><C-w>', { desc = 'Move out of terminal as if it is just a window' })
+vim.keymap.set(
+  't',
+  '<C-W>',
+  '<C-\\><C-N><C-w>',
+  { desc = 'Move out of terminal as if it is just a window' }
+)
 
 -- vim.keymap.set('n', '<leader>-', ':wincmd _<cr>:wincmd \\|<cr>', { desc = 'Zoom on pane' })
 -- vim.keymap.set('n', '<leader>=', ':wincmd =<cr>', { desc = 'Rebalance panes' })
@@ -234,4 +242,9 @@ vim.keymap.set('n', '*', '*zz', { silent = true, desc = '*, but centered' })
 vim.keymap.set('n', '#', '#zz', { silent = true, desc = '#, but centered' })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true, desc = 'g*, but centered' })
 
-vim.keymap.set('n', '<C-x><C-f>', ':e <C-R>=expand("%:p:h") . "/" <CR>', { desc = 'Open new file adjacent to current file like emacs' })
+vim.keymap.set(
+  'n',
+  '<C-x><C-f>',
+  ':e <C-R>=expand("%:p:h") . "/" <CR>',
+  { desc = 'Open new file adjacent to current file like emacs' }
+)

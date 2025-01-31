@@ -6,12 +6,17 @@ return {
     config = function()
       local lint = require 'lint'
       lint.linters_by_ft = {
+        -- python = {'ruff'} -- use ruff lsp for ptyhon
         -- markdown = { 'markdownlint' },
         -- javascript = { 'eslint_d' },
       }
 
       -- wtf, eslint cannot find config
-      lint.linters.eslint_d.args = vim.tbl_extend("keep", { '-c', 'eslint.config.js', '-f', 'json' }, lint.linters.eslint_d.args)
+      lint.linters.eslint_d.args = vim.tbl_extend(
+        'keep',
+        { '-c', 'eslint.config.js', '-f', 'json' },
+        lint.linters.eslint_d.args
+      )
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:

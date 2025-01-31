@@ -161,22 +161,11 @@ return { -- LSP Configuration & Plugins
         autostart = true,
       },
       emmet_ls = {},
-      -- Configure `ruff-lsp`.
-      -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#ruff_lsp
-      ruff_lsp = {
-        autostart = false,
-        init_options = {
-          settings = {
-            -- Any extra CLI arguments for `ruff` go here.
-            args = {},
-          },
-        },
-      },
       basedpyright = {
         autostart = true,
       },
       ruff = {
-        autostart = false,
+        autostart = true,
       },
       pyright = {
         autostart = false,

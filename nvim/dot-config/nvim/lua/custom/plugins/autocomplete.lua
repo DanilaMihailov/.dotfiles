@@ -39,7 +39,9 @@ return { -- Autocompletion
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
     'onsails/lspkind.nvim',
+    'lukas-reineke/cmp-under-comparator',
     { 'petertriho/cmp-git', dependencies = { 'nvim-lua/plenary.nvim' } },
+    { 'tzachar/cmp-ai', dependencies = 'nvim-lua/plenary.nvim' },
   },
   config = function()
     -- See `:help cmp`
@@ -56,6 +58,28 @@ return { -- Autocompletion
       },
     }
 
+    -- local cmp_ai = require 'cmp_ai.config'
+    --
+    -- cmp_ai:setup {
+    --   max_lines = 100,
+    --   provider = 'Ollama',
+    --   provider_options = {
+    --     -- model = 'codellama:7b-code',
+    --     -- model = 'moondream',
+    --     model = 'codellama',
+    --   },
+    --   notify = true,
+    --   notify_callback = function(msg)
+    --     vim.notify(msg)
+    --   end,
+    --   run_on_every_keystroke = true,
+    --   ignored_file_types = {
+    --     -- default is not to ignore
+    --     -- uncomment to ignore in lua:
+    --     -- lua = true
+    --   },
+    -- }
+    --
     cmp.setup.cmdline('/', {
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
@@ -90,6 +114,18 @@ return { -- Autocompletion
       completion = {
         autocomplete = { 'InsertEnter', 'TextChanged' },
         completeopt = 'menu,menuone,noinsert',
+      },
+      sorting = {
+        comparators = {
+          cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          require('cmp-under-comparator').under,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
       },
 
       -- For an understanding of why these mappings were
@@ -139,6 +175,7 @@ return { -- Autocompletion
         { name = 'nvim_lsp' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'luasnip' },
+        -- { name = 'cmp_ai' },
         { name = 'git' },
         { name = 'path' },
         {
@@ -176,6 +213,7 @@ return { -- Autocompletion
             nvim_lua = '[api]',
             path = '[path]',
             luasnip = '[snip]',
+            cmp_ai = '[AI]',
           },
         },
       },

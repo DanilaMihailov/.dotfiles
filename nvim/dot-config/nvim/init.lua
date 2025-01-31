@@ -292,18 +292,17 @@ require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'danilamihailov/vim-tips-wiki',
 
-  {
-    dir = '~/personal/nvim-plugins/beacon.nvim/',
-    opts = {
-      enabled = function()
-        if vim.bo.ft:find 'Neogit' then
-          return false
-        end
-        return true
-      end,
-    },
-    config = true,
-  },
+  -- {
+  --   dir = '~/personal/nvim-plugins/beacon.nvim/',
+  --   opts = {
+  --     enabled = function()
+  --       if vim.bo.ft:find 'Neogit' then
+  --         return false
+  --       end
+  --       return true
+  --     end,
+  --   },
+  -- },
 
   -- 'tpope/vim-surround', -- Surrond with braces ysB
   'tpope/vim-repeat', -- enable repeat for tpope's plugins
@@ -358,30 +357,31 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
+      local wk = require 'which-key'
       require('which-key').setup {
-        window = {
-          winblend = 20,
+        win = {
+          wo = {
+            winblend = 20,
+          },
         },
       }
 
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]un', _ = 'which_key_ignore' },
-        ['<leader>rt'] = { name = '[R]un [T]ests', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-        ['<leader><leader>'] = { name = '[ ] Additional commands', _ = 'which_key_ignore' },
-        ['<leader><leader>g'] = { name = '[G]it commands', _ = 'which_key_ignore' },
-        ['<leader><leader>b'] = { name = '[B]uffer commands', _ = 'which_key_ignore' },
+      wk.add {
+        { '<leader><leader>', group = '[ ] Additional commands' },
+        { '<leader><leader>b', group = '[B]uffer commands' },
+        { '<leader><leader>g', group = '[G]it commands' },
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>h', group = 'Git [H]unk' },
+        { '<leader>r', group = '[R]un' },
+        { '<leader>rt', group = '[R]un [T]ests' },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>w', group = '[W]orkspace' },
       }
+
       -- visual mode
-      require('which-key').register({
-        ['<leader>h'] = { 'Git [H]unk' },
-      }, { mode = 'v' })
+      wk.add { '<leader>h', desc = 'Git [H]unk', mode = 'v' }
     end,
   },
 
@@ -555,6 +555,9 @@ require('lazy').setup({
         function OpenMarkdownPreview (url)
           execute "silent ! osascript -e 'tell application \"Arc\"' -e 'make new tab with properties {URL:\"" . a:url . "\"}' -e 'activate' -e 'end tell'"
         endfunction
+        "function OpenMarkdownPreview (url)
+        "  execute "silent ! qutebrowser --target window " . a:url
+        "endfunction
         let g:mkdp_browserfunc = 'OpenMarkdownPreview'
         ]]
     end,
@@ -598,6 +601,7 @@ require('lazy').setup({
     end,
   },
   { 'fladson/vim-kitty' },
+  { 'eandrju/cellular-automaton.nvim' },
 }, {
   -- defaults = {
   --   lazy = true,

@@ -1,10 +1,3 @@
---- Passed to vim.lsp.buf.format
----@param client vim.lsp.Client
----@return boolean
-local formatFilter = function(client)
-  -- biome is used to format js and json files
-  return client.name ~= 'tsserver' and client.name ~= 'jsonls'
-end
 return { -- Autoformat
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
@@ -13,7 +6,7 @@ return { -- Autoformat
     {
       '<leader>f',
       function()
-        require('conform').format { async = true, lsp_format = 'fallback', filter = formatFilter }
+        require('conform').format { async = true, lsp_format = 'fallback' }
       end,
       mode = '',
       desc = '[F]ormat buffer',
@@ -34,15 +27,10 @@ return { -- Autoformat
       if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
         return
       end
-      -- отключает автоформат для директории kkrm
-      if vim.fn.getcwd(-1, -1):find 'kkrm' then
-        return false
-      end
       local disable_filetypes = { c = true, cpp = true }
       return {
         timeout_ms = 500,
         lsp_format = disable_filetypes[vim.bo[bufnr].filetype] and 'never' or 'fallback',
-        filter = formatFilter,
       }
     end,
     formatters_by_ft = {
@@ -51,14 +39,11 @@ return { -- Autoformat
       toml = { 'taplo' },
       markdown = { 'prettier' },
       python = function()
-        -- ruff only works with python3
-        if vim.fn.getcwd(-1, -1):find 'kkrm' then
-          return { 'autopep8', 'docformatter', 'isort' }
-        else
-          return { 'ruff_fix', 'ruff_format' }
-        end
+        return { 'ruff_fix', 'ruff_format' }
       end,
       html = { 'prettier' },
+      htmlangular = { 'prettier' },
+      htmldjango = { 'djlint' },
       javascript = { 'prettier' },
     },
     formatters = {

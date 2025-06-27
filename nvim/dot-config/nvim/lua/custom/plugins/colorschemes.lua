@@ -21,7 +21,7 @@ return {
       require('catppuccin').setup {
         transparent_background = true,
       }
-      vim.cmd.colorscheme 'catppuccin-mocha'
+      -- vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
 
@@ -34,9 +34,9 @@ return {
         -- palette_overrides = {
         --   dark0_hard = '#1c1c1c',
         -- },
-        contrast = 'hard',
+        contrast = 'soft',
         -- dim_inactive = false,
-        transparent_mode = true,
+        -- transparent_mode = true,
         inverse = true,
         overrides = {
           LspSignatureActiveParameter = { link = 'Visual' },
@@ -49,7 +49,7 @@ return {
           GruvboxGreenSign = { bg = 'NONE' },
         },
       }
-      -- vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'gruvbox'
       vim.opt.background = 'dark'
       vim.cmd [[
         hi FoldColumn guibg=NONE

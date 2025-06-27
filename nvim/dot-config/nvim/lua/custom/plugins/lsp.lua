@@ -4,8 +4,13 @@ return { -- LSP Configuration & Plugins
   event = { 'BufRead', 'BufNewFile' },
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
-    { 'williamboman/mason.nvim', config = true, opts = { ui = { border = 'rounded' } } }, -- NOTE: Must be loaded before dependants
-    'williamboman/mason-lspconfig.nvim',
+    {
+      'williamboman/mason.nvim',
+      version = '^1.0.0',
+      config = true,
+      opts = { ui = { border = 'rounded' } },
+    }, -- NOTE: Must be loaded before dependants
+    { 'williamboman/mason-lspconfig.nvim', version = '^1.0.0' },
     'WhoIsSethDaniel/mason-tool-installer.nvim',
 
     -- Useful status updates for LSP.
@@ -161,27 +166,27 @@ return { -- LSP Configuration & Plugins
         autostart = true,
       },
       emmet_ls = {},
-      basedpyright = {
-        autostart = true,
-      },
-      ruff = {
-        autostart = true,
-      },
-      pyright = {
-        autostart = false,
-        pyright = {
-          -- Using Ruff's import organizer
-          disableOrganizeImports = true,
-        },
-        -- settings = {
-        -- python = {
-        --   analysis = {
-        --     ignore = { '*' },
-        --     -- diagnosticMode = 'workspace',
-        --   },
-        -- },
-        -- },
-      },
+      -- basedpyright = {
+      --   autostart = true,
+      -- },
+      -- ruff = {
+      --   autostart = true,
+      -- },
+      -- pyright = {
+      --   autostart = false,
+      --   pyright = {
+      --     -- Using Ruff's import organizer
+      --     disableOrganizeImports = true,
+      --   },
+      --   -- settings = {
+      --   -- python = {
+      --   --   analysis = {
+      --   --     ignore = { '*' },
+      --   --     -- diagnosticMode = 'workspace',
+      --   --   },
+      --   -- },
+      --   -- },
+      -- },
       rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
@@ -221,10 +226,7 @@ return { -- LSP Configuration & Plugins
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
-      'autopep8',
       'docformatter',
-      'isort',
-      'ruff',
       'prettier',
       'markdownlint',
       'taplo',
@@ -232,6 +234,8 @@ return { -- LSP Configuration & Plugins
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('lspconfig').gleam.setup {}
+    require('lspconfig').ruff.setup { autostart = true }
+    require('lspconfig').basedpyright.setup { autostart = true }
 
     require('mason-lspconfig').setup {
       handlers = {

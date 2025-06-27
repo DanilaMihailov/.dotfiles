@@ -154,7 +154,41 @@ source ~/secrets.sh
 alias emacs='exec $(brew --prefix)/opt/emacs-mac/Emacs.app/Contents/MacOS/Emacs.sh "$@"'
 
 DISABLE_AUTO_TITLE="true"
-precmd () { echo -ne "\e]1;$PWD\a" } # title bar prompt
+
+# Function to set terminal title
+function set_terminal_title() {
+  if [[ -n "$1" ]]; then
+    # When a process is running, show the command and the current directory
+    print -Pn "\e]0;$PWD | $1\a"
+  else
+    # Default title showing only the current directory
+    print -Pn "\e]0;$PWD\a"
+  fi
+}
+
+# Pre-command hook to update the terminal title before each command
+function preexec() {
+  # Update the terminal title with the running command and the current directory
+  set_terminal_title "$1"
+}
+
+# Post-command hook to reset the terminal title after each command
+function precmd() {
+  # Reset the terminal title to the current directory
+  set_terminal_title
+}
+
+# Call the function to set the initial title when the shell starts
+set_terminal_title
 
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
+
+# bun completions
+[ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

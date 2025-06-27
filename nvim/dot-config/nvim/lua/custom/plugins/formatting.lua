@@ -45,6 +45,7 @@ return { -- Autoformat
       htmlangular = { 'prettier' },
       htmldjango = { 'djlint' },
       javascript = { 'prettier' },
+      sh = { 'beautysh' },
     },
     formatters = {
       eslint_d = {
@@ -70,6 +71,9 @@ return { -- Autoformat
         -- NOTE: range_args not really working for prettier
         -- https://github.com/stevearc/conform.nvim/pull/322
         range_args = nil,
+      },
+      beautysh = {
+        prepend_args = { '-i', 2 },
       },
     },
   },

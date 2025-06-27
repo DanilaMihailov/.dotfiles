@@ -141,8 +141,8 @@ vim.keymap.set(
   { desc = 'Open diagnostic [Q]uickfix list' }
 )
 vim.keymap.set('n', '<leader>td', function()
-  vim.g.show_diagnostic_virutal_text = not vim.g.show_diagnostic_virutal_text
-  vim.diagnostic.config { virtual_text = vim.g.show_diagnostic_virutal_text }
+  vim.g.show_diagnostic_virutal_lines = not vim.g.show_diagnostic_virutal_lines
+  vim.diagnostic.config { virtual_lines = vim.g.show_diagnostic_virutal_lines }
 end, { desc = '[T]oggle [D]iagnostics' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier

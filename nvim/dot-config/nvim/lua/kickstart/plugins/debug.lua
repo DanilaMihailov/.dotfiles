@@ -23,15 +23,23 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    {
+      'mfussenegger/nvim-dap-python',
+      config = function()
+        require('dap-python').setup './.run-venv/bin/python'
+        require('dap-python').test_runner = 'pytest'
+      end,
+    },
   },
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
+    local wk = require 'which-key'
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
-      automatic_installation = true,
+      automatic_installation = false,
 
       -- You can provide additional configuration to the handlers,
       -- see mason-nvim-dap README for more information
@@ -42,18 +50,53 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        -- "debugpy" ?
       },
     }
 
+    -- table.insert(require('dap').configurations.python, {
+    --   type = 'python',
+    --   request = 'launch',
+    --   name = 'Start all tests',
+    --   program = '-m debugpy --listen 5678 --wait-for-client -m pytest -n 0',
+    --   cwd = 'server',
+    --   -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+    -- })
+
+    vim.keymap.set(
+      'n',
+      '<leader><leader>dt',
+      require('dap-python').test_method,
+      { desc = 'Test method' }
+    )
+    -- nnoremap <silent> <leader>dn :lua ()<CR>
+    -- nnoremap <silent> <leader>df :lua require('dap-python').test_class()<CR>
+    -- vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
+
     -- Basic debugging keymaps, feel free to change to your liking!
-    vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
-    vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
-    vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
-    vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
+    vim.keymap.set('n', '<leader><leader>dc', dap.continue, { desc = 'Debug: Start/Continue' })
+    vim.keymap.set('n', '<leader><leader>ds', dap.step_into, { desc = 'Debug: Step Into' })
+    vim.keymap.set('n', '<leader><leader>dn', dap.step_over, { desc = 'Debug: Step Over' })
+    vim.keymap.set('n', '<leader><leader>dS', dap.step_out, { desc = 'Debug: Step Out' })
+
+    vim.keymap.set({ 'n', 'v' }, '<leader><leader>dh', function()
+      require('dap.ui.widgets').hover()
+    end, { desc = 'Hover' })
+    vim.keymap.set({ 'n', 'v' }, '<leader><leader>dp', function()
+      require('dap.ui.widgets').preview()
+    end, { desc = 'Preview' })
+
     vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
     vim.keymap.set('n', '<leader>B', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
+
+    vim.fn.sign_define('DapBreakpoint', { text = '', texthl = '', linehl = '', numhl = '' })
+    vim.fn.sign_define(
+      'DapBreakpointCondition',
+      { text = '', texthl = '', linehl = '', numhl = '' }
+    )
+    vim.fn.sign_define('DapStopped', { text = '', texthl = '', linehl = '', numhl = '' })
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
@@ -78,7 +121,12 @@ return {
     }
 
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+    vim.keymap.set(
+      'n',
+      '<leader><leader>dr',
+      dapui.toggle,
+      { desc = 'Debug: See last session result.' }
+    )
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close

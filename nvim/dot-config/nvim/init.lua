@@ -51,6 +51,7 @@ vim.o.shell = '/bin/zsh' -- use zsh as default shell
 vim.filetype.add {
   pattern = {
     ['.*%.js%.ejs'] = 'javascript',
+    ['.*%.py%.example'] = 'python',
     ['.*%.html%.ejs'] = 'html',
     ['.*%.json%.ejs'] = 'json',
   },
@@ -126,7 +127,7 @@ vim.opt.scrolloff = 10
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.g.show_diagnostic_virutal_text = true
+vim.g.show_diagnostic_virutal_lines = true
 -- Diagnostic keymaps
 vim.diagnostic.config {
   severity_sort = true,
@@ -144,8 +145,8 @@ vim.keymap.set(
   { desc = 'Open diagnostic [Q]uickfix list' }
 )
 vim.keymap.set('n', '<leader>td', function()
-  vim.g.show_diagnostic_virutal_text = not vim.g.show_diagnostic_virutal_text
-  vim.diagnostic.config { virtual_text = vim.g.show_diagnostic_virutal_text }
+  vim.g.show_diagnostic_virutal_lines = not vim.g.show_diagnostic_virutal_lines
+  vim.diagnostic.config { virtual_lines = vim.g.show_diagnostic_virutal_lines }
 end, { desc = '[T]oggle [D]iagnostics' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -260,6 +261,30 @@ vim.keymap.set('n', '*', '*zz', { silent = true, desc = '*, but centered' })
 vim.keymap.set('n', '#', '#zz', { silent = true, desc = '#, but centered' })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true, desc = 'g*, but centered' })
 
+vim.opt.spell = true
+vim.opt.spelllang = 'en,ru'
+
+local spell_on_choice = vim.schedule_wrap(function(_, idx)
+  if type(idx) == 'number' then
+    vim.cmd('normal! ' .. idx .. 'z=')
+  end
+end)
+
+local spellsuggest_select = function()
+  if vim.v.count > 0 then
+    spell_on_choice(nil, vim.v.count)
+    return
+  end
+  local cword = vim.fn.expand '<cword>'
+  local prompt = 'Change ' .. vim.inspect(cword) .. ' to:'
+  vim.ui.select(vim.fn.spellsuggest(cword, vim.o.lines), { prompt = prompt }, spell_on_choice)
+end
+
+vim.keymap.set('n', 'z=', spellsuggest_select, { desc = 'Shows spelling suggestions' })
+vim.keymap.set('n', '<leader>ts', function()
+  vim.opt.spell = not vim.opt.spell
+end, { desc = 'Toggle spell check' })
+
 vim.keymap.set(
   'n',
   '<C-x><C-f>',
@@ -291,6 +316,19 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'danilamihailov/vim-tips-wiki',
+  {
+    'mistweaverco/kulala.nvim',
+    keys = {
+      { '<leader>Rs', desc = 'Send request' },
+      { '<leader>Ra', desc = 'Send all requests' },
+      { '<leader>Rb', desc = 'Open scratchpad' },
+    },
+    ft = { 'http', 'rest' },
+    opts = {
+      -- your configuration comes here
+      global_keymaps = true,
+    },
+  },
 
   -- {
   --   dir = '~/personal/nvim-plugins/beacon.nvim/',
@@ -370,6 +408,7 @@ require('lazy').setup({
         { '<leader><leader>', group = '[ ] Additional commands' },
         { '<leader><leader>b', group = '[B]uffer commands' },
         { '<leader><leader>g', group = '[G]it commands' },
+        { '<leader><leader>d', group = '[D]ebug' },
         { '<leader>c', group = '[C]ode' },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>h', group = 'Git [H]unk' },
@@ -448,7 +487,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
@@ -668,19 +707,21 @@ local icons = {
 vim.diagnostic.config {
   underline = true,
   update_in_insert = false,
-  virtual_text = {
-    spacing = 0,
-    source = 'if_many',
-    -- show icons in prefix
-    prefix = function(diagnostic)
-      for d, icon in pairs(icons) do
-        if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-          return icon
-        end
-      end
-      return '●'
-    end,
-  },
+  virtual_lines = true,
+  virtual_text = false,
+  -- virtual_text = {
+  --   spacing = 0,
+  --   source = 'if_many',
+  --   -- show icons in prefix
+  --   prefix = function(diagnostic)
+  --     for d, icon in pairs(icons) do
+  --       if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+  --         return icon
+  --       end
+  --     end
+  --     return '●'
+  --   end,
+  -- },
   jump = {
     float = true,
   },

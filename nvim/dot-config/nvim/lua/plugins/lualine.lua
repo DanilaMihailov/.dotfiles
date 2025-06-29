@@ -28,10 +28,6 @@ return {
       return '\u{f085}  ' .. table.concat(c, ' ')
     end
 
-    local line_x = {
-      { 'filetype', icon_only = true, colored = false },
-    }
-
     require('lualine').setup {
       options = {
         globalstatus = true,
@@ -42,23 +38,21 @@ return {
         section_separators = { left = '', right = '' },
       },
       sections = {
-        lualine_a = {},
-        lualine_b = { 'branch', { 'diagnostics', colored = false } },
+        lualine_a = { 'branch' },
+        lualine_b = { { 'diagnostics', colored = false, always_visible = true } },
         lualine_c = {
-          { 'filename', path = 1 },
+          { 'filename', path = 1, color = { gui = 'bold' } },
         },
-        lualine_x = line_x,
-        lualine_y = {
+        lualine_x = {
           clients_lsp,
-          -- 'lsp_status',
-          'progress',
           {
             require('lazy.status').updates,
             cond = require('lazy.status').has_updates,
           },
         },
+        lualine_y = { { 'filetype', colored = false } },
         lualine_z = {
-          { 'location' },
+          { 'location', 'progress' },
         },
       },
       -- tabline = {

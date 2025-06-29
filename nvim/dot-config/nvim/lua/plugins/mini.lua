@@ -21,7 +21,7 @@ return { -- Collection of various small independent plugins/modules
     require('mini.sessions').setup {
       autoread = true,
       autowrite = true,
-      file = '',
+      file = '.mini-session.vim',
     }
 
     local win_config = function()
@@ -43,6 +43,10 @@ return { -- Collection of various small independent plugins/modules
     vim.keymap.set('n', '<leader><leader>ss', function()
       MiniSessions.select()
     end, { desc = '[S]elect Sessions' })
+
+    vim.keymap.set('n', '<leader><leader>sw', function()
+      MiniSessions.write '.mini-session.vim'
+    end, { desc = '[W]rite Sessions' })
 
     vim.keymap.set('n', '<leader><leader>sr', function()
       MiniSessions.read()

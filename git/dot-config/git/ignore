@@ -2,6 +2,7 @@
 *.swp
 *.un~
 *~
+.mini-session.vim
 
 # macOs
 .DS_Store

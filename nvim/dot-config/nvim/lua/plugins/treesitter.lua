@@ -34,13 +34,6 @@ return {
       require('nvim-treesitter.install').prefer_git = true
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup(opts)
-
-      -- There are additional nvim-treesitter modules that you can use to interact
-      -- with nvim-treesitter. You should go explore a few and see what interests you:
-      --
-      --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-      --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-      --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
   {
@@ -54,7 +47,7 @@ return {
 
       vim.keymap.set('n', '<leader>tc', function()
         context.toggle()
-      end, { desc = '[T]oggle Treesitter [C]ontext' })
+      end, { desc = 'Toggle Treesitter [C]ontext' })
 
       vim.keymap.set('n', '<leader>gc', function()
         require('treesitter-context').go_to_context(vim.v.count1)
@@ -112,20 +105,4 @@ return {
       }
     end,
   },
-  -- {
-  --   'Bekaboo/dropbar.nvim',
-  --   enabled = false,
-  --   event = { 'BufReadPre' },
-  --   -- optional, but required for fuzzy finder support
-  --   dependencies = {
-  --     'nvim-telescope/telescope-fzf-native.nvim',
-  --   },
-  --   config = function()
-  --     require('dropbar').setup()
-  --     vim.cmd.hi 'WinBarNC ctermbg=NONE guibg=NONE'
-  --     vim.keymap.set('n', '<leader><leader>d', function()
-  --       require('dropbar.api').pick()
-  --     end, { desc = '[D]ropbar select' })
-  --   end,
-  -- },
 }

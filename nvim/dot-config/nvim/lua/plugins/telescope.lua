@@ -1,87 +1,97 @@
 return { -- Fuzzy Finder (files, lsp, etc)
   'nvim-telescope/telescope.nvim',
-  -- event = 'VimEnter',
-  lazy = true,
-  keys = { '<leader>s', '<leader>g' },
-  -- branch = '0.1.x',
+  event = 'VimEnter',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    { -- If encountering errors, see telescope-fzf-native README for installation instructions
+    {
       'nvim-telescope/telescope-fzf-native.nvim',
-
-      -- `build` is used to run some command when the plugin is installed/updated.
-      -- This is only run then, not every time Neovim starts up.
       build = 'make',
-
-      -- `cond` is a condition used to determine whether this plugin should be
-      -- installed and loaded.
       cond = function()
         return vim.fn.executable 'make' == 1
       end,
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
-
-    -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
-    -- Telescope is a fuzzy finder that comes with a lot of different things that
-    -- it can fuzzy find! It's more than just a "file finder", it can search
-    -- many different aspects of Neovim, your workspace, LSP, and more!
-    --
-    -- The easiest way to use Telescope, is to start by doing something like:
-    --  :Telescope help_tags
-    --
-    -- After running this command, a window will open up and you're able to
-    -- type in the prompt window. You'll see a list of `help_tags` options and
-    -- a corresponding preview of the help.
-    --
-    -- Two important keymaps to use while in Telescope are:
-    --  - Insert mode: <c-/>
-    --  - Normal mode: ?
-    --
-    -- This opens a window that shows you all of the keymaps for the current
-    -- Telescope picker. This is really useful to discover what Telescope can
-    -- do as well as how to actually do it!
-
-    -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
     local actions = require 'telescope.actions'
+    local themes = require 'telescope.themes'
     require('telescope').setup {
-      -- You can put your default mappings / updates / etc. in here
-      --  All the info you're looking for is in `:help telescope.setup()`
-      --
       defaults = {
+        borderchars = {
+          { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+          prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
+          results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
+          preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        },
         dynamic_preview_title = true,
+        results_title = false,
         path_display = { 'truncate' },
         mappings = {
           i = {
-            -- ['<c-enter>'] = 'to_fuzzy_refine',
+            ['<c-enter>'] = 'to_fuzzy_refine',
             ['<esc>'] = actions.close,
           },
         },
       },
-      -- pickers = {}
+      pickers = {
+        find_files = themes.get_ivy(),
+        help_tags = themes.get_ivy(),
+        keymaps = themes.get_ivy(),
+        builtin = themes.get_ivy(),
+        grep_string = themes.get_ivy(),
+        live_grep = themes.get_ivy(),
+        diagnostics = themes.get_ivy(),
+        resume = themes.get_ivy(),
+        oldfiles = themes.get_ivy(),
+        lsp_references = themes.get_ivy(),
+        lsp_implementations = themes.get_ivy(),
+        lsp_definitions = themes.get_ivy(),
+        lsp_document_symbols = themes.get_ivy(),
+        lsp_dynamic_workspace_symbols = themes.get_ivy(),
+        lsp_type_definitions = themes.get_ivy(),
+      },
       extensions = {
         ['ui-select'] = {
-          require('telescope.themes').get_dropdown(),
+          require('telescope.themes').get_ivy(),
         },
       },
     }
 
+    local function iw(picker, opts)
+      local function inner()
+        picker(themes.get_ivy(opts))
+      end
+
+      return inner
+    end
+
     -- Enable Telescope extensions if they are installed
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
-    pcall(require('telescope').load_extension, 'noice')
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
+    vim.keymap.set('n', '<leader>sb', iw(builtin.buffers), { desc = '[S]earch [B]uffers' })
+    vim.keymap.set('n', '<leader>sc', iw(builtin.commands), { desc = '[S]earch [C]ommands' })
+    vim.keymap.set(
+      'n',
+      '<leader>sC',
+      iw(builtin.colorscheme, { enable_preview = true }),
+      { desc = '[S]earch [C]olorscheme' }
+    )
+
+    vim.keymap.set('n', '<leader>st', iw(builtin.treesitter), { desc = '[S]earch [T]reesitter' })
+    vim.keymap.set(
+      'n',
+      '<leader><leader>gc',
+      iw(builtin.git_branches),
+      { desc = '[G]it [C]heckout' }
+    )
+    vim.keymap.set('n', '<leader><leader>gf', iw(builtin.git_files), { desc = '[G]it [F]iles' })
+
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-    vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch [B]uffers' })
-    vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
-    vim.keymap.set('n', '<leader>sC', function()
-      builtin.colorscheme { enable_preview = true }
-    end, { desc = '[S]earch [C]olorscheme' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
     vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
@@ -95,9 +105,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
       builtin.oldfiles,
       { desc = '[S]earch Recent Files ("." for repeat)' }
     )
-    vim.keymap.set('n', '<leader>st', builtin.treesitter, { desc = '[S]earch [T]reesitter' })
-    vim.keymap.set('n', '<leader><leader>gc', builtin.git_branches, { desc = '[G]it [C]heckout' })
-    vim.keymap.set('n', '<leader><leader>gf', builtin.git_files, { desc = '[G]it [F]iles' })
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()

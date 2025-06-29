@@ -17,7 +17,7 @@ return { -- Autoformat
         vim.g.disable_autoformat = not vim.g.disable_autoformat
       end,
       mode = '',
-      desc = '[T]oggle [F]ormat on Save',
+      desc = 'Toggle [F]ormat on Save',
     },
   },
   opts = {

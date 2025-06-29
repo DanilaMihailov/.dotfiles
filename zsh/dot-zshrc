@@ -129,6 +129,7 @@ alias localip="ipconfig getifaddr en0"
 # vim
 alias e="$EDITOR"
 alias em="$EDITOR -u ~/.config/nvim/minimal.lua"
+alias retro="NVIM_APPNAME=retro $EDITOR"
 alias lazyvim="NVIM_APPNAME=lazynvim $EDITOR"
 alias nvchad="NVIM_APPNAME=nvchad $EDITOR"
 alias nvimrocks="NVIM_APPNAME=nvimrocks $EDITOR"

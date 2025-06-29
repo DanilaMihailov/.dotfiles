@@ -55,6 +55,7 @@ return { -- Autocompletion
       --
       -- See :h blink-cmp-config-keymap for defining your own keymap
       preset = 'default',
+      ['<c-l>'] = { 'select_and_accept', 'snippet_forward', 'fallback' },
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -72,21 +73,24 @@ return { -- Autocompletion
       documentation = { auto_show = true, auto_show_delay_ms = 500 },
     },
 
+    -- Display a preview of the selected item on the current line
+    ghost_text = { enabled = true },
+
     sources = {
       default = { 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
       providers = {
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+        buffer = {
+          opts = {
+            -- get all buffers, even ones like neo-tree
+            get_bufnrs = vim.api.nvim_list_bufs,
+          },
+        },
       },
     },
 
     snippets = { preset = 'luasnip' },
 
-    -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-    -- which automatically downloads a prebuilt binary when enabled.
-    --
-    -- By default, we use the Lua implementation instead, but you may enable
-    -- the rust implementation via `'prefer_rust_with_warning'`
-    --
     -- See :h blink-cmp-config-fuzzy for more information
     fuzzy = { implementation = 'prefer_rust_with_warning' },
 

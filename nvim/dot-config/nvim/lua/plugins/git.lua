@@ -97,13 +97,13 @@ return {
         hi! link NeogitObjectId @string.special.symbol
         hi! link NeogitFilePath @string.special.path
 
-        hi! link NeogitDiffAdd @diff.plus
-        hi! link NeogitDiffAdditions @diff.plus
-        hi! link NeogitDiffAddHighlight @diff.plus
+        "hi! link NeogitDiffAdd @diff.plus
+        "hi! link NeogitDiffAdditions @diff.plus
+        "hi! link NeogitDiffAddHighlight @diff.plus
 
-        hi! link NeogitDiffDelete @diff.minus
-        hi! link NeogitDiffDeletions @diff.minus
-        hi! link NeogitDiffDeleteHighlight @diff.minus
+        "hi! link NeogitDiffDelete @diff.minus
+        "hi! link NeogitDiffDeletions @diff.minus
+        "hi! link NeogitDiffDeleteHighlight @diff.minus
 
         hi! link NeogitWinSeparator WinSeparator
       ]]
@@ -114,6 +114,8 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     ---@type Gitsigns.Config
     opts = {
+      signcolumn = false,
+      numhl = true,
       -- current_line_blame = true,
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'

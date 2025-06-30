@@ -17,6 +17,18 @@ return { -- Collection of various small independent plugins/modules
     -- - sr)'  - [S]urround [R]eplace [)] [']
     require('mini.surround').setup()
 
+    require('mini.bracketed').setup()
+
+    require('mini.move').setup {
+      mappings = {
+        up = '[e',
+        down = ']e',
+
+        line_up = '[e',
+        line_down = ']e',
+      },
+    }
+
     require('mini.pairs').setup()
     require('mini.sessions').setup {
       autoread = true,

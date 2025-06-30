@@ -44,7 +44,8 @@ return {
           { 'filename', path = 1, color = { gui = 'bold' } },
         },
         lualine_x = {
-          clients_lsp,
+          'lsp_status',
+          -- clients_lsp,
           {
             require('lazy.status').updates,
             cond = require('lazy.status').has_updates,

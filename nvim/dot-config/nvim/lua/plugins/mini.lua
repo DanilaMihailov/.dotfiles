@@ -49,6 +49,10 @@ return { -- Collection of various small independent plugins/modules
     end
     require('mini.notify').setup {
       window = { config = win_config },
+      -- show it in lualine
+      lsp_progress = {
+        enable = false,
+      },
     }
     vim.notify = require('mini.notify').make_notify()
 

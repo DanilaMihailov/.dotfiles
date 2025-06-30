@@ -20,6 +20,7 @@ return {
     vim.opt.background = 'dark'
     vim.cmd [[
         hi FoldColumn guibg=NONE
+        hi! link Delimiter GruvboxFg1
       ]]
   end,
 }

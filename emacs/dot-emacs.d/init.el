@@ -12,7 +12,7 @@
  ;; If there is more than one, they won't work right.
  '(icomplete-mode t)
  '(package-selected-packages
-   '(wanderlust flycheck company lsp-treemacs lsp-pyright lsp-ui lsp-mode tree-sitter-langs tree-sitter markdown-mode evil-collection magit general which-key projectile evil doom-themes doom-modeline))
+   '(notmuch wanderlust flycheck company lsp-treemacs lsp-pyright lsp-ui lsp-mode tree-sitter-langs tree-sitter markdown-mode evil-collection magit general which-key projectile evil doom-themes doom-modeline))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -20,7 +20,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
 ;; No sound
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
@@ -153,3 +152,6 @@
 (use-package counsel :ensure t
   :init
   )
+
+
+(autoload 'notmuch "notmuch" "Notmuch mail" t)

@@ -45,6 +45,7 @@ return { -- Autoformat
       htmlangular = { 'prettier' },
       htmldjango = { 'djlint' },
       javascript = { 'prettier' },
+      typescript = { 'prettier' },
       sh = { 'beautysh' },
     },
     formatters = {

@@ -39,7 +39,7 @@ return {
       },
       sections = {
         lualine_a = { 'branch' },
-        lualine_b = { { 'diagnostics', colored = false, always_visible = true } },
+        lualine_b = { { 'diagnostics', colored = false, always_visible = false } },
         lualine_c = {
           { 'filename', path = 1, color = { gui = 'bold' } },
         },

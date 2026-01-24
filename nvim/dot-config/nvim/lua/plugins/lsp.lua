@@ -160,6 +160,8 @@ return {
         -- ts_ls = {},
         --
 
+        -- elixirls = { enabled = false },
+
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -196,7 +198,17 @@ return {
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('lspconfig').ruff.setup { autostart = true }
-      require('lspconfig').basedpyright.setup { autostart = true }
+      -- require('lspconfig').basedpyright.setup { autostart = true }
+      -- require('lspconfig').ty.setup { autostart = true, settings = { ty = {} } }
+      vim.lsp.enable 'ty'
+
+      vim.lsp.config('expert', {
+        cmd = { 'expert', '--stdio' },
+        root_markers = { 'mix.exs', '.git' },
+        filetypes = { 'elixir', 'eelixir', 'heex' },
+      })
+
+      vim.lsp.enable 'expert'
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
@@ -214,5 +226,18 @@ return {
         },
       }
     end,
+  },
+  -- tailwind-tools.lua
+  {
+    'luckasRanarison/tailwind-tools.nvim',
+    enabled = false,
+    name = 'tailwind-tools',
+    build = ':UpdateRemotePlugins',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-telescope/telescope.nvim', -- optional
+      'neovim/nvim-lspconfig', -- optional
+    },
+    opts = {}, -- your configuration
   },
 }

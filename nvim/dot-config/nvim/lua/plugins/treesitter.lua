@@ -50,7 +50,7 @@ return {
       end, { desc = 'Toggle Treesitter [C]ontext' })
 
       vim.keymap.set('n', '<leader>gc', function()
-        require('treesitter-context').go_to_context(vim.v.count1)
+        require('sldfasldf').go_to_context(vim.v.count1)
       end, { silent = true, desc = '[G]o to [C]ontext (upper)' })
     end,
   },

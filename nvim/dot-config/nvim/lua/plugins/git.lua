@@ -28,7 +28,11 @@ return {
       -- },
       disable_hint = true,
       git_services = {
-        ['gitlab.clabs.net'] = 'https://gitlab.clabs.net/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}&merge_request[target_branch]=master',
+        ["gitlab.clabs.net"] = {
+            pull_request = "https://gitlab.clabs.net/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}",
+            commit = "https://gitlab.clabs.net/${owner}/${repository}/-/commit/${oid}",
+            tree = "https://gitlab.clabs.net/${owner}/${repository}/-/tree/${branch_name}?ref_type=heads",
+        },
       },
       disable_context_highlighting = true,
       graph_style = 'unicode',

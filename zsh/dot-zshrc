@@ -5,6 +5,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+export XDG_CONFIG_HOME="$HOME/.config"
+
 export GITLAB_URL="https://gitlab.clabs.net/"
 
 # Do not run update on every command wtf
@@ -61,7 +63,7 @@ zinit snippet OMZP::asdf
 zinit snippet OMZP::mosh
 zinit snippet OMZP::npm
 # zinit snippet OMZP::poetry
-zinit snippet OMZP::tmux
+# zinit snippet OMZP::tmux
 zinit snippet OMZP::command-not-found
 
 zinit wait lucid is-snippet as"completion" for \
@@ -81,6 +83,7 @@ export LANG=en_US.UTF-8
 
 export MANPAGER='nvim +Man!'
 export EDITOR='nvim'
+export BROWSER='qutebrowser'
 
 # run this command on ssh login 
 if [[ -n $SSH_CONNECTION ]]; then
@@ -193,3 +196,9 @@ eval "$(uvx --generate-shell-completion zsh)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export GNUPGHOME="$HOME/.gnupg"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/zen/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions

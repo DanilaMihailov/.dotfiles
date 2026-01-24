@@ -17,55 +17,48 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- See `:help telescope` and `:help telescope.setup()`
     local actions = require 'telescope.actions'
     local themes = require 'telescope.themes'
+    local ivy = themes.get_ivy { borderchars = { preview = { ' ' } } }
+    local presorter = require('telescope.sorters').prefilter
     require('telescope').setup {
       defaults = {
-        borderchars = {
-          { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-          prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
-          results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
-          preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-        },
         dynamic_preview_title = true,
         results_title = false,
         path_display = { 'truncate' },
         mappings = {
           i = {
             ['<c-enter>'] = 'to_fuzzy_refine',
+            ['<c-r>'] = 'to_fuzzy_refine',
             ['<esc>'] = actions.close,
           },
         },
       },
       pickers = {
-        find_files = themes.get_ivy(),
-        help_tags = themes.get_ivy(),
-        keymaps = themes.get_ivy(),
-        builtin = themes.get_ivy(),
-        grep_string = themes.get_ivy(),
-        live_grep = themes.get_ivy(),
-        diagnostics = themes.get_ivy(),
-        resume = themes.get_ivy(),
-        oldfiles = themes.get_ivy(),
-        lsp_references = themes.get_ivy(),
-        lsp_implementations = themes.get_ivy(),
-        lsp_definitions = themes.get_ivy(),
-        lsp_document_symbols = themes.get_ivy(),
-        lsp_dynamic_workspace_symbols = themes.get_ivy(),
-        lsp_type_definitions = themes.get_ivy(),
+        find_files = themes.get_ivy { previewer = false },
+        help_tags = ivy,
+        keymaps = ivy,
+        builtin = ivy,
+        grep_string = ivy,
+        live_grep = ivy,
+        diagnostics = ivy,
+        resume = ivy,
+        oldfiles = ivy,
+        lsp_references = ivy,
+        lsp_implementations = ivy,
+        lsp_definitions = ivy,
+        lsp_document_symbols = ivy,
+        lsp_dynamic_workspace_symbols = ivy,
+        lsp_type_definitions = ivy,
+        git_files = ivy,
+        git_branches = ivy,
+        buffers = ivy,
+        commands = ivy,
       },
       extensions = {
         ['ui-select'] = {
-          require('telescope.themes').get_ivy(),
+          themes.get_cursor(),
         },
       },
     }
-
-    local function iw(picker, opts)
-      local function inner()
-        picker(themes.get_ivy(opts))
-      end
-
-      return inner
-    end
 
     -- Enable Telescope extensions if they are installed
     pcall(require('telescope').load_extension, 'fzf')
@@ -73,23 +66,15 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
-    vim.keymap.set('n', '<leader>sb', iw(builtin.buffers), { desc = '[S]earch [B]uffers' })
-    vim.keymap.set('n', '<leader>sc', iw(builtin.commands), { desc = '[S]earch [C]ommands' })
-    vim.keymap.set(
-      'n',
-      '<leader>sC',
-      iw(builtin.colorscheme, { enable_preview = true }),
-      { desc = '[S]earch [C]olorscheme' }
-    )
+    vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch [B]uffers' })
+    vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
+    vim.keymap.set('n', '<leader>sC', function()
+      builtin.colorscheme { enable_preview = true }
+    end, { desc = '[S]earch [C]olorscheme' })
 
-    vim.keymap.set('n', '<leader>st', iw(builtin.treesitter), { desc = '[S]earch [T]reesitter' })
-    vim.keymap.set(
-      'n',
-      '<leader><leader>gc',
-      iw(builtin.git_branches),
-      { desc = '[G]it [C]heckout' }
-    )
-    vim.keymap.set('n', '<leader><leader>gf', iw(builtin.git_files), { desc = '[G]it [F]iles' })
+    vim.keymap.set('n', '<leader>st', builtin.treesitter, { desc = '[S]earch [T]reesitter' })
+    vim.keymap.set('n', '<leader><leader>gc', builtin.git_branches, { desc = '[G]it [C]heckout' })
+    vim.keymap.set('n', '<leader><leader>gf', builtin.git_files, { desc = '[G]it [F]iles' })
 
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
@@ -109,7 +94,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
         winblend = 10,
         previewer = false,
       })
@@ -118,10 +103,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- It's also possible to pass additional configuration options.
     --  See `:help telescope.builtin.live_grep()` for information about particular keys
     vim.keymap.set('n', '<leader>s/', function()
-      builtin.live_grep {
+      builtin.live_grep(themes.get_ivy {
         grep_open_files = true,
         prompt_title = 'Live Grep in Open Files',
-      }
+      })
     end, { desc = '[S]earch [/] in Open Files' })
 
     -- Shortcut for searching your Neovim configuration files

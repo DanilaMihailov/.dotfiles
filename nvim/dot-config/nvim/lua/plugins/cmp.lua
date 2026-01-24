@@ -28,6 +28,7 @@ return { -- Autocompletion
       opts = {},
     },
     'folke/lazydev.nvim',
+    'Kaiser-Yang/blink-cmp-avante',
   },
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
@@ -76,13 +77,20 @@ return { -- Autocompletion
     },
 
     sources = {
-      default = { 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
+      default = { 'avante', 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
       providers = {
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         buffer = {
           opts = {
             -- get all buffers, even ones like neo-tree
             get_bufnrs = vim.api.nvim_list_bufs,
+          },
+        },
+        avante = {
+          module = 'blink-cmp-avante',
+          name = 'Avante',
+          opts = {
+            -- options for blink-cmp-avante
           },
         },
       },

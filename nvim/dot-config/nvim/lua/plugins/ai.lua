@@ -1,6 +1,13 @@
 return {
   'olimorris/codecompanion.nvim',
-  opts = {},
+  enabled = false,
+  opts = {
+    interactions = {
+      chat = {
+        adapter = 'opencode',
+      },
+    },
+  },
   dependencies = {
     'nvim-lua/plenary.nvim',
   },

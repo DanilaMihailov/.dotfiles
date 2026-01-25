@@ -1,7 +1,11 @@
 return {
   'sudo-tee/opencode.nvim',
   config = function()
-    require('opencode').setup {}
+    require('opencode').setup {
+      ui = {
+        input_height = 0.05,
+      },
+    }
   end,
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -18,8 +22,8 @@ return {
     -- 'hrsh7th/nvim-cmp',
 
     -- Optional, for file mentions picker, pick only one
-    'folke/snacks.nvim',
-    -- 'nvim-telescope/telescope.nvim',
+    -- 'folke/snacks.nvim',
+    'nvim-telescope/telescope.nvim',
     -- 'ibhagwan/fzf-lua',
     -- 'nvim_mini/mini.nvim',
   },

@@ -2,8 +2,14 @@ return {
   'sudo-tee/opencode.nvim',
   config = function()
     require('opencode').setup {
+      default_mode = 'plan',
       ui = {
         input_height = 0.05,
+      },
+      keymap = {
+        input_window = {
+          ['<tab>'] = { 'switch_mode', mode = { 'n', 'i' } },
+        },
       },
     }
   end,

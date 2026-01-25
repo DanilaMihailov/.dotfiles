@@ -4,7 +4,7 @@ return {
     require('opencode').setup {
       default_mode = 'plan',
       ui = {
-        input_height = 0.05,
+        input_height = 0.08,
       },
       keymap = {
         input_window = {

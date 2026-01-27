@@ -2,9 +2,75 @@
 	"$schema": "https://opencode.ai/config.json",
 	"theme": "gruvbox",
 	"autoshare": false,
-	"model": "mls/qwen3-coder:30b-a3b-q8_0",
+	"model": "bothub/qwen3-coder",
 	"autoupdate": true,
+	"keybinds": {
+		"leader": "ctrl+x",
+		"messages_line_up": "ctrl+y",
+		"messages_line_down": "ctrl+e",
+		"messages_half_page_up": "ctrl+u",
+		"messages_half_page_down": "ctrl+d",
+	},
+	"tui": {
+		"scroll_speed": 5,
+		"scroll_acceleration": {
+			"enabled": true
+		}
+	},
 	"provider": {
+		"bothub": {
+			"npm": "@ai-sdk/openai-compatible",
+			"name": "bothub",
+			"options": {
+				"baseURL": "https://bothub.chat/api/v2/openai/v1",
+			},
+			"models": {
+				"gpt-5.2": {
+					"name": "gpt-5.2",
+					"cost": {
+						"input": 328.13,
+						"output": 2625
+					}
+				},
+				"claude-opus-4.5": {
+					"name": "claude-opus-4.5",
+					"cost": {
+						"input": 937.5,
+						"output": 4687.5
+					}
+				},
+				"minimax-01": {
+					"name": "minimax-01",
+					"cost": {
+						"input": 37.5,
+						"output": 206.25
+					}
+				},
+				"gpt-5-mini": {
+					"name": "gpt-5-mini",
+					"cost": {
+						"input": 37.5,
+						"output": 300
+					}
+				},
+				"qwen3-coder": {
+					"name": "qwen3-coder",
+					"cost": {
+						"input": 33,
+						"output": 270
+					},
+					"options": {
+						"provider": {
+							"order": [
+								"google",
+								"deepinfra",
+							],
+							"allow_fallbacks": false
+						}
+					}
+				},
+			}
+		},
 		"mls": {
 			"npm": "@ai-sdk/openai-compatible",
 			"name": "MLS",
@@ -13,12 +79,41 @@
 			},
 			"models": {
 				"qwen3-coder:30b-a3b-q8_0": {
-					"name": "qwen3 coder"
+					"name": "qwen3-coder"
+				}
+			}
+		},
+		"local": {
+			"npm": "@ai-sdk/openai-compatible",
+			"name": "local",
+			"options": {
+				"baseURL": "http://localhost:11434/v1"
+			},
+			"models": {
+				"deepseek-r1:1.5b": {
+					"name": "deepseek-r1",
+					"tool_call": true
+				},
+				"qwen2.5-coder:1.5b": {
+					"name": "qwen2.5-coder"
 				}
 			}
 		}
 	},
 	"agent": {
+		"chat": {
+			"model": "local/qwen2.5-coder:1.5b",
+			"tools": {
+				"write": false,
+				"edit": false,
+				"bash": false,
+				"webfetch": true
+			}
+		},
+		"title": {
+			"model": "mls/qwen3-coder:30b-a3b-q8_0",
+			"maxTokens": 80
+		},
 		"code-reviewer": {
 			"description": "Reviews code for general best practices and potential issues",
 			"mode": "subagent",

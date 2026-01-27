@@ -12,16 +12,7 @@ return {
   ---@type avante.Config
   opts = {
     -- add any opts here
-    -- this file can contain specific instructions for your project
-    instructions_file = 'avante.md',
-    -- for example
     provider = 'opencode',
-    providers = {
-      ollama = {
-        endpoint = 'http://192.168.50.2:11434', -- Note that there is no /v1 at the end.
-        model = 'qwen3-coder:30b-a3b-q8_0',
-      },
-    },
     acp_providers = {
       ['opencode'] = {
         command = 'opencode',

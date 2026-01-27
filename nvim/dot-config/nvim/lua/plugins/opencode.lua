@@ -9,7 +9,13 @@ return {
       keymap = {
         input_window = {
           ['<tab>'] = { 'switch_mode', mode = { 'n', 'i' } },
+          ['<C-cr>'] = { 'submit_input_prompt', mode = { 'n', 'i' } },
+          ['<C-n>'] = { 'next_prompt_history', mode = { 'n', 'i' } },
+          ['<C-p>'] = { 'prev_prompt_history', mode = { 'n', 'i' } },
         },
+      },
+      debug = {
+        show_ids = false,
       },
     }
   end,

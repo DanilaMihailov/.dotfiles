@@ -2,8 +2,12 @@
 	"$schema": "https://opencode.ai/config.json",
 	"theme": "gruvbox",
 	"autoshare": false,
-	"model": "bothub/qwen3-coder",
+	"model": "bothub/glm-4.7-flash",
 	"autoupdate": true,
+	"enabled_providers": [
+		"bothub",
+		"mls"
+	],
 	"keybinds": {
 		"leader": "ctrl+x",
 		"messages_line_up": "ctrl+y",
@@ -28,36 +32,66 @@
 				"gpt-5.2": {
 					"name": "gpt-5.2",
 					"cost": {
-						"input": 328.13,
-						"output": 2625
+						"input": 206.25,
+						"output": 1650
 					}
 				},
 				"claude-opus-4.5": {
 					"name": "claude-opus-4.5",
 					"cost": {
-						"input": 937.5,
-						"output": 4687.5
+						"input": 589.29,
+						"output": 2946
 					}
 				},
 				"minimax-01": {
 					"name": "minimax-01",
 					"cost": {
-						"input": 37.5,
-						"output": 206.25
+						"input": 23.57,
+						"output": 129.64
 					}
 				},
 				"gpt-5-mini": {
 					"name": "gpt-5-mini",
 					"cost": {
-						"input": 37.5,
-						"output": 300
+						"input": 29.46,
+						"output": 235.71
 					}
+				},
+				"gpt-5-nano": {
+					"name": "gpt-5-nano",
+					"cost": {
+						"input": 5.89,
+						"output": 47.14
+					},
+				},
+				"glm-4.7-flash": {
+					"name": "glm-4.7-flash",
+					"cost": {
+						"input": 8.25,
+						"output": 47.14
+					},
+					"limit": {
+						"context": 200000,
+						"output": 66000
+					},
+					"variants": {
+						"fast": {
+							"reasoningEffort": "none"
+						},
+					}
+				},
+				"qwen3-coder-30b-a3b-instruct": {
+					"name": "qwen3-coder-30b",
+					"cost": {
+						"input": 8.25,
+						"output": 31.82
+					},
 				},
 				"qwen3-coder": {
 					"name": "qwen3-coder",
 					"cost": {
-						"input": 33,
-						"output": 270
+						"input": 25.93,
+						"output": 212.14
 					},
 					"options": {
 						"provider": {
@@ -80,6 +114,14 @@
 			"models": {
 				"qwen3-coder:30b-a3b-q8_0": {
 					"name": "qwen3-coder"
+				},
+				"glm-4.7-flash:q8_0": {
+					"name": "glm-4.7",
+					"variants": {
+						"fast": {
+							"reasoningEffort": "none"
+						},
+					}
 				}
 			}
 		},
@@ -94,15 +136,28 @@
 					"name": "deepseek-r1",
 					"tool_call": true
 				},
-				"qwen2.5-coder:1.5b": {
-					"name": "qwen2.5-coder"
+				"qwen2.5-coder:3b-base-q8_0": {
+					"name": "qwen2-coder:3b",
+					"tool_call": true
+				},
+				"granite4:350m-h-q8_0": {
+					"name": "granite4:350m-h-q8_0",
+					"tool_call": true
+				},
+				"granite4:1b-h-q8_0": {
+					"name": "granite4:1b-h-q8_0",
+					"tool_call": true
+				},
+				"ministral-3:3b-instruct-2512-q8_0": {
+					"name": "ministral-3:3b",
+					"tool_call": true
 				}
 			}
 		}
 	},
 	"agent": {
 		"chat": {
-			"model": "local/qwen2.5-coder:1.5b",
+			"model": "bothub/glm-4.7-flash",
 			"tools": {
 				"write": false,
 				"edit": false,
@@ -111,13 +166,13 @@
 			}
 		},
 		"title": {
-			"model": "mls/qwen3-coder:30b-a3b-q8_0",
+			"model": "bothub/glm-4.7-flash",
 			"maxTokens": 80
 		},
 		"code-reviewer": {
 			"description": "Reviews code for general best practices and potential issues",
 			"mode": "subagent",
-			"model": "mls/qwen3-coder:30b-a3b-q8_0",
+			"model": "bothub/glm-4.7-flash",
 			"prompt": "You are a code reviewer focusing on general best practices, including code structure, readability, maintainability, and adherence to common conventions.",
 			"tools": {
 				"write": false,

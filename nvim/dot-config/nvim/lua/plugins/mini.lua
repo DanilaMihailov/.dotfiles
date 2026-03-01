@@ -56,6 +56,11 @@ return { -- Collection of various small independent plugins/modules
     }
     vim.notify = require('mini.notify').make_notify()
 
+    -- Create command to show history
+    vim.api.nvim_create_user_command('Notifications', function()
+      require('mini.notify').show_history()
+    end, { desc = 'Show notification history' })
+
     vim.keymap.set('n', '<leader><leader>ss', function()
       MiniSessions.select()
     end, { desc = '[S]elect Sessions' })

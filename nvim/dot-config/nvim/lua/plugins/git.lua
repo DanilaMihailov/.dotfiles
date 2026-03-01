@@ -1,4 +1,21 @@
 -- all git integrations live here (signs, status, diffview)
+--
+
+local function qf_unique_files()
+  local qf_list = vim.fn.getqflist()
+  local unique_list = {}
+  local seen = {}
+
+  for _, entry in ipairs(qf_list) do
+    if not seen[entry.bufnr] then
+      table.insert(unique_list, entry)
+      seen[entry.bufnr] = true
+    end
+  end
+
+  vim.fn.setqflist(unique_list, 'r')
+end
+
 return {
   { -- better diff/merge tool
     'sindrets/diffview.nvim',
@@ -6,6 +23,9 @@ return {
     cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
     opts = {
       enhanced_diff_hl = true,
+      file_panel = {
+        listing_style = 'list', -- This changes the view from tree to flat list
+      },
     },
     init = function()
       vim.opt.fillchars:append { diff = '╱' }
@@ -28,10 +48,10 @@ return {
       -- },
       disable_hint = true,
       git_services = {
-        ["gitlab.clabs.net"] = {
-            pull_request = "https://gitlab.clabs.net/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}",
-            commit = "https://gitlab.clabs.net/${owner}/${repository}/-/commit/${oid}",
-            tree = "https://gitlab.clabs.net/${owner}/${repository}/-/tree/${branch_name}?ref_type=heads",
+        ['gitlab.clabs.net'] = {
+          pull_request = 'https://gitlab.clabs.net/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}',
+          commit = 'https://gitlab.clabs.net/${owner}/${repository}/-/commit/${oid}',
+          tree = 'https://gitlab.clabs.net/${owner}/${repository}/-/tree/${branch_name}?ref_type=heads',
         },
       },
       disable_context_highlighting = true,
@@ -175,6 +195,28 @@ return {
           { desc = 'Toggle git show [b]lame line' }
         )
         map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = 'Toggle git show [D]eleted' })
+
+        map('n', '<leader>hq', function()
+          gitsigns.setqflist 'all'
+        end, { desc = 'Quickfix list with all hunks' })
+
+        vim.api.nvim_create_user_command('Review', function()
+          gitsigns.change_base('master', true)
+          gitsigns.toggle_signs(true)
+          gitsigns.setqflist('all', {}, function(err)
+            if not err then
+              qf_unique_files()
+            end
+          end)
+          vim.opt.signcolumn = 'yes'
+        end, { desc = 'Review against master' })
+
+        vim.api.nvim_create_user_command('ReviewDone', function()
+          gitsigns.change_base(nil, true)
+          gitsigns.toggle_signs(false)
+          vim.opt.signcolumn = 'number'
+          vim.cmd 'cclose'
+        end, { desc = 'Review against master' })
       end,
     },
     init = function()

@@ -1,10 +1,17 @@
 return {
-  'sudo-tee/opencode.nvim',
+  dir = '~/personal/opencode.nvim',
   config = function()
     require('opencode').setup {
       default_mode = 'plan',
       ui = {
         input_height = 0.08,
+        cost_format = '%.2f₽',
+        output = {
+          tools = {
+            show_output = true, -- Show tools output [diffs, cmd output, etc.] (default: true)
+            show_reasoning_output = false, -- Show reasoning/thinking steps output (default: true)
+          },
+        },
       },
       keymap = {
         input_window = {
@@ -13,18 +20,30 @@ return {
           ['<cr>'] = { 'submit_input_prompt', mode = { 'n', 'i' } },
           ['<C-n>'] = { 'next_prompt_history', mode = { 'n', 'i' } },
           ['<C-p>'] = { 'prev_prompt_history', mode = { 'n', 'i' } },
+          ['<C-t>'] = { 'cycle_variant', mode = { 'n', 'i' } }, -- Cycle through model variants
+          ['<C-x>l'] = { 'select_session', mode = { 'n', 'i' } }, -- Select and load a opencode session
+          ['<C-x>m'] = { 'configure_provider', mode = { 'n', 'i' } }, -- Quick provider and model switch from predefined list
+          ['<C-x>n'] = { 'open_input_new_session', mode = { 'n', 'i' } }, -- Opens and focuses on input window on insert mode. Creates a new session
+        },
+        output_window = {
+          ['<C-t>'] = { 'cycle_variant', mode = { 'n', 'i' } }, -- Cycle through model variants
+          ['<C-x>l'] = { 'select_session' }, -- Select and load a opencode session
+          ['<C-x>m'] = { 'configure_provider' }, -- Quick provider and model switch from predefined list
+          ['<C-x>n'] = { 'open_input_new_session' }, -- Opens and focuses on input window on insert mode. Creates a new session
         },
       },
       debug = {
         show_ids = false,
       },
+      context = {
+        diagnostics = {
+          enabled = false,
+        },
+        current_file = {
+          enabled = false,
+        },
+      },
     }
-
-    local util = require('opencode.util')
-    ---@diagnostic disable-next-line: duplicate-set-field
-    util.format_cost = function(c)
-      return c and c > 0 and string.format('₽%.2f', c) or nil
-    end
   end,
   dependencies = {
     'nvim-lua/plenary.nvim',

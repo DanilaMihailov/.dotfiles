@@ -201,7 +201,21 @@ return {
         end, { desc = 'Quickfix list with all hunks' })
 
         vim.api.nvim_create_user_command('Review', function()
-          gitsigns.change_base('master', true)
+          -- Try merge-base --fork-point first (better for rebased branches), fall back to merge-base
+          local mb = vim.fn.system {
+            'git',
+            'merge-base',
+            '--fork-point',
+            'HEAD',
+            'master',
+          }
+          if not mb or mb == '' or vim.v.shell_error ~= 0 then
+            mb = vim.fn.system { 'git', 'merge-base', 'HEAD', 'master' }
+          end
+
+          vim.notify('Reviewing against ' .. mb)
+
+          gitsigns.change_base(vim.trim(mb), true)
           gitsigns.toggle_signs(true)
           gitsigns.setqflist('all', {}, function(err)
             if not err then
@@ -217,6 +231,14 @@ return {
           vim.opt.signcolumn = 'number'
           vim.cmd 'cclose'
         end, { desc = 'Review against master' })
+
+        vim.api.nvim_create_user_command('ReviewMR', function()
+          require('gitlab_review').review_mr()
+        end, { desc = 'Select and review a GitLab MR' })
+
+        vim.api.nvim_create_user_command('GDraft', function(opts)
+          require('gitlab_review').create_draft_note(opts.range > 0)
+        end, { desc = 'Create a GitLab draft note', range = true })
       end,
     },
     init = function()

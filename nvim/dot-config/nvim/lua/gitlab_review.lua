@@ -147,9 +147,14 @@ local function render_dashboard(mr_iid)
   vim.opt_local.swapfile = false
   vim.opt_local.filetype = 'markdown'
   vim.opt_local.wrap = true
+  vim.opt_local.number = false
+  vim.opt_local.relativenumber = false
+  vim.opt_local.signcolumn = 'no'
 
   local lines = {
     '# ' .. mr.title,
+    '`' .. mr.source_branch .. ' → ' .. mr.target_branch .. '` **@' .. mr.author.username .. '**',
+    '---',
     '',
   }
 

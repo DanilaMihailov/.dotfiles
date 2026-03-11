@@ -1,26 +1,17 @@
 {
 	"$schema": "https://opencode.ai/config.json",
-	"theme": "gruvbox",
 	"autoshare": false,
-	"model": "bothub/glm-4.7-flash",
+	"model": "bothub/gemini-3-flash-preview",
 	"autoupdate": true,
 	"enabled_providers": [
+		"github-copilot",
+		"openai",
 		"bothub",
-		"mls"
+		"mls",
+		"DISABLED_local",
+		"DISABLED_openrouter",
+		"DISABLED_zen"
 	],
-	"keybinds": {
-		"leader": "ctrl+x",
-		"messages_line_up": "ctrl+y",
-		"messages_line_down": "ctrl+e",
-		"messages_half_page_up": "ctrl+u",
-		"messages_half_page_down": "ctrl+d",
-	},
-	"tui": {
-		"scroll_speed": 5,
-		"scroll_acceleration": {
-			"enabled": true
-		}
-	},
 	"provider": {
 		"bothub": {
 			"npm": "@ai-sdk/openai-compatible",
@@ -29,25 +20,11 @@
 				"baseURL": "https://bothub.chat/api/v2/openai/v1",
 			},
 			"models": {
-				"gpt-5.2": {
-					"name": "gpt-5.2",
+				"gpt-5.2-codex": {
+					"name": "gpt-5.2-codex",
 					"cost": {
 						"input": 206.25,
 						"output": 1650
-					}
-				},
-				"claude-opus-4.5": {
-					"name": "claude-opus-4.5",
-					"cost": {
-						"input": 589.29,
-						"output": 2946
-					}
-				},
-				"minimax-01": {
-					"name": "minimax-01",
-					"cost": {
-						"input": 23.57,
-						"output": 129.64
 					}
 				},
 				"gpt-5-mini": {
@@ -63,6 +40,63 @@
 						"input": 5.89,
 						"output": 47.14
 					},
+					"options": {
+						"provider": {
+							"only": [
+								"openai",
+							],
+							"allow_fallbacks": false
+						}
+					}
+				},
+				"gpt-4.1-nano": {
+					"name": "gpt-4.1-nano",
+					"cost": {
+						"input": 11.79,
+						"output": 47.14
+					},
+					"options": {
+						"provider": {
+							"only": [
+								"azure",
+							],
+							"allow_fallbacks": false
+						}
+					}
+				},
+				"claude-sonnet-4.5": {
+					"name": "claude-sonnet-4.5",
+					"cost": {
+						"input": 353.57,
+						"output": 1767.86
+					}
+				},
+				"claude-opus-4.5": {
+					"name": "claude-opus-4.5",
+					"cost": {
+						"input": 589.29,
+						"output": 2946
+					}
+				},
+				"glm-4.7": {
+					"name": "glm-4.7",
+					"cost": {
+						"input": 50,
+						"output": 230,
+					},
+					"limit": {
+						"context": 203000,
+						"output": 0
+					},
+					"options": {
+						"provider": {
+							"order": [
+								"deepinfra",
+								"together",
+							],
+							"allow_fallbacks": false
+						}
+					}
 				},
 				"glm-4.7-flash": {
 					"name": "glm-4.7-flash",
@@ -78,29 +112,180 @@
 						"fast": {
 							"reasoningEffort": "none"
 						},
-					}
-				},
-				"qwen3-coder-30b-a3b-instruct": {
-					"name": "qwen3-coder-30b",
-					"cost": {
-						"input": 8.25,
-						"output": 31.82
-					},
-				},
-				"qwen3-coder": {
-					"name": "qwen3-coder",
-					"cost": {
-						"input": 25.93,
-						"output": 212.14
 					},
 					"options": {
 						"provider": {
-							"order": [
-								"google",
-								"deepinfra",
+							"sort": "throughput"
+						}
+					}
+				},
+				"glm-5": {
+					"name": "GLM 5",
+					"cost": {
+						"input": 70,
+						"output": 230
+					},
+					"limit": {
+						"context": 200000,
+						"output": 130000
+					},
+					"options": {
+						"provider": {
+							"sort": "throughput"
+						}
+					}
+				},
+				"gemini-3-flash-preview": {
+					"name": "gemini-3-flash-preview",
+					"cost": {
+						"input": 58.9,
+						"output": 353.57
+					},
+					"options": {
+						"provider": {
+							"only": [
+								"google-ai-studio",
+							]
+						}
+					}
+				},
+				"gemini-3.1-flash-lite-preview": {
+					"name": "gemini-3.1-flash-lite-preview",
+					"cost": {
+						"input": 19.79,
+						"output": 120
+					},
+					"options": {
+						"provider": {
+							"sort": "throughput"
+						}
+					},
+					"variants": {
+						"fast": {
+							"reasoningEffort": "none"
+						},
+					},
+				},
+				"minimax-m2.1": {
+					"name": "minimax-m2.1",
+					"cost": {
+						"input": 35.36,
+						"output": 141.43
+					},
+					"limit": {
+						"context": 205000,
+						"output": 0
+					},
+					"options": {
+						"provider": {
+							"sort": "throughput"
+						}
+					}
+				},
+				"minimax-m2.5": {
+					"name": "minimax-m2.5",
+					"cost": {
+						"input": 35.36,
+						"output": 141.43
+					},
+					"limit": {
+						"context": 205000,
+						"output": 0
+					},
+					"options": {
+						"provider": {
+							"sort": "throughput"
+						}
+					}
+				},
+				"mimo-v2-flash": {
+					"name": "mimo-v2-flash",
+					"cost": {
+						"input": 11.79,
+						"output": 35.36
+					},
+					"limit": {
+						"context": 262000,
+						"output": 32000
+					},
+				},
+				"kimi-k2.5": {
+					"name": "kimi-k2.5",
+					"cost": {
+						"input": 58.93,
+						"output": 282.86
+					},
+				},
+				"gpt-oss-20b": {
+					"name": "gpt-oss-20b",
+					"cost": {
+						"input": 8.84,
+						"output": 35.36
+					},
+					"limit": {
+						"context": 131000,
+						"output": 0
+					},
+					"options": {
+						"provider": {
+							"only": [
+								"groq",
 							],
 							"allow_fallbacks": false
 						}
+					}
+				},
+				"gpt-oss-120b": {
+					"name": "gpt-oss-120b",
+					"cost": {
+						"input": 26,
+						"output": 58
+					},
+					"limit": {
+						"context": 131000,
+						"output": 0
+					},
+					"options": {
+						"provider": {
+							"only": [
+								"cerebras/fp16",
+							],
+							"allow_fallbacks": false
+						}
+					}
+				},
+				"qwen3-coder-next": {
+					"name": "qwen3-coder-next",
+					"cost": {
+						"input": 50,
+						"output": 150
+					},
+					"options": {
+						"provider": {
+							"sort": "throughput"
+						}
+					}
+				},
+				"grok-code-fast-1": {
+					"name": "grok-code-fast-1",
+					"cost": {
+						"input": 20,
+						"output": 150
+					},
+					"limit": {
+						"context": 256000,
+						"output": 10000
+					}
+				},
+				"step-3.5-flash": {
+					"name": "step-3.5-flash",
+					"cost": {
+						"input": 11,
+						"output": 35
+					},
+					"limit": {
+						"context": 256000,
+						"output": 256000
 					}
 				},
 			}
@@ -129,50 +314,41 @@
 			"npm": "@ai-sdk/openai-compatible",
 			"name": "local",
 			"options": {
-				"baseURL": "http://localhost:11434/v1"
+				"baseURL": "http://127.0.0.1:1234/v1"
 			},
 			"models": {
-				"deepseek-r1:1.5b": {
-					"name": "deepseek-r1",
-					"tool_call": true
+				"liquid/lfm2.5-1.2b": {
+					"name": "lfm2.5",
 				},
-				"qwen2.5-coder:3b-base-q8_0": {
-					"name": "qwen2-coder:3b",
-					"tool_call": true
+				"qwen/qwen3-8b": {
+					"name": "qwen3-8b",
 				},
-				"granite4:350m-h-q8_0": {
-					"name": "granite4:350m-h-q8_0",
-					"tool_call": true
-				},
-				"granite4:1b-h-q8_0": {
-					"name": "granite4:1b-h-q8_0",
-					"tool_call": true
-				},
-				"ministral-3:3b-instruct-2512-q8_0": {
-					"name": "ministral-3:3b",
-					"tool_call": true
+				"qwen3-zero-coder-reasoning-0.8b-mlx": {
+					"name": "qwen3-zero-coder"
 				}
 			}
 		}
 	},
 	"agent": {
-		"chat": {
-			"model": "bothub/glm-4.7-flash",
+		"ask": {
+			"model": "bothub/gemini-3.1-flash-lite-preview",
+			"mode": "all",
+			"prompt": "You are the best helper for web search and analytics. Always try to use websearch tool or webfetch tool. Ask claryfing questions with question tool. ALWAYS provide sources at the end! Prefer shorter answers to the point.",
 			"tools": {
-				"write": false,
-				"edit": false,
-				"bash": false,
-				"webfetch": true
+				"*": false,
+				"webfetch": true,
+				"websearch": true,
+				"question": true
 			}
 		},
 		"title": {
-			"model": "bothub/glm-4.7-flash",
+			"model": "bothub/gemini-3.1-flash-lite-preview",
 			"maxTokens": 80
 		},
 		"code-reviewer": {
 			"description": "Reviews code for general best practices and potential issues",
 			"mode": "subagent",
-			"model": "bothub/glm-4.7-flash",
+			"model": "bothub/gemini-3.1-flash-lite-preview",
 			"prompt": "You are a code reviewer focusing on general best practices, including code structure, readability, maintainability, and adherence to common conventions.",
 			"tools": {
 				"write": false,

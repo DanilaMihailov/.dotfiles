@@ -17,6 +17,12 @@ local function qf_unique_files()
 end
 
 return {
+  {
+    dir = '~/personal/luar',
+    config = function()
+      require('luar').setup {}
+    end,
+  },
   { -- better diff/merge tool
     'sindrets/diffview.nvim',
     ---@type DiffViewOptions
@@ -200,17 +206,20 @@ return {
           gitsigns.setqflist 'all'
         end, { desc = 'Quickfix list with all hunks' })
 
-        vim.api.nvim_create_user_command('Review', function()
+        vim.api.nvim_create_user_command('ReviewSimple', function()
+          local base_branch = vim.fn.system('git show-ref --verify --quiet refs/heads/main')
+          base_branch = vim.v.shell_error == 0 and 'main' or 'master'
+
           -- Try merge-base --fork-point first (better for rebased branches), fall back to merge-base
           local mb = vim.fn.system {
             'git',
             'merge-base',
             '--fork-point',
             'HEAD',
-            'master',
+            base_branch,
           }
           if not mb or mb == '' or vim.v.shell_error ~= 0 then
-            mb = vim.fn.system { 'git', 'merge-base', 'HEAD', 'master' }
+            mb = vim.fn.system { 'git', 'merge-base', 'HEAD', base_branch }
           end
 
           vim.notify('Reviewing against ' .. mb)
@@ -223,14 +232,14 @@ return {
             end
           end)
           vim.opt.signcolumn = 'yes'
-        end, { desc = 'Review against master' })
+        end, { desc = 'Review against main' })
 
-        vim.api.nvim_create_user_command('ReviewDone', function()
+        vim.api.nvim_create_user_command('ReviewSimpleDone', function()
           gitsigns.change_base(nil, true)
           gitsigns.toggle_signs(false)
           vim.opt.signcolumn = 'number'
           vim.cmd 'cclose'
-        end, { desc = 'Review against master' })
+        end, { desc = 'Review against main' })
 
         vim.api.nvim_create_user_command('ReviewMR', function()
           require('gitlab_review').review_mr()

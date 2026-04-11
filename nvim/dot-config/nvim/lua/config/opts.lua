@@ -18,7 +18,7 @@ vim.g.have_nerd_font = true
 -- vim.o.keymap = 'russian-jcukenwin' -- allow use russian keys for moves and stuff
 -- allows using motions in russian language
 vim.opt.langmap =
-  'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
+  'ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчнях;abcdefghijklmnopqrstuvwxyz['
 
 -- helps gf to find files
 -- ** - all files from root

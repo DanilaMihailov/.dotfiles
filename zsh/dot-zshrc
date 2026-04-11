@@ -1,3 +1,5 @@
+eval "$(direnv hook zsh)"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -202,3 +204,11 @@ fpath=(/Users/zen/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/zen/.lmstudio/bin"
+# End of LM Studio CLI section
+
+# enable to allow open code use websearch tool (may break)
+export OPENCODE_ENABLE_EXA=true
+

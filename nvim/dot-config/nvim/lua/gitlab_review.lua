@@ -152,8 +152,9 @@ local function render_dashboard(mr_iid)
   vim.opt_local.signcolumn = 'no'
 
   local lines = {
-    '# ' .. mr.title,
+    '# [' .. mr.title .. '](' .. mr.web_url .. ')',
     '`' .. mr.source_branch .. ' → ' .. mr.target_branch .. '` **@' .. mr.author.username .. '**',
+    '',
     '---',
     '',
   }
@@ -296,8 +297,8 @@ function M.review_mr()
           end
 
           -- Call existing Review command if it exists
-          if vim.fn.exists ':Review' == 2 then
-            vim.cmd 'Review'
+          if vim.fn.exists ':ReviewSimple' == 2 then
+            vim.cmd 'ReviewSimple'
           end
 
           render_dashboard(mr.iid)

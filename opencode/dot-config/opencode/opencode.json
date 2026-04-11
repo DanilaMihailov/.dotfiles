@@ -3,6 +3,7 @@
 	"autoshare": false,
 	"model": "bothub/gemini-3-flash-preview",
 	"autoupdate": true,
+	"formatter": false,
 	"enabled_providers": [
 		"github-copilot",
 		"openai",
@@ -20,103 +21,32 @@
 				"baseURL": "https://bothub.chat/api/v2/openai/v1",
 			},
 			"models": {
-				"gpt-5.2-codex": {
-					"name": "gpt-5.2-codex",
+				"gpt-5.4-nano": {
+					"name": "gpt-5.4-nano",
 					"cost": {
-						"input": 206.25,
-						"output": 1650
-					}
-				},
-				"gpt-5-mini": {
-					"name": "gpt-5-mini",
-					"cost": {
-						"input": 29.46,
-						"output": 235.71
-					}
-				},
-				"gpt-5-nano": {
-					"name": "gpt-5-nano",
-					"cost": {
-						"input": 5.89,
-						"output": 47.14
-					},
-					"options": {
-						"provider": {
-							"only": [
-								"openai",
-							],
-							"allow_fallbacks": false
-						}
-					}
-				},
-				"gpt-4.1-nano": {
-					"name": "gpt-4.1-nano",
-					"cost": {
-						"input": 11.79,
-						"output": 47.14
-					},
-					"options": {
-						"provider": {
-							"only": [
-								"azure",
-							],
-							"allow_fallbacks": false
-						}
-					}
-				},
-				"claude-sonnet-4.5": {
-					"name": "claude-sonnet-4.5",
-					"cost": {
-						"input": 353.57,
-						"output": 1767.86
-					}
-				},
-				"claude-opus-4.5": {
-					"name": "claude-opus-4.5",
-					"cost": {
-						"input": 589.29,
-						"output": 2946
-					}
-				},
-				"glm-4.7": {
-					"name": "glm-4.7",
-					"cost": {
-						"input": 50,
-						"output": 230,
+						"input": 18,
+						"output": 107
 					},
 					"limit": {
-						"context": 203000,
-						"output": 0
+						"context": 400000,
+						"output": 128000
 					},
 					"options": {
-						"provider": {
-							"order": [
-								"deepinfra",
-								"together",
-							],
-							"allow_fallbacks": false
-						}
+						"reasoningEffort": "xhigh"
 					}
 				},
-				"glm-4.7-flash": {
-					"name": "glm-4.7-flash",
+				"gpt-5.4-mini": {
+					"name": "gpt-5.4-mini",
 					"cost": {
-						"input": 8.25,
-						"output": 47.14
+						"input": 70,
+						"output": 387
 					},
 					"limit": {
-						"context": 200000,
-						"output": 66000
-					},
-					"variants": {
-						"fast": {
-							"reasoningEffort": "none"
-						},
+						"context": 400000,
+						"output": 128000
 					},
 					"options": {
-						"provider": {
-							"sort": "throughput"
-						}
+						"reasoningEffort": "xhigh"
 					}
 				},
 				"glm-5": {
@@ -135,6 +65,10 @@
 						}
 					}
 				},
+				
+				"gemma-4-31b-it:free": {
+					"name": "gemma-4-31b",
+				},
 				"gemini-3-flash-preview": {
 					"name": "gemini-3-flash-preview",
 					"cost": {
@@ -147,7 +81,12 @@
 								"google-ai-studio",
 							]
 						}
-					}
+					},
+					"variants": {
+						"high": {
+							"reasoningEffort": "high"
+						},
+					},
 				},
 				"gemini-3.1-flash-lite-preview": {
 					"name": "gemini-3.1-flash-lite-preview",
@@ -166,22 +105,6 @@
 						},
 					},
 				},
-				"minimax-m2.1": {
-					"name": "minimax-m2.1",
-					"cost": {
-						"input": 35.36,
-						"output": 141.43
-					},
-					"limit": {
-						"context": 205000,
-						"output": 0
-					},
-					"options": {
-						"provider": {
-							"sort": "throughput"
-						}
-					}
-				},
 				"minimax-m2.5": {
 					"name": "minimax-m2.5",
 					"cost": {
@@ -198,6 +121,17 @@
 						}
 					}
 				},
+				"minimax-m2.7": {
+					"name": "minimax-m2.7",
+					"cost": {
+						"input": 35.36,
+						"output": 141.43
+					},
+					"limit": {
+						"context": 205000,
+						"output": 131000
+					}
+				},
 				"mimo-v2-flash": {
 					"name": "mimo-v2-flash",
 					"cost": {
@@ -206,7 +140,7 @@
 					},
 					"limit": {
 						"context": 262000,
-						"output": 32000
+						"output": 65000
 					},
 				},
 				"kimi-k2.5": {
@@ -215,44 +149,6 @@
 						"input": 58.93,
 						"output": 282.86
 					},
-				},
-				"gpt-oss-20b": {
-					"name": "gpt-oss-20b",
-					"cost": {
-						"input": 8.84,
-						"output": 35.36
-					},
-					"limit": {
-						"context": 131000,
-						"output": 0
-					},
-					"options": {
-						"provider": {
-							"only": [
-								"groq",
-							],
-							"allow_fallbacks": false
-						}
-					}
-				},
-				"gpt-oss-120b": {
-					"name": "gpt-oss-120b",
-					"cost": {
-						"input": 26,
-						"output": 58
-					},
-					"limit": {
-						"context": 131000,
-						"output": 0
-					},
-					"options": {
-						"provider": {
-							"only": [
-								"cerebras/fp16",
-							],
-							"allow_fallbacks": false
-						}
-					}
 				},
 				"qwen3-coder-next": {
 					"name": "qwen3-coder-next",
@@ -264,17 +160,6 @@
 						"provider": {
 							"sort": "throughput"
 						}
-					}
-				},
-				"grok-code-fast-1": {
-					"name": "grok-code-fast-1",
-					"cost": {
-						"input": 20,
-						"output": 150
-					},
-					"limit": {
-						"context": 256000,
-						"output": 10000
 					}
 				},
 				"step-3.5-flash": {

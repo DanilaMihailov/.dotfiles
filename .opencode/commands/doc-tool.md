@@ -7,4 +7,4 @@ Explore tool folder in @$1
 Load how to document a tool:
 skill({ name: "document-tool" })
 
-And now propose changes to README.md
+update @README.md file

@@ -1,6 +1,9 @@
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+-- Use Russian Ctrl+х as Esc
+vim.keymap.set({ 'n', 'i', 'v', 't' }, '<C-х>', '<Esc>', { desc = 'Russian Ctrl-х as Esc' })
+vim.keymap.set({ 'n', 'i', 'v', 't' }, '<C-[>', '<Esc>', { desc = 'Ensure Ctrl-[ is also Esc' })
 
 vim.keymap.set(
   'n',

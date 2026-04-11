@@ -1,5 +1,6 @@
 return {
-  dir = '~/personal/opencode.nvim',
+  -- dir = '~/personal/opencode.nvim',
+  'sudo-tee/opencode.nvim',
   config = function()
     require('opencode').setup {
       default_mode = 'plan',

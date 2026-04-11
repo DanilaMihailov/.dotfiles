@@ -22,13 +22,16 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 vim.keymap.set('n', 'y<C-g>', function()
   local bufname = vim.api.nvim_buf_get_name(0)
-  local cwd = vim.uv.cwd()
-  if not cwd then
+  local root = vim.fs.root(bufname, '.git') or vim.uv.cwd()
+  if not root then
     return
   end
-  local relPath = '.' .. bufname:gsub(cwd, '') .. ':' .. vim.fn.line '.'
-  vim.notify('Copied path to clipboard\n' .. relPath, vim.log.levels.INFO)
-  vim.fn.setreg(vim.v.register, relPath)
+
+  local relpath = vim.fs.relpath(root, bufname) or bufname
+  local value = relpath .. ':' .. vim.fn.line '.'
+
+  vim.fn.setreg(vim.v.register, value)
+  vim.notify('Copied path to clipboard\n' .. value, vim.log.levels.INFO)
 end, { desc = 'Yank relative file path' })
 
 -- Keybinds to make split navigation easier.

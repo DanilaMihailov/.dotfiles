@@ -34,15 +34,6 @@ vim.keymap.set('n', 'y<C-g>', function()
   vim.notify('Copied path to clipboard\n' .. value, vim.log.levels.INFO)
 end, { desc = 'Yank relative file path' })
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
 vim.keymap.set('n', 'gh', '_', { desc = 'Move cursor to the begining of line (_)' })
 vim.keymap.set('n', 'gl', '$', { desc = 'Move cursor to the end of line ($)' })
 

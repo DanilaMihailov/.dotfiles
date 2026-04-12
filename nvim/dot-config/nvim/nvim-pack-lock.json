@@ -1,0 +1,17 @@
+{
+  "plugins": {
+    "neogit": {
+      "rev": "e06745228600a585b88726fc9fba44a373c15a47",
+      "src": "https://github.com/NeogitOrg/neogit"
+    },
+    "oil.nvim": {
+      "rev": "975a77cce3c8cb742bc1b3629f4328f5ca977dad",
+      "src": "https://github.com/stevearc/oil.nvim",
+      "version": "2.0.0 - 3.0.0"
+    },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    }
+  }
+}

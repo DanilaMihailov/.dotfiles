@@ -1,13 +1,15 @@
-vim.pack.add({{
-src = 'https://github.com/stevearc/oil.nvim',
-version = vim.version.range('2.x')
-}})
+vim.pack.add {
+  {
+    src = 'https://github.com/stevearc/oil.nvim',
+    version = vim.version.range '2.x',
+  },
+}
 
-local oil = require('oil')
+local oil = require 'oil'
 
 oil.setup(
----@type oil.setupOpts
-{
+  ---@type oil.setupOpts
+  {
     win_options = {
       signcolumn = 'yes:2',
       winbar = '%F',
@@ -65,5 +67,5 @@ oil.setup(
 vim.keymap.set('n', '-', oil.open, { desc = 'Open parent directory' })
 
 vim.keymap.set('n', '_', function()
-oil.open(vim.uv.cwd())
+  oil.open(vim.uv.cwd())
 end, { desc = 'Open CWD' })

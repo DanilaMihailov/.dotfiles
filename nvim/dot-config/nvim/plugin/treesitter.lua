@@ -1,0 +1,57 @@
+vim.pack.add {
+  'https://github.com/neovim-treesitter/nvim-treesitter',
+  'https://github.com/nvim-treesitter/nvim-treesitter-context',
+}
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '*' },
+  callback = function(args)
+    local ft = vim.bo[args.buf].filetype
+    local lang = vim.treesitter.language.get_lang(ft) or ft
+    if not lang or lang == '' then
+      return
+    end
+
+    local ts = require 'nvim-treesitter'
+    if not vim.list_contains(ts.get_available(), lang) then
+      return
+    end
+
+    -- install if missing (no-op if already installed)
+    pcall(function()
+      ts.install { lang }
+    end)
+
+    -- enable if available
+    if vim.treesitter.language.add(lang) then
+      pcall(vim.treesitter.start, args.buf, lang)
+      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- folds
+      vim.wo.foldmethod = 'expr'
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not ev.data.active then
+        vim.cmd.packadd 'nvim-treesitter'
+      end
+      vim.cmd 'TSUpdate'
+    end
+  end,
+})
+
+local context = require 'treesitter-context'
+
+context.setup()
+
+vim.keymap.set('n', '<leader>tc', function()
+  context.toggle()
+end, { desc = 'Toggle Treesitter [C]ontext' })
+
+vim.keymap.set('n', '<leader>gc', function()
+  context.go_to_context(vim.v.count1)
+end, { silent = true, desc = '[G]o to [C]ontext (upper)' })

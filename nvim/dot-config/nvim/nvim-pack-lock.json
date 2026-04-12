@@ -10,6 +10,11 @@
       "src": "https://github.com/stevearc/conform.nvim",
       "version": "9.0.0 - 10.0.0"
     },
+    "gitsigns.nvim": {
+      "rev": "a462f416e2ce4744531c6256252dee99a7d34a83",
+      "src": "https://github.com/lewis6991/gitsigns.nvim",
+      "version": "2.0.0 - 3.0.0"
+    },
     "gruvbox.nvim": {
       "rev": "61b0b3be2f0cfd521667403a0367298144d6c165",
       "src": "https://github.com/ellisonleao/gruvbox.nvim",
@@ -18,6 +23,10 @@
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
       "src": "https://github.com/folke/lazydev.nvim"
+    },
+    "lualine.nvim": {
+      "rev": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mini.icons": {
       "rev": "ff2e4f1d29f659cc2bad0f9256f2f6195c6b2428",
@@ -33,19 +42,51 @@
       "rev": "e06745228600a585b88726fc9fba44a373c15a47",
       "src": "https://github.com/NeogitOrg/neogit"
     },
+    "nvim-dap": {
+      "rev": "45a69eba683a2c448dd9ecfc4de89511f0646b5f",
+      "src": "https://codeberg.org/mfussenegger/nvim-dap",
+      "version": "'master'"
+    },
+    "nvim-dap-python": {
+      "rev": "1808458eba2b18f178f990e01376941a42c7f93b",
+      "src": "https://codeberg.org/mfussenegger/nvim-dap-python",
+      "version": "'master'"
+    },
+    "nvim-dap-view": {
+      "rev": "e44892210cfa98d23bf22b82b345213d742b9bee",
+      "src": "https://github.com/igorlfs/nvim-dap-view",
+      "version": "1.0.0 - 2.0.0"
+    },
     "nvim-lspconfig": {
       "rev": "9bafffaeaae363c5211080e06e04ed5b422fd5ad",
       "src": "https://github.com/neovim/nvim-lspconfig",
       "version": "2.0.0 - 3.0.0"
+    },
+    "nvim-treesitter": {
+      "rev": "328722623b3394d9a563a5dafd7a90a8f1342dc5",
+      "src": "https://github.com/neovim-treesitter/nvim-treesitter"
+    },
+    "nvim-treesitter-context": {
+      "rev": "b0c45cefe2c8f7b55fc46f34e563bc428ef99636",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "oil.nvim": {
       "rev": "975a77cce3c8cb742bc1b3629f4328f5ca977dad",
       "src": "https://github.com/stevearc/oil.nvim",
       "version": "2.0.0 - 3.0.0"
     },
+    "opencode.nvim": {
+      "rev": "0ce125b609744604054bab5c67e6ff4601a4853d",
+      "src": "https://github.com/sudo-tee/opencode.nvim"
+    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "render-markdown.nvim": {
+      "rev": "e3c18ddd27a853f85a6f513a864cf4f2982b9f26",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim",
+      "version": "8.0.0 - 9.0.0"
     },
     "snacks.nvim": {
       "rev": "e6fd58c82f2f3fcddd3fe81703d47d6d48fc7b9f",

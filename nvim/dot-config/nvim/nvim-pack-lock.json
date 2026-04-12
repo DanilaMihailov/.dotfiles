@@ -10,6 +10,11 @@
       "src": "https://github.com/stevearc/conform.nvim",
       "version": "9.0.0 - 10.0.0"
     },
+    "gruvbox.nvim": {
+      "rev": "61b0b3be2f0cfd521667403a0367298144d6c165",
+      "src": "https://github.com/ellisonleao/gruvbox.nvim",
+      "version": "2.0.0 - 3.0.0"
+    },
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
       "src": "https://github.com/folke/lazydev.nvim"
@@ -31,6 +36,11 @@
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "snacks.nvim": {
+      "rev": "e6fd58c82f2f3fcddd3fe81703d47d6d48fc7b9f",
+      "src": "https://github.com/folke/snacks.nvim",
+      "version": "2.0.0 - 3.0.0"
     }
   }
 }

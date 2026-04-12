@@ -5,6 +5,10 @@
       "src": "https://github.com/Saghen/blink.cmp",
       "version": "1.0.0 - 2.0.0"
     },
+    "close-buffers.vim": {
+      "rev": "a679b99cee5f3349a83f95f8200e7c1fe6603b13",
+      "src": "https://github.com/Asheq/close-buffers.vim"
+    },
     "conform.nvim": {
       "rev": "3543d000dafbc41cc7761d860cfdb24e82154f75",
       "src": "https://github.com/stevearc/conform.nvim",
@@ -19,6 +23,10 @@
       "rev": "61b0b3be2f0cfd521667403a0367298144d6c165",
       "src": "https://github.com/ellisonleao/gruvbox.nvim",
       "version": "2.0.0 - 3.0.0"
+    },
+    "guess-indent.nvim": {
+      "rev": "84a4987ff36798c2fc1169cbaff67960aed9776f",
+      "src": "https://github.com/nmac427/guess-indent.nvim"
     },
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",

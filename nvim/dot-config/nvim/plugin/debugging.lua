@@ -1,4 +1,5 @@
 vim.pack.add {
+  -- nvim-dap MUST be on master, release tags are way out of date
   { src = 'https://codeberg.org/mfussenegger/nvim-dap', version = 'master' },
   { src = 'https://codeberg.org/mfussenegger/nvim-dap-python', version = 'master' },
   { src = 'https://github.com/igorlfs/nvim-dap-view', version = vim.version.range '1.x' },

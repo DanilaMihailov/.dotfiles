@@ -71,7 +71,7 @@
       "version": "2.0.0 - 3.0.0"
     },
     "nvim-treesitter": {
-      "rev": "328722623b3394d9a563a5dafd7a90a8f1342dc5",
+      "rev": "beae65a429b9dd56b659ab221f091eb53ddf654e",
       "src": "https://github.com/neovim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -100,6 +100,10 @@
       "rev": "e6fd58c82f2f3fcddd3fe81703d47d6d48fc7b9f",
       "src": "https://github.com/folke/snacks.nvim",
       "version": "2.0.0 - 3.0.0"
+    },
+    "treesitter-parser-registry": {
+      "rev": "46796631bb16965ac214444a54c2540e4fc82516",
+      "src": "https://github.com/neovim-treesitter/treesitter-parser-registry"
     },
     "which-key.nvim": {
       "rev": "fcbf4eea17cb299c02557d576f0d568878e354a4",

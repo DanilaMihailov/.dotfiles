@@ -1,4 +1,5 @@
 vim.pack.add {
+  'https://github.com/neovim-treesitter/treesitter-parser-registry',
   'https://github.com/neovim-treesitter/nvim-treesitter',
   'https://github.com/nvim-treesitter/nvim-treesitter-context',
 }
@@ -30,6 +31,11 @@ vim.api.nvim_create_autocmd('FileType', {
 
     -- enable if available
     if pcall(vim.treesitter.start, args.buf, lang) then
+      -- vim.notify(
+      --   'Treesitter started: ' .. lang .. ' ft: ' .. ft,
+      --   vim.log.levels.INFO,
+      --   { title = 'TS' }
+      -- )
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- folds
       vim.wo.foldmethod = 'expr'
       vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation

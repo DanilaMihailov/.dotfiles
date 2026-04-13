@@ -42,6 +42,7 @@ local groups = {
   'SnacksPickerPreview',
   'SnacksPickerBorder', -- The border background
   'SnacksPickerScrollBar', -- The scrollbar background
+  'SnacksPickerDir', -- The scrollbar background
 }
 
 for _, group in ipairs(groups) do

@@ -3,17 +3,23 @@ vim.pack.add {
   'https://github.com/nvim-treesitter/nvim-treesitter-context',
 }
 
+-- for some languages query files depend on another
+-- javascript -> ecma, jsx
+-- html -> html_tags
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { '*' },
   callback = function(args)
     local ft = vim.bo[args.buf].filetype
     local lang = vim.treesitter.language.get_lang(ft) or ft
     if not lang or lang == '' then
+      -- vim.notify('Lang not found: ' .. lang, vim.log.levels.INFO, { title = 'TS' })
       return
     end
 
     local ts = require 'nvim-treesitter'
     if not vim.list_contains(ts.get_available(), lang) then
+      -- vim.notify('Lang not available: ' .. lang, vim.log.levels.INFO, { title = 'TS' })
       return
     end
 
@@ -23,11 +29,12 @@ vim.api.nvim_create_autocmd('FileType', {
     end)
 
     -- enable if available
-    if vim.treesitter.language.add(lang) then
-      pcall(vim.treesitter.start, args.buf, lang)
+    if pcall(vim.treesitter.start, args.buf, lang) then
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- folds
       vim.wo.foldmethod = 'expr'
       vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation
+    else
+      vim.notify('Treesitter not started: ' .. lang, vim.log.levels.WARN, { title = 'TS' })
     end
   end,
 })

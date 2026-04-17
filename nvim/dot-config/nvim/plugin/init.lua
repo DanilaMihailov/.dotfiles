@@ -1,4 +1,5 @@
 vim.pack.add {
+  -- for opencode and neogit (hopefully for now)
   'https://github.com/nvim-lua/plenary.nvim',
   {
     src = 'https://github.com/nvim-mini/mini.icons',

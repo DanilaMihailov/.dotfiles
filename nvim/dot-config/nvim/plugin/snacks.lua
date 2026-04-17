@@ -69,7 +69,7 @@ end, { desc = 'Recent' })
 
 -- git
 vim.keymap.set('n', '<leader><leader>gb', function()
-  snacks.picker.git_branches()
+  snacks.picker.git_branches { all = true }
 end, { desc = 'Git Branches' })
 vim.keymap.set('n', '<leader><leader>gl', function()
   snacks.picker.git_log()

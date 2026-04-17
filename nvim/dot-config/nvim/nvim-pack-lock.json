@@ -71,7 +71,7 @@
       "version": "2.0.0 - 3.0.0"
     },
     "nvim-treesitter": {
-      "rev": "beae65a429b9dd56b659ab221f091eb53ddf654e",
+      "rev": "df7489eeea351bece7fd0f9c825be5cb6a1438f0",
       "src": "https://github.com/neovim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -84,7 +84,7 @@
       "version": "2.0.0 - 3.0.0"
     },
     "opencode.nvim": {
-      "rev": "0ce125b609744604054bab5c67e6ff4601a4853d",
+      "rev": "8625b2f48df2f19bd3814461dbb44391abc832f6",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "plenary.nvim": {
@@ -102,7 +102,7 @@
       "version": "2.0.0 - 3.0.0"
     },
     "treesitter-parser-registry": {
-      "rev": "46796631bb16965ac214444a54c2540e4fc82516",
+      "rev": "6eb15358bb9fc88f0d3401d8538d56652e9bdf3c",
       "src": "https://github.com/neovim-treesitter/treesitter-parser-registry"
     },
     "which-key.nvim": {

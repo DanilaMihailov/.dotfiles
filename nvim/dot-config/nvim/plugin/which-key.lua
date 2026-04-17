@@ -35,10 +35,3 @@ wk.add {
   end,
   desc = 'Buffer Local Keymaps (which-key)',
 }
-
-return { -- Useful plugin to show you pending keybinds.
-  'folke/which-key.nvim',
-  keys = {},
-  config = function() -- This is the function that runs, AFTER loading
-  end,
-}

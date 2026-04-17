@@ -33,6 +33,7 @@ conform.setup {
     htmldjango = { 'djlint' },
     javascript = { 'prettier' },
     typescript = { 'prettier' },
+    typescriptreact = { 'prettier' },
     sh = { 'beautysh' },
   },
   formatters = {

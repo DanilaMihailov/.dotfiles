@@ -1,8 +1,15 @@
-return {
-  'stevearc/oil.nvim',
-  cmd = 'Oil',
+vim.pack.add {
+  {
+    src = 'https://github.com/stevearc/oil.nvim',
+    version = vim.version.range '2.x',
+  },
+}
+
+local oil = require 'oil'
+
+oil.setup(
   ---@type oil.setupOpts
-  opts = {
+  {
     win_options = {
       signcolumn = 'yes:2',
       winbar = '%F',
@@ -54,13 +61,11 @@ return {
       },
       ['<C-q>'] = 'actions.send_to_qflist',
     },
-  },
-  -- Optional dependencies
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
-  init = function()
-    vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
-    vim.keymap.set('n', '_', function()
-      require('oil').open(vim.uv.cwd())
-    end, { desc = 'Open CWD' })
-  end,
-}
+  }
+)
+
+vim.keymap.set('n', '-', oil.open, { desc = 'Open parent directory' })
+
+vim.keymap.set('n', '_', function()
+  oil.open(vim.uv.cwd())
+end, { desc = 'Open CWD' })

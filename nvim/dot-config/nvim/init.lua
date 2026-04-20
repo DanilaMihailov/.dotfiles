@@ -213,19 +213,66 @@ end, { desc = 'Toggle [D]iagnostics' })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-vim.keymap.set('n', 'y<C-g>', function()
+local function get_relative_bufpath()
   local bufname = vim.api.nvim_buf_get_name(0)
   local root = vim.fs.root(bufname, '.git') or vim.uv.cwd()
   if not root then
+    return nil
+  end
+
+  return vim.fs.relpath(root, bufname) or bufname
+end
+
+vim.keymap.set('n', 'y<C-g>', function()
+  local relpath = get_relative_bufpath()
+  if not relpath then
     return
   end
 
-  local relpath = vim.fs.relpath(root, bufname) or bufname
   local value = relpath .. ':' .. vim.fn.line '.'
 
   vim.fn.setreg(vim.v.register, value)
   vim.notify('Copied path to clipboard\n' .. value, vim.log.levels.INFO)
 end, { desc = 'Yank relative file path' })
+
+vim.keymap.set('n', '<leader>ys', function()
+  local relpath = get_relative_bufpath()
+  if not relpath then
+    return
+  end
+
+  local line_nr = vim.fn.line '.'
+  local value = relpath .. ':' .. line_nr .. '\n' .. vim.fn.getline(line_nr)
+
+  vim.fn.setreg(vim.v.register, value)
+  vim.notify('Copied path and line to clipboard\n' .. value, vim.log.levels.INFO)
+end, { desc = 'Yank relative file path with line text' })
+
+vim.keymap.set('x', '<leader>ys', function()
+  local relpath = get_relative_bufpath()
+  if not relpath then
+    return
+  end
+
+  local visual_type = vim.fn.visualmode()
+  local a = vim.fn.getpos 'v'
+  local b = vim.fn.getpos '.'
+  local start_pos, end_pos = a, b
+
+  if a[2] > b[2] or (a[2] == b[2] and a[3] > b[3]) then
+    start_pos, end_pos = b, a
+  end
+
+  local selected = vim.fn.getregion(start_pos, end_pos, { type = visual_type })
+  local start_line = start_pos[2]
+  local end_line = end_pos[2]
+  local line_range = start_line == end_line and tostring(start_line) or (start_line .. '-' .. end_line)
+  local value = relpath .. ':' .. line_range .. '\n' .. table.concat(selected, '\n')
+
+  vim.fn.setreg(vim.v.register, value)
+  vim.api.nvim_feedkeys(vim.keycode '<Esc>', 'x', false)
+  vim.notify('Copied path and selection to clipboard\n' .. value, vim.log.levels.INFO)
+end, { desc = 'Yank relative file path with selected text' })
 
 vim.keymap.set('n', 'gh', '_', { desc = 'Move cursor to the begining of line (_)' })
 vim.keymap.set('n', 'gl', '$', { desc = 'Move cursor to the end of line ($)' })

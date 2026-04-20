@@ -69,7 +69,20 @@ end, { desc = 'Recent' })
 
 -- git
 vim.keymap.set('n', '<leader><leader>gb', function()
-  snacks.picker.git_branches { all = true }
+  snacks.picker.git_branches {
+    all = true,
+    matcher = { sort_empty = true },
+    -- Tag local branches so Snacks can sort them ahead of remotes.
+    -- Sort order is: current branch first, then other local branches,
+    -- then remote branches.
+    transform = function(item)
+      item.local_branch = item.current or (item.branch ~= nil and not item.branch:match '^remotes/')
+      return item
+    end,
+    sort = {
+      fields = { 'current', 'local_branch', 'score:desc', 'idx' },
+    },
+  }
 end, { desc = 'Git Branches' })
 vim.keymap.set('n', '<leader><leader>gl', function()
   snacks.picker.git_log()

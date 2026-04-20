@@ -47,7 +47,7 @@
       "version": "0.0.0 - 1.0.0"
     },
     "neogit": {
-      "rev": "e06745228600a585b88726fc9fba44a373c15a47",
+      "rev": "d1cfc4986195239cac55700b675cea7a9578d430",
       "src": "https://github.com/NeogitOrg/neogit"
     },
     "nvim-dap": {
@@ -84,7 +84,7 @@
       "version": "2.0.0 - 3.0.0"
     },
     "opencode.nvim": {
-      "rev": "8625b2f48df2f19bd3814461dbb44391abc832f6",
+      "rev": "8edc19ac64e3075d4d68e49ef6846dec562ed316",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "plenary.nvim": {

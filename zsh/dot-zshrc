@@ -134,6 +134,7 @@ alias localip="ipconfig getifaddr en0"
 # vim
 alias e="$EDITOR"
 alias em="$EDITOR -u ~/.config/nvim/minimal.lua"
+alias efresh="NVIM_APPNAME=efresh $EDITOR"
 alias retro="NVIM_APPNAME=retro $EDITOR"
 alias lazyvim="NVIM_APPNAME=lazynvim $EDITOR"
 alias nvchad="NVIM_APPNAME=nvchad $EDITOR"
@@ -211,4 +212,5 @@ export PATH="$PATH:/Users/zen/.lmstudio/bin"
 
 # enable to allow open code use websearch tool (may break)
 export OPENCODE_ENABLE_EXA=true
-
+# trying to fix pi timeout with openai-responses
+CODEX_LB_UPSTREAM_STREAM_TRANSPORT=websocket

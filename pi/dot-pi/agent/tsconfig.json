@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["extensions/**/*.ts", "extensions/codex-lb.DONOTUSEts"]
+}

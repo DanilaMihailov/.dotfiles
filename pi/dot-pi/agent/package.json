@@ -1,0 +1,13 @@
+{
+  "name": "pi-agent-config",
+  "private": true,
+  "dependencies": {
+    "@mariozechner/pi-coding-agent": "0.67.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

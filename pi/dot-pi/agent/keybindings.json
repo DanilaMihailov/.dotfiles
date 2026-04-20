@@ -1,0 +1,12 @@
+{
+  "tui.select.up": ["up", "ctrl+p"],
+  "tui.select.down": ["down", "ctrl+n"],
+  "tui.editor.cursorUp": ["up", "ctrl+p", "alt+k"],
+  "tui.editor.cursorDown": ["down", "ctrl+n", "alt+j"],
+  "tui.editor.cursorLeft": ["left", "alt+h"],
+  "tui.editor.cursorRight": ["right", "alt+l"],
+  "tui.editor.cursorWordLeft": ["alt+left", "alt+b"],
+  "tui.editor.cursorWordRight": ["alt+right", "alt+w"],
+  "app.model.cycleForward": [],
+  "app.session.togglePath": []
+}

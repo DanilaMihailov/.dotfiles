@@ -16,7 +16,8 @@
       "source": "npm:pi-vim",
       "extensions": []
     },
-    "npm:pi-ask-user"
+    "npm:pi-ask-user",
+    "npm:@touchskyer/memex"
   ],
   "quietStartup": true,
   "showHardwareCursor": true,

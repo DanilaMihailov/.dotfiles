@@ -93,6 +93,18 @@ export default function bothubExtension(pi: ExtensionAPI) {
         contextWindow: 262144,
         maxTokens: 65536,
       },
+      {
+        id: "elephant-alpha",
+        name: "Elephant",
+        reasoning: false,
+        input: ["text"],
+        cost: {
+          input: 0,
+          output: 0,
+        },
+        contextWindow: 262144,
+        maxTokens: 32768,
+      },
     ],
   });
 }

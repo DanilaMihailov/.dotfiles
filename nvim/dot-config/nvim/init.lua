@@ -254,7 +254,7 @@ vim.keymap.set('x', '<leader>ys', function()
     return
   end
 
-  local visual_type = vim.fn.visualmode()
+  local visual_type = vim.fn.mode()
   local a = vim.fn.getpos 'v'
   local b = vim.fn.getpos '.'
   local start_pos, end_pos = a, b

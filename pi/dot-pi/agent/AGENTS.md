@@ -1,29 +1,21 @@
-# Global Agent Instructions
-
-Follow higher-priority system, developer, and user instructions first. Use these instructions as default behavior.
-
-## Progress updates
-
-- Share brief progress updates for multi-step, exploratory, or longer-running tasks.
-- Before making changes or running a batch of commands, briefly say what you are about to do.
-- After an important step, briefly report what you found, changed, or ruled out.
-- Keep updates concise and useful; avoid narrating every trivial action.
-- During longer tasks, include the current outcome and next step.
-
-## Task decomposition and execution
-
-- For non-trivial or larger requests, first decompose the work into concrete tasks.
-- When task tools are available, use them to create, track, and update those tasks.
-- Mark tasks as in progress before starting work, keep dependencies clear, and mark tasks completed when fully done.
-- Prefer smaller, outcome-focused tasks that make progress easy to understand and verify.
-- Tasks are especially useful when the request involves a list of files, directories, URLs, or similar repeated items.
-- For per-item work, break the request into tasks such as reading, analyzing, or summarizing each item, then produce a final combined summary.
-- When multiple tasks are independent and subagents are available, use subagents to parallelize execution when appropriate.
-- Give subagents clear scope, context, and acceptance criteria, then integrate and summarize their results.
-- After finishing a task, check for the next unblocked task before continuing.
-
-## Style
-
-- Be clear, direct, and concise.
-- Mention file paths when relevant.
-- In final responses, summarize the outcome and note any next step or follow-up.
+- Give brief progress updates for multi-step work.
+- Before a batch of edits or commands, say what you are about to do.
+- After an important step, say what changed or what you ruled out.
+- Always decompose the work into concrete steps, even if no tasks are created.
+- If there is only one simple non-exploratory action, do it directly without creating a task.
+- Treat code search, repo inspection, file discovery, tracing, comparison, and “find where X is defined” requests as exploratory work even if the final answer is short.
+- If the work has multiple steps, create separate concrete tasks.
+- For exploratory work, create at least one concrete task unless the work is limited to reading one explicitly named file with no additional lookup.
+- Use task tools when available; mark tasks in progress before starting and completed when done.
+- Use a read-only subagent for explore work like code search, repo inspection, finding files, tracing requests, and similar discovery tasks.
+- Prefer read-only subagents for explore, search, inspection, and planning to keep the main context clean.
+- Only skip a subagent for a genuinely trivial single-file, single-question read with no search, no comparison, and no branching.
+- If you skip a subagent for work that looks explorable or parallelizable, explicitly say why the narrow exception applies; convenience alone is not enough.
+- If work splits into 2+ independent parts, create one task per part and run them in parallel when practical.
+- Give subagents clear scope and acceptance criteria, then integrate their results.
+- When a subagent completion notification arrives with a result preview, do not call get_subagent_result or TaskOutput to re-fetch the same result unless the preview is explicitly truncated and you need the complete content for the next step. If the preview is sufficient, summarize it directly without an extra fetch.
+- Be clear, direct, concise, and mention file paths when relevant.
+- Before any `git commit`, show a short summary of the pending changes, list the files to be committed, show drafted commit message, and ask the user for explicit confirmation. Do not commit without that confirmation.
+- use conventional commits
+- always add footer Assisted-by: agent name (model name)
+- Do not use emojis.

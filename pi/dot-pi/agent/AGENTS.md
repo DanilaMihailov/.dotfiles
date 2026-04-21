@@ -16,6 +16,6 @@
 - When a subagent completion notification arrives with a result preview, do not call get_subagent_result or TaskOutput to re-fetch the same result unless the preview is explicitly truncated and you need the complete content for the next step. If the preview is sufficient, summarize it directly without an extra fetch.
 - Be clear, direct, concise, and mention file paths when relevant.
 - Before any `git commit`, show a short summary of the pending changes, list the files to be committed, show drafted commit message, and ask the user for explicit confirmation. Do not commit without that confirmation.
-- use conventional commits
+- use conventional commits, prefer to have no body of commit (except footer), but if you have body, then be super concise
 - always add footer Assisted-by: agent name (model name)
 - Do not use emojis.

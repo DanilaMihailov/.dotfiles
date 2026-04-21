@@ -105,4 +105,3 @@ that dots "." are replaced with "dot-"
 - Validate correct file permissions for configurations
 - Follow best practices for each tool's configuration format
 - Use appropriate shebangs for script execution
-

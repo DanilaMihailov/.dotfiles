@@ -223,7 +223,7 @@ local function get_relative_bufpath()
   return vim.fs.relpath(root, bufname) or bufname
 end
 
-vim.keymap.set('n', 'y<C-g>', function()
+vim.keymap.set('n', '<leader>ys', function()
   local relpath = get_relative_bufpath()
   if not relpath then
     return
@@ -232,21 +232,8 @@ vim.keymap.set('n', 'y<C-g>', function()
   local value = relpath .. ':' .. vim.fn.line '.'
 
   vim.fn.setreg(vim.v.register, value)
-  vim.notify('Copied path to clipboard\n' .. value, vim.log.levels.INFO)
-end, { desc = 'Yank relative file path' })
-
-vim.keymap.set('n', '<leader>ys', function()
-  local relpath = get_relative_bufpath()
-  if not relpath then
-    return
-  end
-
-  local line_nr = vim.fn.line '.'
-  local value = relpath .. ':' .. line_nr .. '\n' .. vim.fn.getline(line_nr)
-
-  vim.fn.setreg(vim.v.register, value)
-  vim.notify('Copied path and line to clipboard\n' .. value, vim.log.levels.INFO)
-end, { desc = 'Yank relative file path with line text' })
+  vim.notify('Copied path and line number to clipboard\n' .. value, vim.log.levels.INFO)
+end, { desc = 'Yank relative file path and line number' })
 
 vim.keymap.set('x', '<leader>ys', function()
   local relpath = get_relative_bufpath()
@@ -272,7 +259,7 @@ vim.keymap.set('x', '<leader>ys', function()
   vim.fn.setreg(vim.v.register, value)
   vim.api.nvim_feedkeys(vim.keycode '<Esc>', 'x', false)
   vim.notify('Copied path and selection to clipboard\n' .. value, vim.log.levels.INFO)
-end, { desc = 'Yank relative file path with selected text' })
+end, { desc = 'Yank relative file path and selection' })
 
 vim.keymap.set('n', 'gh', '_', { desc = 'Move cursor to the begining of line (_)' })
 vim.keymap.set('n', 'gl', '$', { desc = 'Move cursor to the end of line ($)' })

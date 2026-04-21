@@ -22,8 +22,9 @@ export default function modelNameSystemPromptExtension(pi: ExtensionAPI) {
         event.systemPrompt +
         `
 
-## Runtime Model
+## Runtime Agent
 
+Current agent: pi coding agent
 Current active model: ${displayName} (${providerAndId})
 `,
     };

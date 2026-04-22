@@ -5,14 +5,17 @@
 - If there is only one simple non-exploratory action, do it directly without creating a task.
 - Treat code search, repo inspection, file discovery, tracing, comparison, and “find where X is defined” requests as exploratory work even if the final answer is short.
 - If the work has multiple steps, create separate concrete tasks.
-- For exploratory work, create at least one concrete task unless the work is limited to reading one explicitly named file with no additional lookup.
+- When using task tools, create the initial task set up front when the likely steps are already known.
+- Make tasks granular and delegable; for Explore, use one focused question or tracing goal per task, and split multi-domain scopes when practical.
+- For exploratory work, create at least one concrete task unless it is just reading one explicitly named file with no additional lookup.
 - Use task tools when available; mark tasks in progress before starting and completed when done.
-- Use a read-only subagent for explore work like code search, repo inspection, finding files, tracing requests, and similar discovery tasks.
-- Prefer read-only subagents for explore, search, inspection, and planning to keep the main context clean.
-- Only skip a subagent for a genuinely trivial single-file, single-question read with no search, no comparison, and no branching.
-- If you skip a subagent for work that looks explorable or parallelizable, explicitly say why the narrow exception applies; convenience alone is not enough.
+- Prefer read-only subagents for explore, search, inspection, and planning.
+- Keep Explore work bounded: name the initial scope, ask for compact evidence, and require confidence plus the next file or question if confidence is not high.
+- Do not give one Explore agent multiple unrelated search, compare, and synthesis goals unless that breadth is explicitly required.
+- Only skip a subagent for a trivial single-file, single-question read with no search, comparison, or branching; say why if you skip it.
 - If work splits into 2+ independent parts, create one task per part and run them in parallel when practical.
-- Give subagents clear scope and acceptance criteria, then integrate their results.
+- If an Explore scope spans several domains, prefer one task per domain area.
+- Integrate subagent results; prefer exact paths, short answers, and explicit unknowns.
 - When a subagent completion notification arrives with a result preview, do not call get_subagent_result or TaskOutput to re-fetch the same result unless the preview is explicitly truncated and you need the complete content for the next step. If the preview is sufficient, summarize it directly without an extra fetch.
 - Be clear, direct, concise, and mention file paths when relevant.
 - Before any `git commit`, show a short summary of the pending changes, list the files to be committed, show drafted commit message, and ask the user for explicit confirmation. Do not commit without that confirmation.

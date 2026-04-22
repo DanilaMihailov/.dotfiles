@@ -84,6 +84,13 @@ that dots "." are replaced with "dot-"
 - Aliases defined for common git operations
 - Proper user configuration (name/email)
 
+### Pi Config (`pi/`)
+
+- Repo-managed Pi config lives under `pi/dot-pi/agent/`
+- Local agent definitions are in `pi/dot-pi/agent/agents/`; repo extensions are in `pi/dot-pi/agent/extensions/`
+- Enabled Pi packages are listed in `pi/dot-pi/agent/settings.json`
+- For Pi extension/package questions, check installed package source first: global packages are often under `~/.asdf/installs/nodejs/.../lib/node_modules/`, and runtime-installed packages may be under `~/.pi/agent/node_modules/`
+
 ### General Dotfiles
 
 - All files in this repository are managed via GNU Stow

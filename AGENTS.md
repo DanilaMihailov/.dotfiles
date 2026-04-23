@@ -93,7 +93,8 @@ that dots "." are replaced with "dot-"
 - Enabled Pi packages are listed in `pi/dot-pi/agent/settings.json`
 - For Pi extension/package questions, check installed package source first: global packages are often under `~/.asdf/installs/nodejs/.../lib/node_modules/`, and runtime-installed packages may be under `~/.pi/agent/node_modules/`
 - When documenting reusable global Pi skill helpers that may be run from arbitrary working directories, prefer absolute filesystem paths in the skill docs.
-- For repo-managed Pi extensions, `pi/dot-pi/agent/tsconfig.json` may use absolute paths into `~/.pi/agent/node_modules`; symlink-relative `paths` and `typeRoots` can resolve differently between a repo-opened editor/LSP and `cd ~/.pi/agent && tsc`.
+- For repo-managed Pi extensions, run TypeScript checks from `~/.pi/agent`, not from `~/dotfiles/pi/dot-pi/agent`, because the live `node_modules` used for resolution live under `~/.pi/agent/node_modules`.
+- `pi/dot-pi/agent/tsconfig.json` is allowed to use absolute paths into `~/.pi/agent/node_modules`; symlink-relative `paths` and `typeRoots` can resolve differently between a repo-opened editor/LSP and `cd ~/.pi/agent && tsc`.
 
 ### General Dotfiles
 

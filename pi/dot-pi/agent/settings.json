@@ -22,7 +22,7 @@
   "quietStartup": true,
   "showHardwareCursor": true,
   "transport": "websocket",
-  "theme": "gruvbox-dark",
+  "theme": "gruvbox-dark-readable",
   "collapseChangelog": true,
   "enableInstallTelemetry": false
 }

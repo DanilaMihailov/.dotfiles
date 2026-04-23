@@ -4,6 +4,8 @@
 
 This is a dotfiles repository managed with GNU Stow. It contains configuration files for various development tools and applications including Neovim, Zsh, Git, Alacritty and others.
 
+The repo root mixes visible Stow package directories such as `alacritty/`, `git/`, `nvim/`, `pi/`, and `zsh/` with hidden tool/state roots like `.pi/`, `.opencode/`, and `.claude/`, plus repo-wide meta files such as `AGENTS.md`, `CLAUDE.md`, `.editorconfig`, and `.tool-versions`.
+
 ## Build/Lint/Test Commands
 
 ### General Commands
@@ -90,6 +92,8 @@ that dots "." are replaced with "dot-"
 - Local agent definitions are in `pi/dot-pi/agent/agents/`; repo extensions are in `pi/dot-pi/agent/extensions/`
 - Enabled Pi packages are listed in `pi/dot-pi/agent/settings.json`
 - For Pi extension/package questions, check installed package source first: global packages are often under `~/.asdf/installs/nodejs/.../lib/node_modules/`, and runtime-installed packages may be under `~/.pi/agent/node_modules/`
+- When documenting reusable global Pi skill helpers that may be run from arbitrary working directories, prefer absolute filesystem paths in the skill docs.
+- For repo-managed Pi extensions, `pi/dot-pi/agent/tsconfig.json` may use absolute paths into `~/.pi/agent/node_modules`; symlink-relative `paths` and `typeRoots` can resolve differently between a repo-opened editor/LSP and `cd ~/.pi/agent && tsc`.
 
 ### General Dotfiles
 

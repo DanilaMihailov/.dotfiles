@@ -10,6 +10,7 @@
 - For exploratory work, create at least one concrete task unless it is just reading one explicitly named file with no additional lookup.
 - Use task tools when available; mark tasks in progress before starting and completed when done.
 - Prefer read-only subagents for explore, search, inspection, and planning.
+- For a global `Explore` agent, prefer a bounded scout role: use read-only search tools like `read`, `grep`, `find`, and `ls` when possible, avoid `bash` unless it is actually needed, and bias prompts toward sufficiency, confidence, and the next question instead of exhaustive research.
 - Keep Explore work bounded: name the initial scope, ask for compact evidence, and require confidence plus the next file or question if confidence is not high.
 - Do not give one Explore agent multiple unrelated search, compare, and synthesis goals unless that breadth is explicitly required.
 - Only skip a subagent for a trivial single-file, single-question read with no search, comparison, or branching; say why if you skip it.
@@ -18,7 +19,12 @@
 - Integrate subagent results; prefer exact paths, short answers, and explicit unknowns.
 - When a subagent completion notification arrives with a result preview, do not call get_subagent_result or TaskOutput to re-fetch the same result unless the preview is explicitly truncated and you need the complete content for the next step. If the preview is sufficient, summarize it directly without an extra fetch.
 - Be clear, direct, concise, and mention file paths when relevant.
+- Local or repo `AGENTS.md` policy can be stricter than generic Pi defaults or README guidance; follow the local policy and installed tooling rather than assuming Pi core behavior is the ceiling.
+- When adding or changing reusable helper scripts in a skill, update `SKILL.md` and nearby reference docs in the same pass so later sessions discover the supported entrypoints.
 - Before any `git commit`, show a short summary of the pending changes, list the files to be committed, show drafted commit message, and ask the user for explicit confirmation. Do not commit without that confirmation.
 - use conventional commits, prefer to have no body of commit (except footer), but if you have body, then be super concise
 - always add footer Assisted-by: agent name (model name)
 - Do not use emojis.
+- For Pi extension TypeScript checks, run them from `~/.pi/agent`, not from `~/dotfiles/pi/dot-pi/agent`, because the live `node_modules` used for resolution live under `~/.pi/agent/node_modules`.
+- `pi/dot-pi/agent/tsconfig.json` is allowed to use absolute paths into `~/.pi/agent/node_modules` so repo-opened LSP and live-directory `tsc` resolve the same dependencies.
+- Do not use repo-path `tsc` runs as routine validation for Pi extension changes in this repo; prefer editor/LSP feedback, doc/API checks, and runtime reload verification unless the user explicitly asks for the live-directory typecheck.

@@ -1,8 +1,16 @@
 {
   "compilerOptions": {
     "target": "ES2022",
+    "lib": ["ES2022"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@mariozechner/*": ["../../../../.pi/agent/node_modules/@mariozechner/*"],
+      "@sinclair/*": ["../../../../.pi/agent/node_modules/@sinclair/*"]
+    },
+    "typeRoots": ["../../../../.pi/agent/node_modules/@types"],
+    "types": ["node"],
     "noEmit": true,
     "strict": true,
     "skipLibCheck": true

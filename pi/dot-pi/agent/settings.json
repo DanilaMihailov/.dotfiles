@@ -1,14 +1,13 @@
 {
-  "lastChangelogVersion": "0.67.68",
+  "lastChangelogVersion": "0.69.0",
   "defaultProvider": "codex-lb",
-  "defaultModel": "gpt-5.4",
+  "defaultModel": "gpt-5.5",
   "editorPaddingX": 2,
   "defaultThinkingLevel": "high",
   "hideThinkingBlock": true,
   "doubleEscapeAction": "tree",
   "packages": [
     "npm:@tmustier/pi-usage-extension",
-    "npm:@ifi/oh-pi-themes",
     "npm:pi-tool-display",
     "npm:@tintinweb/pi-tasks",
     "npm:@tintinweb/pi-subagents",
@@ -16,13 +15,13 @@
       "source": "npm:pi-vim",
       "extensions": []
     },
-    "npm:pi-ask-user",
-    "npm:@touchskyer/memex"
+    "npm:pi-ask-user"
   ],
-  "quietStartup": true,
+  "quietStartup": false,
   "showHardwareCursor": true,
   "transport": "websocket",
   "theme": "gruvbox-dark-readable",
   "collapseChangelog": true,
-  "enableInstallTelemetry": false
+  "enableInstallTelemetry": false,
+  "treeFilterMode": "default"
 }

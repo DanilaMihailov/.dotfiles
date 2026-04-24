@@ -4,6 +4,8 @@
  * tools, reasoning, and transport options into Responses-style SSE/WebSocket
  * requests for the `gpt-5.4` model family.
  */
+import { appendFileSync, mkdirSync } from "node:fs";
+import { dirname, join } from "node:path";
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import {
   createAssistantMessageEventStream,
@@ -38,6 +40,83 @@ const CODEX_RESPONSE_STATUSES = new Set([
   "queued",
   "in_progress",
 ]);
+const CODEX_LB_DEBUG_ENV = "CODEX_LB_DEBUG";
+const CODEX_LB_LOG_FILE_ENV = "CODEX_LB_LOG_FILE";
+
+/**
+ * Returns true when verbose provider diagnostics should be written.
+ */
+function isDebugEnabled() {
+  return /^(1|true|yes|on)$/i.test(process.env[CODEX_LB_DEBUG_ENV] ?? "");
+}
+
+/**
+ * Resolves the diagnostics log path. Defaults to a per-project Pi log file.
+ */
+function getDebugLogFile() {
+  return (
+    process.env[CODEX_LB_LOG_FILE_ENV] ||
+    join(process.cwd(), ".pi", "codex-lb.log")
+  );
+}
+
+/**
+ * Writes one structured diagnostics event when CODEX_LB_DEBUG is enabled.
+ */
+function debugLog(event: string, details: Record<string, unknown> = {}) {
+  if (!isDebugEnabled()) {
+    return;
+  }
+  const file = getDebugLogFile();
+  try {
+    mkdirSync(dirname(file), { recursive: true });
+    appendFileSync(
+      file,
+      `${JSON.stringify({ time: new Date().toISOString(), event, ...details })}\n`,
+      "utf8",
+    );
+  } catch (error) {
+    console.error(
+      `[codex-lb] failed to write diagnostics: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+}
+
+/**
+ * Converts websocket close/error events into a small JSON-safe summary.
+ */
+function describeTransportEvent(event: unknown) {
+  if (!event || typeof event !== "object") {
+    return { value: String(event) };
+  }
+  const record = event as Record<string, unknown>;
+  return {
+    type: typeof record.type === "string" ? record.type : undefined,
+    message: typeof record.message === "string" ? record.message : undefined,
+    code: typeof record.code === "number" ? record.code : undefined,
+    reason: typeof record.reason === "string" ? record.reason : undefined,
+    wasClean:
+      typeof record.wasClean === "boolean" ? record.wasClean : undefined,
+  };
+}
+
+/**
+ * Summarizes request size/shape without logging conversation content or secrets.
+ */
+function summarizeRequestBody(body: Record<string, unknown>) {
+  const input = body.input;
+  const tools = body.tools;
+  return {
+    model: body.model,
+    max_output_tokens: body.max_output_tokens,
+    reasoning: body.reasoning,
+    inputItems: Array.isArray(input) ? input.length : undefined,
+    tools: Array.isArray(tools) ? tools.length : undefined,
+    hasInstructions:
+      typeof body.instructions === "string" && body.instructions.length > 0,
+    prompt_cache_key: body.prompt_cache_key,
+  };
+}
 
 /**
  * Normalizes pi reasoning levels to what the target model supports.
@@ -196,6 +275,7 @@ function buildRequestBody(
   options?: SimpleStreamOptions,
 ) {
   const reasoningEffort = normalizeReasoningEffort(model, options?.reasoning);
+  const sessionId = options?.sessionId;
   const body: Record<string, unknown> = {
     model: model.id,
     store: false,
@@ -206,11 +286,18 @@ function buildRequestBody(
     }),
     text: { verbosity: "medium" },
     include: ["reasoning.encrypted_content"],
-    prompt_cache_key: options?.sessionId,
+    prompt_cache_key: sessionId,
     tool_choice: "auto",
     parallel_tool_calls: true,
+    client_metadata: {
+      "x-codex-installation-id": sessionId ?? "pi",
+      "x-codex-window-id": sessionId ?? "pi",
+    },
   };
 
+  if (options?.maxTokens !== undefined) {
+    body.max_output_tokens = options.maxTokens;
+  }
   if (options?.temperature !== undefined) {
     body.temperature = options.temperature;
   }
@@ -425,11 +512,18 @@ async function* parseWebSocket(socket: WebSocket, signal?: AbortSignal) {
   };
 
   const onError = (event: unknown) => {
+    debugLog("websocket.error", {
+      transportEvent: describeTransportEvent(event),
+    });
     failed = extractWebSocketError(event);
     done = true;
     wake();
   };
   const onClose = (event: unknown) => {
+    debugLog("websocket.close", {
+      sawCompletion,
+      transportEvent: describeTransportEvent(event),
+    });
     if (sawCompletion) {
       done = true;
       wake();
@@ -599,13 +693,21 @@ async function processWebSocketStream(
   options?: SimpleStreamOptions,
 ) {
   const requestId = options?.sessionId || createRequestId();
+  const url = resolveCodexWebSocketUrl(model.baseUrl);
+  debugLog("websocket.connect.start", {
+    requestId,
+    url,
+    model: `${model.provider}/${model.id}`,
+    body: summarizeRequestBody(body),
+  });
   const socket = await connectWebSocket(
-    resolveCodexWebSocketUrl(model.baseUrl),
+    url,
     buildWebSocketHeaders(model, apiKey, options, requestId),
     options?.signal,
   );
 
   try {
+    debugLog("websocket.response.create", { requestId });
     socket.send(JSON.stringify({ type: "response.create", ...body }));
     stream.push({ type: "start", partial: output });
     await processResponsesStream(
@@ -615,6 +717,24 @@ async function processWebSocketStream(
       model,
       {},
     );
+    debugLog("websocket.response.done", {
+      requestId,
+      stopReason: output.stopReason,
+      usage: output.usage,
+      contentBlocks: output.content.length,
+    });
+  } catch (error) {
+    debugLog("websocket.response.error", {
+      requestId,
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+      partial: {
+        stopReason: output.stopReason,
+        usage: output.usage,
+        contentBlocks: output.content.length,
+      },
+    });
+    throw error;
   } finally {
     try {
       socket.close(1000, "done");
@@ -709,8 +829,22 @@ function streamCodexLb(
         body = nextBody as Record<string, unknown>;
       }
 
-      const transport = options?.transport || "sse";
-      if (transport !== "sse") {
+      const transport = options?.transport || "websocket";
+      debugLog("request.start", {
+        model: `${model.provider}/${model.id}`,
+        transport,
+        body: summarizeRequestBody(body),
+      });
+      if (transport === "websocket") {
+        await processWebSocketStream(
+          model,
+          body,
+          apiKey,
+          output,
+          stream,
+          options,
+        );
+      } else if (transport === "auto") {
         try {
           await processWebSocketStream(
             model,
@@ -721,9 +855,9 @@ function streamCodexLb(
             options,
           );
         } catch (error) {
-          if (transport === "websocket") {
-            throw error;
-          }
+          debugLog("websocket.fallback_to_sse", {
+            message: error instanceof Error ? error.message : String(error),
+          });
           await processSseStream(model, body, apiKey, output, stream, options);
         }
       } else {

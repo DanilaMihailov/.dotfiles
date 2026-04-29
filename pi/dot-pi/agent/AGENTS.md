@@ -8,33 +8,32 @@
 - Be clear, direct, concise, and mention file paths when relevant.
 - Do not use emojis.
 
-## Planning and Tasking
+## Plans
 
-- Always decompose work into concrete steps, even if no tasks are created.
-- If there is only one simple non-exploratory action, do it directly without creating a task.
-- Treat code search, repo inspection, file discovery, tracing, comparison, and “find where X is defined” requests as exploratory work even if the final answer is short.
-- For multi-step work, create separate concrete tasks.
-- When using task tools and the likely steps are already known, create the initial task set up front.
-- Use task tools when available; mark tasks in progress before starting and completed when done.
-- Make tasks granular and delegable; for Explore, use one focused question or tracing goal per task, and split multi-domain scopes when practical.
-- For exploratory work, create at least one concrete task unless it is just reading one explicitly named file with no additional lookup.
-- If work splits into 2+ independent parts, create one task per part and run them in parallel when practical.
-- If an Explore scope spans several domains, prefer one task per domain area.
+- Always break the work into concrete steps, even if you do not need to call `update_plan`.
+- If there is only one simple non-exploratory action, do it directly without a plan update.
+- Treat code search, repo inspection, file discovery, tracing, comparison, and “find where X is defined” as exploratory work even if the final answer will be short.
+- For multi-step or exploratory work, use `update_plan` early with small outcome-oriented steps.
+- Use Codex plan statuses literally: `pending`, `in_progress`, and `completed`.
+- Keep exactly one plan step `in_progress` at a time.
+- When the likely path is already clear, create the initial plan up front instead of narrating an implicit plan.
+- Keep steps granular enough to finish, verify, or hand off cleanly.
+- If the work splits into 2+ independent parts, represent them as separate steps and parallelize only when the workflow supports it.
+- Update the plan when scope changes, and mark steps completed as soon as the result is actually in hand.
+- Mark a step `completed` before starting the next step or presenting the task as finished.
+- If you finish a step and continue working, immediately move the next active step to `in_progress` so stale state does not linger.
+- Before the final response, do a quick stale-state pass and fix any step that is still `pending` or `in_progress` despite already being done.
 
-## Subagents and Explore
+## Agents and Exploration
 
-- Prefer read-only subagents for explore, search, inspection, and planning.
-- For a global `Explore` agent, prefer a bounded scout role: use read-only search tools like `read`, `grep`, `find`, and `ls` when possible, avoid `bash` unless it is actually needed, and bias prompts toward sufficiency, confidence, and the next question instead of exhaustive research.
-- Keep Explore work bounded: name the initial scope, ask for compact evidence, and require confidence plus the next file or question if confidence is not high.
-- Do not give one Explore agent multiple unrelated search, compare, and synthesis goals unless that breadth is explicitly required.
-- Only skip a subagent for a trivial single-file, single-question read with no search, comparison, or branching; say why if you skip it.
-- Integrate subagent results; prefer exact paths, short answers, and explicit unknowns.
-- When a subagent completion notification arrives with a result preview, do not call `get_subagent_result` or `TaskOutput` to re-fetch the same result unless the preview is truncated and you need the full content for the next step. If the preview is sufficient, summarize it directly without an extra fetch.
-
-## Policy Precedence
-
-- Follow the most local applicable `AGENTS.md`.
-- Local or repo `AGENTS.md` policy can be stricter than generic Pi defaults or README guidance; follow the local policy and installed tooling rather than assuming Pi core behavior is the ceiling.
+- Do not use `spawn_agent` unless the user explicitly asks for delegation, agents, or parallel agent work.
+- When delegation is not explicitly requested, do exploration locally with read-oriented commands such as `rg`, `sed`, `ls`, and `git diff`.
+- If delegation is explicitly requested, use `explorer` for bounded codebase questions and `worker` for implementation work with a clear write scope.
+- Keep delegated prompts narrow: one concrete question, trace, or ownership area per agent unless broader scope is clearly required.
+- If multiple delegated tasks are independent, give each agent a disjoint responsibility and continue the main thread locally instead of waiting immediately.
+- Reuse an existing agent with `send_input` when the follow-up stays on the same thread of work.
+- Call `wait_agent` sparingly and mainly when the next critical-path step is blocked on that result.
+- Integrate agent results directly, preferring exact paths, concise findings, and explicit unknowns.
 
 ## Skills and Documentation
 

@@ -35,7 +35,7 @@ require('sidekick').setup {
       end,
     },
     prompts = {
-      diagnostics_line = 'Can you help me fix the diagnostics in a {file} on a line {line}?\n{diagnostics_line}',
+      diagnostics_line = 'Can you help me fix only this diagnostics?\n{diagnostics_line}',
     },
   },
 }
@@ -78,8 +78,10 @@ vim.keymap.set({ 'n', 't', 'i', 'x' }, '<c-.>', function()
 end, { desc = 'Sidekick Focus' })
 
 local function sidekick_open_codex(focus)
-  local state = require('sidekick.cli.state')
-  local current = state.get { attached = true, cwd = true, name = 'codex' }[1]
+  require('sidekick.cli.session').setup()
+
+  local state = require 'sidekick.cli.state'
+  local current = state.get({ attached = true, cwd = true, name = 'codex' })[1]
 
   state.attach(current or {
     installed = vim.fn.executable 'codex' == 1,

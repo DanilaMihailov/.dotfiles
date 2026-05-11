@@ -33,6 +33,9 @@ require('mini.move').setup {
 }
 
 require('mini.pairs').setup()
+
+vim.opt.sessionoptions:remove 'terminal'
+
 require('mini.sessions').setup {
   autoread = true,
   autowrite = true,

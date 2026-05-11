@@ -8,6 +8,10 @@ vim.pack.add {
 require('sidekick').setup {
   cli = {
     win = {
+      wo = {
+        scrolloff = 1,
+        winhighlight = 'Normal:Normal,NormalNC:Normal,EndOfBuffer:Normal,SignColumn:Normal',
+      },
       split = {
         width = 100,
       },
@@ -36,6 +40,31 @@ require('sidekick').setup {
   },
 }
 
+vim.api.nvim_set_hl(0, 'SidekickChat', { link = 'Normal' })
+vim.api.nvim_create_autocmd('ColorScheme', {
+  callback = function()
+    vim.api.nvim_set_hl(0, 'SidekickChat', { link = 'Normal' })
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'TermEnter', 'TextChangedT' }, {
+  callback = function(args)
+    if vim.bo[args.buf].filetype ~= 'sidekick_terminal' then
+      return
+    end
+
+    vim.schedule(function()
+      local last_line = vim.api.nvim_buf_line_count(args.buf)
+
+      for _, win in ipairs(vim.fn.win_findbuf(args.buf)) do
+        if vim.api.nvim_win_is_valid(win) then
+          vim.api.nvim_win_set_cursor(win, { last_line, 0 })
+        end
+      end
+    end)
+  end,
+})
+
 vim.keymap.set('i', '<tab>', function()
   -- if there is a next edit, jump to it, otherwise apply it if any
   if not require('sidekick').nes_jump_or_apply() then
@@ -48,27 +77,41 @@ vim.keymap.set({ 'n', 't', 'i', 'x' }, '<c-.>', function()
   require('sidekick.cli').focus()
 end, { desc = 'Sidekick Focus' })
 
+local function sidekick_open_codex(focus)
+  local state = require('sidekick.cli.state')
+  local current = state.get { attached = true, cwd = true, name = 'codex' }[1]
+
+  state.attach(current or {
+    installed = vim.fn.executable 'codex' == 1,
+    tool = require('sidekick.config').get_tool 'codex',
+  }, {
+    focus = focus,
+    show = true,
+  })
+end
+
 vim.keymap.set('n', '<leader>aa', function()
-  require('sidekick.cli').toggle { focus = false }
-end, { desc = 'Sidekick Toggle CLI' })
+  sidekick_open_codex(true)
+end, { desc = 'Sidekick Open Codex and Focus' })
 
-vim.keymap.set('n', '<leader>aA', function()
-  require('sidekick.cli').toggle { focus = true }
-end, { desc = 'Sidekick Toggle CLI and Focus' })
-
-vim.keymap.set('n', '<leader>as', function()
-  require('sidekick.cli').select { filter = { installed = true }, focus = false }
-end, { desc = 'Select CLI' })
-
-vim.keymap.set('n', '<leader>aS', function()
-  require('sidekick.cli').select { filter = { installed = true }, focus = true }
-end, { desc = 'Select CLI and Focus' })
-
-vim.keymap.set('n', '<leader>ad', function()
-  require('sidekick.cli').close()
-end, { desc = 'Detach a CLI Session' })
+vim.keymap.set('n', '<leader>aC', function()
+  require('sidekick.cli').select { filter = { installed = true, name = 'codex' }, focus = true }
+end, { desc = 'Sidekick Select Codex Session' })
 
 local sidekick_zoomed = false
+
+local function sidekick_submit(focus)
+  require('sidekick.cli.state').with(function(state)
+    if state.session then
+      state.session:submit()
+    end
+  end, {
+    attach = true,
+    filter = { installed = true },
+    focus = focus,
+    show = true,
+  })
+end
 
 vim.keymap.set('n', '<leader>az', function()
   local width = sidekick_zoomed and 100 or math.floor(vim.o.columns * 0.8)
@@ -81,6 +124,14 @@ vim.keymap.set('n', '<leader>az', function()
 
   sidekick_zoomed = not sidekick_zoomed
 end, { desc = 'Sidekick Toggle Zoom' })
+
+vim.keymap.set({ 'n', 'x' }, '<leader>as', function()
+  sidekick_submit(false)
+end, { desc = 'Sidekick Submit' })
+
+vim.keymap.set({ 'n', 'x' }, '<leader>aS', function()
+  sidekick_submit(true)
+end, { desc = 'Sidekick Submit and Focus' })
 
 vim.keymap.set({ 'x', 'n' }, '<leader>at', function()
   require('sidekick.cli').send { msg = '{this}', focus = false }
@@ -125,12 +176,3 @@ vim.keymap.set({ 'n', 'x' }, '<leader>aP', function()
     end,
   }
 end, { desc = 'Sidekick Select Prompt and Focus' })
-
--- Example of a keybinding to open Claude directly
-vim.keymap.set('n', '<leader>ac', function()
-  require('sidekick.cli').toggle { name = 'codex', focus = false }
-end, { desc = 'Sidekick Toggle Codex' })
-
-vim.keymap.set('n', '<leader>aC', function()
-  require('sidekick.cli').toggle { name = 'codex', focus = true }
-end, { desc = 'Sidekick Toggle Codex and Focus' })

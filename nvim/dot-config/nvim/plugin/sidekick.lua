@@ -9,7 +9,6 @@ require('sidekick').setup {
   cli = {
     win = {
       wo = {
-        scrolloff = 1,
         winhighlight = 'Normal:Normal,NormalNC:Normal,EndOfBuffer:Normal,SignColumn:Normal',
       },
       split = {
@@ -47,6 +46,20 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   end,
 })
 
+local function sidekick_scroll_to_bottom(buf)
+  if not (buf and vim.api.nvim_buf_is_valid(buf)) then
+    return
+  end
+
+  local last_line = vim.api.nvim_buf_line_count(buf)
+
+  for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+    if vim.api.nvim_win_is_valid(win) then
+      pcall(vim.api.nvim_win_set_cursor, win, { last_line, 0 })
+    end
+  end
+end
+
 vim.api.nvim_create_autocmd({ 'TermEnter', 'TextChangedT' }, {
   callback = function(args)
     if vim.bo[args.buf].filetype ~= 'sidekick_terminal' then
@@ -54,13 +67,7 @@ vim.api.nvim_create_autocmd({ 'TermEnter', 'TextChangedT' }, {
     end
 
     vim.schedule(function()
-      local last_line = vim.api.nvim_buf_line_count(args.buf)
-
-      for _, win in ipairs(vim.fn.win_findbuf(args.buf)) do
-        if vim.api.nvim_win_is_valid(win) then
-          vim.api.nvim_win_set_cursor(win, { last_line, 0 })
-        end
-      end
+      sidekick_scroll_to_bottom(args.buf)
     end)
   end,
 })
@@ -83,6 +90,11 @@ local function sidekick_open_codex(focus)
   local state = require 'sidekick.cli.state'
   local current = state.get({ attached = true, cwd = true, name = 'codex' })[1]
 
+  if current and current.terminal and current.terminal:is_open() then
+    current.terminal:hide()
+    return
+  end
+
   state.attach(current or {
     installed = vim.fn.executable 'codex' == 1,
     tool = require('sidekick.config').get_tool 'codex',
@@ -94,7 +106,7 @@ end
 
 vim.keymap.set('n', '<leader>aa', function()
   sidekick_open_codex(true)
-end, { desc = 'Sidekick Open Codex and Focus' })
+end, { desc = 'Sidekick Toggle Codex and Focus' })
 
 vim.keymap.set('n', '<leader>aC', function()
   require('sidekick.cli').select { filter = { installed = true, name = 'codex' }, focus = true }
@@ -102,9 +114,17 @@ end, { desc = 'Sidekick Select Codex Session' })
 
 local sidekick_zoomed = false
 
+-- Send a real Enter to Codex without inserting an extra blank prompt line.
 local function sidekick_submit(focus)
   require('sidekick.cli.state').with(function(state)
-    if state.session then
+    local terminal = state.terminal
+    local job = terminal and rawget(terminal, 'job')
+    local buf = terminal and rawget(terminal, 'buf')
+
+    if job then
+      vim.api.nvim_chan_send(job, '\r')
+      sidekick_scroll_to_bottom(buf)
+    elseif state.session then
       state.session:submit()
     end
   end, {
@@ -116,11 +136,12 @@ local function sidekick_submit(focus)
 end
 
 vim.keymap.set('n', '<leader>az', function()
-  local width = sidekick_zoomed and 100 or math.floor(vim.o.columns * 0.8)
+  local width = sidekick_zoomed and 100 or math.floor(vim.o.columns * 0.6)
 
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.w[win].sidekick_session_id and vim.api.nvim_win_get_config(win).relative == '' then
       vim.api.nvim_win_set_width(win, width)
+      sidekick_scroll_to_bottom(vim.api.nvim_win_get_buf(win))
     end
   end
 

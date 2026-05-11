@@ -33,7 +33,7 @@
       "src": "https://github.com/folke/lazydev.nvim"
     },
     "lualine.nvim": {
-      "rev": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c",
+      "rev": "131a558e13f9f28b15cd235557150ccb23f89286",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mini.icons": {
@@ -47,7 +47,7 @@
       "version": "0.0.0 - 1.0.0"
     },
     "neogit": {
-      "rev": "d1cfc4986195239cac55700b675cea7a9578d430",
+      "rev": "395ac481e197784e410b59b987fadaf9e7481df1",
       "src": "https://github.com/NeogitOrg/neogit"
     },
     "nvim-dap": {
@@ -66,7 +66,7 @@
       "version": "1.0.0 - 2.0.0"
     },
     "nvim-lspconfig": {
-      "rev": "9bafffaeaae363c5211080e06e04ed5b422fd5ad",
+      "rev": "f6738ef65dabade340b473d4ff2a1ad3352c10e7",
       "src": "https://github.com/neovim/nvim-lspconfig",
       "version": "2.0.0 - 3.0.0"
     },
@@ -75,7 +75,7 @@
       "src": "https://github.com/neovim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
-      "rev": "b0c45cefe2c8f7b55fc46f34e563bc428ef99636",
+      "rev": "b311b30818951d01f7b4bf650521b868b3fece16",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "oil.nvim": {
@@ -84,7 +84,7 @@
       "version": "2.0.0 - 3.0.0"
     },
     "opencode.nvim": {
-      "rev": "8edc19ac64e3075d4d68e49ef6846dec562ed316",
+      "rev": "f71b2acd02271966f6044aec85bead5816a87621",
       "src": "https://github.com/sudo-tee/opencode.nvim"
     },
     "plenary.nvim": {
@@ -95,6 +95,11 @@
       "rev": "e3c18ddd27a853f85a6f513a864cf4f2982b9f26",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim",
       "version": "8.0.0 - 9.0.0"
+    },
+    "sidekick.nvim": {
+      "rev": "53a2d3afa61e5fd2e17b270b5fa72e5493808304",
+      "src": "https://github.com/folke/sidekick.nvim",
+      "version": "2.0.0 - 3.0.0"
     },
     "snacks.nvim": {
       "rev": "e6fd58c82f2f3fcddd3fe81703d47d6d48fc7b9f",

@@ -192,6 +192,7 @@ eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
+eval "$(codex completion zsh)"
 
 # bun completions
 [ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"

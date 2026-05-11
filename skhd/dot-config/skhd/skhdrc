@@ -172,5 +172,4 @@ shift + alt - t : yabai -m window --toggle float --grid 1:1:1:1:1:1
 
 # APPS
 
-alt - return : kitty --single-instance -d ~
-
+alt - return : ghostty --working-directory=~

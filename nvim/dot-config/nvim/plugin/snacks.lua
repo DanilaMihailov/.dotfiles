@@ -34,6 +34,76 @@ snacks.setup {
   },
 }
 
+snacks.toggle({
+  id = 'codelens',
+  name = 'CodeLens',
+  get = function()
+    return vim.lsp.codelens.is_enabled()
+  end,
+  set = function(state)
+    vim.lsp.codelens.enable(state)
+  end,
+}):map('<leader>tl')
+
+snacks.toggle({
+  id = 'diagnostic_virtual_lines',
+  name = 'Diagnostic Virtual Lines',
+  get = function()
+    return vim.diagnostic.config().virtual_lines == true
+  end,
+  set = function(state)
+    vim.diagnostic.config { virtual_lines = state }
+  end,
+}):map('<leader>td')
+
+snacks.toggle.option('spell', { name = 'Spell Check' }):map('<leader>ts')
+
+snacks.toggle({
+  id = 'format_on_save',
+  name = 'Format on Save',
+  get = function()
+    return vim.g.disable_autoformat ~= true
+  end,
+  set = function(state)
+    vim.g.disable_autoformat = not state
+  end,
+}):map('<leader>tf')
+
+snacks.toggle({
+  id = 'git_current_line_blame',
+  name = 'Git Current Line Blame',
+  get = function()
+    return require('gitsigns.config').config.current_line_blame == true
+  end,
+  set = function(state)
+    require('gitsigns').toggle_current_line_blame(state)
+  end,
+}):map('<leader>tb')
+
+snacks.toggle({
+  id = 'git_deleted_lines',
+  name = 'Git Deleted Lines',
+  get = function()
+    return require('gitsigns.config').config.show_deleted == true
+  end,
+  set = function(state)
+    require('gitsigns.config').config.show_deleted = state
+  end,
+}):map('<leader>tD')
+
+vim.schedule(function()
+  snacks.toggle({
+    id = 'treesitter_context',
+    name = 'Treesitter Context',
+    get = function()
+      return require('treesitter-context').enabled()
+    end,
+    set = function(state)
+      require('treesitter-context')[state and 'enable' or 'disable']()
+    end,
+  }):map('<leader>tc')
+end)
+
 vim.keymap.set('n', '<leader>sf', function()
   snacks.picker.smart()
 end, { desc = 'Smart Find Files' })

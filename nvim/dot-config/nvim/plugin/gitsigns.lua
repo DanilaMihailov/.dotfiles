@@ -71,15 +71,6 @@ gitsigns.setup {
     map('n', '<leader>hD', function()
       gitsigns.diffthis '@'
     end, { desc = 'git [D]iff against last commit' })
-    -- Toggles
-    map(
-      'n',
-      '<leader>tb',
-      gitsigns.toggle_current_line_blame,
-      { desc = 'Toggle git show [b]lame line' }
-    )
-    map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = 'Toggle git show [D]eleted' })
-
     map('n', '<leader>hq', function()
       gitsigns.setqflist 'all'
     end, { desc = 'Quickfix list with all hunks' })

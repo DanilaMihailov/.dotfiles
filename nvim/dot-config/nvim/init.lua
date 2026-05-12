@@ -110,7 +110,6 @@ vim.opt.scrolloff = 10
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 
-vim.g.show_diagnostic_virutal_lines = true
 -- Diagnostic Config
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
@@ -125,6 +124,7 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.HINT] = '󰌶 ',
     },
   } or {},
+  virtual_lines = false,
   -- virtual_text = {
   --   virt_text_hide = !vim.g.show_diagnostic_virutal_text
   --   source = 'if_many',
@@ -140,6 +140,8 @@ vim.diagnostic.config {
   --   end,
   -- },
 }
+
+vim.g.disable_autoformat = true
 
 -- folds using treesitter
 vim.opt.foldmethod = 'expr'
@@ -205,15 +207,7 @@ vim.keymap.set(
   { desc = 'Open diagnostic [Q]uickfix list' }
 )
 
-vim.keymap.set('n', '<leader>td', function()
-  vim.g.show_diagnostic_virutal_lines = not vim.g.show_diagnostic_virutal_lines
-  vim.diagnostic.config { virtual_lines = vim.g.show_diagnostic_virutal_lines }
-end, { desc = 'Toggle [D]iagnostics' })
-
 vim.lsp.codelens.enable(true)
-vim.keymap.set('n', '<leader>tl', function()
-  vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled())
-end, { desc = 'Toggle Code[L]ens' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -307,6 +301,3 @@ local spellsuggest_select = function()
 end
 
 vim.keymap.set('n', 'z=', spellsuggest_select, { desc = 'Shows spelling suggestions' })
-vim.keymap.set('n', '<leader>ts', function()
-  vim.opt.spell = not vim.opt.spell
-end, { desc = 'Toggle spell check' })

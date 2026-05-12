@@ -61,10 +61,6 @@ local context = require 'treesitter-context'
 
 context.setup()
 
-vim.keymap.set('n', '<leader>tc', function()
-  context.toggle()
-end, { desc = 'Toggle Treesitter [C]ontext' })
-
 vim.keymap.set('n', '<leader>gc', function()
   context.go_to_context(vim.v.count1)
 end, { silent = true, desc = '[G]o to [C]ontext (upper)' })

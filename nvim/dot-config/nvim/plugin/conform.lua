@@ -70,7 +70,3 @@ conform.setup {
 vim.keymap.set('n', '<leader>f', function()
   require('conform').format { async = true, lsp_format = 'fallback' }
 end, { desc = '[F]ormat buffer' })
-
-vim.keymap.set('n', '<leader>tf', function()
-  vim.g.disable_autoformat = not vim.g.disable_autoformat
-end, { desc = 'Toggle [F]ormat on Save' })

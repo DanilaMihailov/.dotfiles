@@ -210,6 +210,11 @@ vim.keymap.set('n', '<leader>td', function()
   vim.diagnostic.config { virtual_lines = vim.g.show_diagnostic_virutal_lines }
 end, { desc = 'Toggle [D]iagnostics' })
 
+vim.lsp.codelens.enable(true)
+vim.keymap.set('n', '<leader>tl', function()
+  vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled())
+end, { desc = 'Toggle Code[L]ens' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 

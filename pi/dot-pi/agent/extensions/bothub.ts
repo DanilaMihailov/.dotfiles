@@ -99,6 +99,44 @@ export default function bothubExtension(pi: ExtensionAPI) {
         maxTokens: 65536,
       },
       {
+        id: "deepseek-v4-flash",
+        name: "DeepSeek V4 Flash",
+        reasoning: true,
+        input: ["text"],
+        cost: {
+          input: 0.112,
+          output: 0.224,
+          cacheRead: 0.022,
+          cacheWrite: 0,
+        },
+        contextWindow: 1048576,
+        maxTokens: 384000,
+        compat: {
+          openRouterRouting: {
+            only: ["deepseek"],
+          },
+        },
+      },
+      {
+        id: "deepseek-v4-pro",
+        name: "DeepSeek V4 Pro",
+        reasoning: true,
+        input: ["text"],
+        cost: {
+          input: 0.435,
+          output: 0.87,
+          cacheRead: 0.003625,
+          cacheWrite: 0,
+        },
+        contextWindow: 1048576,
+        maxTokens: 384000,
+        compat: {
+          openRouterRouting: {
+            only: ["deepseek"],
+          },
+        },
+      },
+      {
         id: "elephant-alpha",
         name: "Elephant",
         reasoning: false,

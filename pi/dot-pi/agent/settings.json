@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.74.1",
   "defaultProvider": "bothub",
-  "defaultModel": "deepseek-v4-flash",
+  "defaultModel": "deepseek-v4-pro",
   "editorPaddingX": 2,
   "defaultThinkingLevel": "high",
   "hideThinkingBlock": true,

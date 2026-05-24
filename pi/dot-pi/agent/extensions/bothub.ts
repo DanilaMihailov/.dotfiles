@@ -9,6 +9,17 @@ import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
  * Registers the custom Bothub provider and its Gemini model metadata.
  */
 export default function bothubExtension(pi: ExtensionAPI) {
+  // Inject OpenRouter provider routing for models that define compat.openRouterRouting.
+  // Pi only does this automatically when baseUrl contains "openrouter.ai", but Bothub
+  // passes through all OpenRouter body params, so we do it unconditionally here.
+  pi.on("before_provider_request", (event, ctx) => {
+    const routing = (ctx.model as any)?.compat?.openRouterRouting;
+    if (!routing) return;
+    const payload = event.payload as Record<string, unknown>;
+    if (payload.provider) return; // don't override if already set
+    return { ...payload, provider: routing };
+  });
+
   pi.registerProvider("bothub", {
     baseUrl: "https://bothub.chat/api/v2/openai/v1",
     apiKey: "BOTHUB_KEY", // env var name or literal value
@@ -111,11 +122,11 @@ export default function bothubExtension(pi: ExtensionAPI) {
         },
         contextWindow: 1048576,
         maxTokens: 384000,
-        compat: {
-          openRouterRouting: {
-            only: ["deepseek"],
-          },
-        },
+        // compat: {
+        //   openRouterRouting: {
+        //     only: ["deepseek"],
+        //   },
+        // },
       },
       {
         id: "deepseek-v4-pro",
@@ -130,11 +141,11 @@ export default function bothubExtension(pi: ExtensionAPI) {
         },
         contextWindow: 1048576,
         maxTokens: 384000,
-        compat: {
-          openRouterRouting: {
-            only: ["deepseek"],
-          },
-        },
+        // compat: {
+        //   openRouterRouting: {
+        //     only: ["deepseek"],
+        //   },
+        // },
       },
       {
         id: "elephant-alpha",

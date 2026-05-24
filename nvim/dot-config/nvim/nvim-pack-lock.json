@@ -47,11 +47,11 @@
       "version": "0.0.0 - 1.0.0"
     },
     "neogit": {
-      "rev": "395ac481e197784e410b59b987fadaf9e7481df1",
+      "rev": "99326a1310fb2d616b455d2fd16d01bf00682f06",
       "src": "https://github.com/NeogitOrg/neogit"
     },
     "nvim-dap": {
-      "rev": "45a69eba683a2c448dd9ecfc4de89511f0646b5f",
+      "rev": "531771530d4f82ad2d21e436e3cc052d68d7aebb",
       "src": "https://codeberg.org/mfussenegger/nvim-dap",
       "version": "'master'"
     },
@@ -81,24 +81,6 @@
     "oil.nvim": {
       "rev": "975a77cce3c8cb742bc1b3629f4328f5ca977dad",
       "src": "https://github.com/stevearc/oil.nvim",
-      "version": "2.0.0 - 3.0.0"
-    },
-    "opencode.nvim": {
-      "rev": "f71b2acd02271966f6044aec85bead5816a87621",
-      "src": "https://github.com/sudo-tee/opencode.nvim"
-    },
-    "plenary.nvim": {
-      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
-    "render-markdown.nvim": {
-      "rev": "e3c18ddd27a853f85a6f513a864cf4f2982b9f26",
-      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim",
-      "version": "8.0.0 - 9.0.0"
-    },
-    "sidekick.nvim": {
-      "rev": "53a2d3afa61e5fd2e17b270b5fa72e5493808304",
-      "src": "https://github.com/folke/sidekick.nvim",
       "version": "2.0.0 - 3.0.0"
     },
     "snacks.nvim": {

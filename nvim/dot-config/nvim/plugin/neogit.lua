@@ -7,10 +7,10 @@ local neogit = require 'neogit'
 neogit.setup {
   disable_hint = true,
   git_services = {
-    ['gitlab.clabs.net'] = {
-      pull_request = 'https://gitlab.clabs.net/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}',
-      commit = 'https://gitlab.clabs.net/${owner}/${repository}/-/commit/${oid}',
-      tree = 'https://gitlab.clabs.net/${owner}/${repository}/-/tree/${branch_name}?ref_type=heads',
+    ['gitlab.rtlq.ru'] = {
+      pull_request = 'https://gitlab.rtlq.ru/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}',
+      commit = 'https://gitlab.rtlq.ru/${owner}/${repository}/-/commit/${oid}',
+      tree = 'https://gitlab.rtlq.ru/${owner}/${repository}/-/tree/${branch_name}?ref_type=heads',
     },
   },
   disable_context_highlighting = true,

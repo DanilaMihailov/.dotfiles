@@ -175,6 +175,30 @@
 						"output": 65000
 					},
 				},
+				"deepseek-v4-flash": {
+					"name": "DeepSeek V4 Flash",
+					"reasoning": true,
+					"cost": {
+						"input": 13.2,
+						"output": 26.4
+					},
+					"limit": {
+						"context": 1048576,
+						"output": 384000
+					}
+				},
+				"deepseek-v4-pro": {
+					"name": "DeepSeek V4 Pro",
+					"reasoning": true,
+					"cost": {
+						"input": 51.27,
+						"output": 102.54
+					},
+					"limit": {
+						"context": 1048576,
+						"output": 384000
+					}
+				},
 				"kimi-k2.5": {
 					"name": "kimi-k2.5",
 					"cost": {

@@ -28,12 +28,12 @@ conform.setup {
     python = function()
       return { 'ruff_fix', 'ruff_format' }
     end,
-    html = { 'prettier' },
+    -- html = { 'prettier' },
     htmlangular = { 'prettier' },
     htmldjango = { 'djlint' },
-    javascript = { 'prettier' },
-    typescript = { 'prettier' },
-    typescriptreact = { 'prettier' },
+    -- javascript = { 'prettier' },
+    -- typescript = { 'prettier' },
+    -- typescriptreact = { 'prettier' },
     sh = { 'beautysh' },
   },
   formatters = {

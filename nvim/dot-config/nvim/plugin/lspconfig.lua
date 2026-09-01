@@ -8,4 +8,5 @@ vim.lsp.enable 'lua_ls'
 vim.lsp.enable 'ts_ls'
 vim.lsp.enable 'expert' -- elixir lsp
 vim.lsp.enable 'jsonls'
-vim.lsp.enable 'eslint'
+-- vim.lsp.enable 'eslint'
+vim.lsp.enable 'biome'

@@ -10,6 +10,7 @@ This repository contains my personal configuration files (dotfiles) for various 
 - [Zsh configuration](#zsh-configuration) - Shell configuration with Powerlevel10k, plugins, and customizations
 - [Git configuration](#git-configuration) - Global git settings and aliases
 - Alacritty terminal (`alacritty/`) - Terminal emulator configuration
+- Foot terminal (`foot/`) - Terminal emulator configuration (`stow -v --dotfiles foot`)
 - Hyprland (`hyprland/`) - Compositor and Hyprpaper configuration
 - Waybar (`waybar/`) - Status bar configuration and helper scripts
 - Other tools - Configuration for various development tools

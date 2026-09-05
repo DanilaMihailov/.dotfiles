@@ -1,0 +1,191 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 28,
+  "spacing": 4,
+
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/window"
+  ],
+
+  "modules-center": [
+    "clock"
+  ],
+
+  "modules-right": [
+    "group/system-monitor",
+    "group/network-status",
+    "custom/internal-display",
+    "pulseaudio",
+    "group/power-status",
+    "tray"
+  ],
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "active-only": false,
+    "show-special": true,
+    "special-visible-only": true,
+    "on-click": "activate",
+    "format": "{name} {windows}",
+    "format-window-separator": " ",
+    "window-rewrite-default": "󰘔",
+    "window-rewrite": {
+      "class<(firefox|Firefox)>": "",
+      "class<(chromium|Chromium|google-chrome)>": "",
+      "class<zen>": "󰖟",
+      "class<(foot|footclient)> title<.*(nvim|Neovim).*>": "",
+      "class<(foot|footclient)> title<.*(btop|Btop).*>": "󰨇",
+      "class<(foot|footclient)> title<.*(codex|Codex).*>": "󰚩",
+      "class<(foot|footclient)> title<.*(ssh|SSH).*>": "󰣀",
+      "class<(foot|footclient)>": "",
+      "class<(dolphin|org.kde.dolphin)>": "󰉋",
+      "class<(code|Code|codium|VSCodium)>": "󰨞",
+      "class<(discord|Discord|vesktop|Vesktop)>": "󰙯",
+      "class<(spotify|Spotify)>": "",
+      "class<(steam|Steam)>": "",
+      "class<(Throne|throne)>": "󰒍"
+    }
+  },
+
+  "hyprland/window": {
+    "max-length": 60,
+    "separate-outputs": true
+  },
+
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>"
+  },
+
+  "network": {
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰖪",
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "tooltip-format": "{ifname}: {essid}\nSignal: {signalStrength}%\n{ipaddr}"
+  },
+
+  "group/network-status": {
+    "orientation": "horizontal",
+    "modules": [
+      "network",
+      "custom/wireguard",
+      "custom/throne"
+    ]
+  },
+
+  "custom/wireguard": {
+    "exec": "~/.config/waybar/wireguard-toggle.sh",
+    "on-click": "~/.config/waybar/wireguard-toggle.sh toggle",
+    "return-type": "json",
+    "interval": 5,
+    "signal": 8
+  },
+
+  "custom/throne": {
+    "exec": "~/.config/waybar/throne-toggle.sh",
+    "on-click": "~/.config/waybar/throne-toggle.sh toggle",
+    "return-type": "json",
+    "interval": 5
+  },
+
+  "custom/internal-display": {
+    "exec": "~/.config/waybar/internal-display-toggle.sh",
+    "on-click": "~/.config/waybar/internal-display-toggle.sh toggle",
+    "return-type": "json",
+    "interval": 2
+  },
+
+  "group/system-monitor": {
+    "orientation": "horizontal",
+    "modules": [
+      "cpu",
+      "temperature"
+    ]
+  },
+
+  "cpu": {
+    "interval": 2,
+    "format": " {usage:02}%",
+    "tooltip-format": "CPU usage: {usage}%\nLoad: {load1} {load5} {load15}",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    }
+  },
+
+  "temperature": {
+    "interval": 5,
+    "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+    "input-filename": "temp1_input",
+    "critical-threshold": 90,
+    "format": " {temperatureC}°C",
+    "format-critical": " {temperatureC}°C",
+    "tooltip-format": "CPU package temperature: {temperatureC}°C"
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "󰝟",
+    "format-icons": {
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    },
+    "tooltip-format": "{desc}: {volume}%",
+    "on-click": "pavucontrol"
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "󰾅",
+      "performance": "󰓅",
+      "balanced": "󰾅",
+      "power-saver": "󰌪"
+    }
+  },
+
+  "group/power-status": {
+    "orientation": "horizontal",
+    "modules": [
+      "power-profiles-daemon",
+      "battery"
+    ]
+  },
+
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄{capacity}%",
+    "format-icons": [
+      "󰂎",
+      "󰁺",
+      "󰁼",
+      "󰁾",
+      "󰂀",
+      "󰂂",
+      "󰁹"
+    ],
+    "states": {
+      "warning": 30,
+      "critical": 15
+    }
+  },
+
+  "tray": {
+    "spacing": 6
+  }
+}

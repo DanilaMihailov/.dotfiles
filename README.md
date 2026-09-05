@@ -10,6 +10,8 @@ This repository contains my personal configuration files (dotfiles) for various 
 - [Zsh configuration](#zsh-configuration) - Shell configuration with Powerlevel10k, plugins, and customizations
 - [Git configuration](#git-configuration) - Global git settings and aliases
 - Alacritty terminal (`alacritty/`) - Terminal emulator configuration
+- Hyprland (`hyprland/`) - Compositor and Hyprpaper configuration
+- Waybar (`waybar/`) - Status bar configuration and helper scripts
 - Other tools - Configuration for various development tools
 
 ## Using GNU stow
@@ -24,6 +26,15 @@ stow -v --dotfiles */
 `-n` - will run in simulation mode
 
 `--dotfiles` - change `dot-` to `.` in names
+
+To apply just the Hyprland and Waybar configs from the repository root:
+
+```sh
+stow -v --dotfiles hyprland waybar
+```
+
+These packages link `~/.config/hypr` and `~/.config/waybar` to the repository.
+Move any existing configs out of those paths before applying them on another machine.
 
 ## Neovim
 

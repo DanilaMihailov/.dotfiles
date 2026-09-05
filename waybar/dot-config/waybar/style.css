@@ -1,0 +1,210 @@
+* {
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 10px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: #cdd6f4;
+}
+
+#workspaces,
+#window,
+#clock,
+#network-status,
+#system-monitor,
+#custom-internal-display,
+#pulseaudio,
+#power-status,
+#tray {
+  background: #1e1e2e;
+  border: 1px solid #313244;
+  border-radius: 12px;
+  margin: 5px 3px;
+  padding: 0 10px;
+}
+
+#network-status #network,
+#network-status #custom-wireguard,
+#network-status #custom-throne {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0 10px 0 0;
+  padding: 0;
+}
+
+#network-status #custom-throne {
+  margin-right: 0;
+}
+
+#system-monitor #cpu,
+#system-monitor #temperature {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#system-monitor #cpu {
+  margin-right: 10px;
+}
+
+#power-status #power-profiles-daemon,
+#power-status #battery {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#power-status #power-profiles-daemon {
+  margin-right: 10px;
+}
+
+#workspaces {
+  padding: 0 4px;
+}
+
+#workspaces button {
+  color: #6c7086;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  padding: 0 8px;
+  margin: 3px 2px;
+  box-shadow: none;
+}
+
+#workspaces button:hover {
+  color: #cdd6f4;
+  background: #313244;
+}
+
+#workspaces button.active {
+  color: #1e1e2e;
+  background: #89b4fa;
+}
+
+#workspaces button.urgent {
+  color: #1e1e2e;
+  background: #f38ba8;
+}
+
+#workspaces button.special {
+  color: #f5c2e7;
+  background: #313244;
+}
+
+#workspaces button.special.active {
+  color: #1e1e2e;
+  background: #f5c2e7;
+}
+
+#window {
+  color: #a6adc8;
+}
+
+#clock {
+  color: #cba6f7;
+}
+
+#network {
+  color: #89dceb;
+}
+
+#custom-wireguard.connected {
+  color: #a6e3a1;
+}
+
+#custom-wireguard.disconnected {
+  color: #6c7086;
+}
+
+#custom-wireguard.error {
+  color: #f38ba8;
+}
+
+#custom-throne.connected {
+  color: #a6e3a1;
+}
+
+#custom-throne.disconnected {
+  color: #f9e2af;
+}
+
+#custom-throne.stopped {
+  color: #6c7086;
+}
+
+#custom-internal-display.enabled {
+  color: #a6e3a1;
+}
+
+#custom-internal-display.disabled,
+#custom-internal-display.disconnected {
+  color: #6c7086;
+}
+
+#custom-internal-display.error {
+  color: #f38ba8;
+}
+
+#cpu {
+  color: #89b4fa;
+}
+
+#cpu.warning {
+  color: #f9e2af;
+}
+
+#cpu.critical {
+  color: #f38ba8;
+}
+
+#temperature {
+  color: #fab387;
+}
+
+#temperature.critical {
+  color: #f38ba8;
+}
+
+#pulseaudio {
+  color: #f9e2af;
+}
+
+#pulseaudio.muted {
+  color: #6c7086;
+}
+
+#power-profiles-daemon {
+  color: #fab387;
+}
+
+#power-profiles-daemon.performance {
+  color: #f38ba8;
+}
+
+#power-profiles-daemon.power-saver {
+  color: #a6e3a1;
+}
+
+#battery {
+  color: #a6e3a1;
+}
+
+#battery.warning {
+  color: #f9e2af;
+}
+
+#battery.critical {
+  color: #f38ba8;
+}
+
+#tray {
+  padding: 2px 6px;
+}

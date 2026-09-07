@@ -97,9 +97,21 @@ window#waybar {
   background: #313244;
 }
 
+/* On each bar, underline the workspaces hosted by that bar's monitor. */
+#workspaces button.hosting-monitor {
+  color: #bac2de;
+  background: #25263a;
+  box-shadow: inset 0 -1px rgba(137, 180, 250, 0.45);
+}
+
 #workspaces button.active {
   color: #1e1e2e;
   background: #89b4fa;
+  box-shadow: none;
+}
+
+#workspaces button.hosting-monitor.active {
+  box-shadow: inset 0 -1px rgba(30, 30, 46, 0.55);
 }
 
 #workspaces button.urgent {

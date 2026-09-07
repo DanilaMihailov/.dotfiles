@@ -48,7 +48,7 @@ hl.monitor(left_external_monitor)
 -- Set programs that you use
 local terminal    = "foot"
 local fileManager = "dolphin"
-local menu        = "hyprlauncher"
+local menu        = "vicinae toggle"
 
 
 -------------------
@@ -68,6 +68,7 @@ local menu        = "hyprlauncher"
 
 hl.on("hyprland.start", function ()
   hl.exec_cmd("hyprpaper")
+  hl.exec_cmd("hyprland-per-window-layout")
 end)
 
 
@@ -233,6 +234,7 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        focus_on_activate = true
     },
 })
 
@@ -246,7 +248,7 @@ hl.config({
         kb_layout  = "us,ru",
         kb_variant = "",
         kb_model   = "",
-        kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
+        kb_options = "ctrl:nocaps,grp:ctrl_space_toggle,altwin:swap_lalt_lwin",
         kb_rules   = "",
 
         follow_mouse = 1,
@@ -303,7 +305,12 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind(
+  mainMod .. " + CTRL + SPACE",
+  hl.dsp.exec_cmd(menu .. ' cmd launch core:search-emojis')
+)
 hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("swaync-client -t -sw"))
+hl.bind("Print", hl.dsp.exec_cmd("flock -n /tmp/hyprshot-region.lock hyprshot -m region"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.window.float({ action = "toggle" }))
 
@@ -398,6 +405,10 @@ hl.bind(mainMod .. " + h", focus_or_monitor("left", -1))
 hl.bind(mainMod .. " + l", focus_or_monitor("right", 1))
 hl.bind(mainMod .. " + k", focus_or_workspace("up", "m-1"))
 hl.bind(mainMod .. " + j", focus_or_workspace("down", "m+1"))
+hl.bind(mainMod .. " + CTRL + h", hl.dsp.focus({ monitor = "l" }))
+hl.bind(mainMod .. " + CTRL + l", hl.dsp.focus({ monitor = "r" }))
+hl.bind(mainMod .. " + CTRL + SHIFT + h", hl.dsp.workspace.move({ monitor = "l" }))
+hl.bind(mainMod .. " + CTRL + SHIFT + l", hl.dsp.workspace.move({ monitor = "r" }))
 hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ workspace = "m-1" }))
 hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ workspace = "m+1" }))
 
@@ -424,9 +435,12 @@ end
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
--- Scroll through existing workspaces with mainMod + scroll
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+-- Follow the same window/monitor navigation as mainMod + h/l. Add Shift to
+-- scroll through workspaces on the active monitor.
+hl.bind(mainMod .. " + mouse_down", focus_or_monitor("right", 1))
+hl.bind(mainMod .. " + mouse_up",   focus_or_monitor("left", -1))
+hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.focus({ workspace = "m+1" }))
+hl.bind(mainMod .. " + SHIFT + mouse_up",   hl.dsp.focus({ workspace = "m-1" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })

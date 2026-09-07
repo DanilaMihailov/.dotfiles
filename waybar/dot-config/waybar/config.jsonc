@@ -46,6 +46,8 @@
       "class<(dolphin|org.kde.dolphin)>": "󰉋",
       "class<(code|Code|codium|VSCodium)>": "󰨞",
       "class<(discord|Discord|vesktop|Vesktop)>": "󰙯",
+      "class<Mattermost.Desktop>": "",
+      "class<org.mozilla.Thunderbird>": "",
       "class<(spotify|Spotify)>": "",
       "class<(steam|Steam)>": "",
       "class<(Throne|throne)>": "󰒍"

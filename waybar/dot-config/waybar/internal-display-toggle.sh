@@ -33,7 +33,7 @@ fi
 
 if [[ "$action" == "toggle" ]]; then
   if [[ "$display_disabled" == "true" ]]; then
-    if ! hyprctl eval 'hl.monitor({ output = "eDP-1", disabled = false, mode = "2560x1600@60", position = "3840x0", scale = 2 })' >/dev/null 2>&1; then
+    if ! hyprctl eval 'hl.monitor({ output = "eDP-1", disabled = false, mode = "1920x1080@60", position = "3840x0", scale = 1.5 })' >/dev/null 2>&1; then
       printf '{"text":"󰍹","tooltip":"Failed to enable the internal display","class":"error"}\n'
       exit 0
     fi

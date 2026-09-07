@@ -106,6 +106,15 @@ hl.env("HYPRCURSOR_SIZE", "20")
 -----------------------
 
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
+-- Gruvbox Dark (medium). Keeping the palette named here makes it easy to
+-- reuse when more compositor styling is added later.
+local gruvbox = {
+    bg0    = "282828",
+    bg2    = "504945",
+    yellow = "fabd2f",
+    orange = "fe8019",
+}
+
 hl.config({
     general = {
         gaps_in  = 4,
@@ -114,8 +123,14 @@ hl.config({
         border_size = 1,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border   = {
+                colors = {
+                    "rgba(" .. gruvbox.orange .. "ee)",
+                    "rgba(" .. gruvbox.yellow .. "ee)",
+                },
+                angle = 45,
+            },
+            inactive_border = "rgba(" .. gruvbox.bg2 .. "aa)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -142,7 +157,7 @@ hl.config({
             enabled      = false,
             range        = 4,
             render_power = 3,
-            color        = 0xee1a1a1a,
+            color        = "rgba(" .. gruvbox.bg0 .. "ee)",
         },
 
         blur = {

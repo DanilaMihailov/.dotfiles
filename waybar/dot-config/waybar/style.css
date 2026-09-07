@@ -4,9 +4,25 @@
   min-height: 0;
 }
 
+/* Gruvbox Dark (medium) */
+@define-color bg0 #282828;
+@define-color bg1 #3c3836;
+@define-color bg2 #504945;
+@define-color gray #928374;
+@define-color fg0 #fbf1c7;
+@define-color fg1 #ebdbb2;
+@define-color fg2 #d5c4a1;
+@define-color red #fb4934;
+@define-color green #b8bb26;
+@define-color yellow #fabd2f;
+@define-color blue #83a598;
+@define-color purple #d3869b;
+@define-color aqua #8ec07c;
+@define-color orange #fe8019;
+
 window#waybar {
   background: transparent;
-  color: #cdd6f4;
+  color: @fg1;
 }
 
 #workspaces,
@@ -19,9 +35,9 @@ window#waybar {
 #pulseaudio,
 #power-status,
 #tray {
-  background: #1e1e2e;
-  border: 1px solid #313244;
-  border-radius: 12px;
+  background: @bg0;
+  border: 1px solid @bg2;
+  border-radius: 5px;
   margin: 5px 3px;
   padding: 0 10px;
 }
@@ -83,165 +99,165 @@ window#waybar {
 }
 
 #workspaces button {
-  color: #6c7086;
+  color: @gray;
   background: transparent;
   border: none;
-  border-radius: 9px;
+  border-radius: 5px;
   padding: 0 8px;
   margin: 3px 2px;
   box-shadow: none;
 }
 
 #workspaces button:hover {
-  color: #cdd6f4;
-  background: #313244;
+  color: @fg0;
+  background: @bg2;
 }
 
 /* On each bar, underline the workspaces hosted by that bar's monitor. */
 #workspaces button.hosting-monitor {
-  color: #bac2de;
-  background: #25263a;
-  box-shadow: inset 0 -1px rgba(137, 180, 250, 0.45);
+  color: @fg2;
+  background: @bg1;
+  box-shadow: inset 0 -1px rgba(131, 165, 152, 0.55);
 }
 
 #workspaces button.active {
-  color: #1e1e2e;
-  background: #89b4fa;
+  color: @bg0;
+  background: @yellow;
   box-shadow: none;
 }
 
 #workspaces button.hosting-monitor.active {
-  box-shadow: inset 0 -1px rgba(30, 30, 46, 0.55);
+  box-shadow: inset 0 -1px rgba(40, 40, 40, 0.55);
 }
 
 #workspaces button.urgent {
-  color: #1e1e2e;
-  background: #f38ba8;
+  color: @bg0;
+  background: @red;
 }
 
 #workspaces button.special {
-  color: #f5c2e7;
-  background: #313244;
+  color: @purple;
+  background: @bg2;
 }
 
 #workspaces button.special.active {
-  color: #1e1e2e;
-  background: #f5c2e7;
+  color: @bg0;
+  background: @purple;
 }
 
 #window {
-  color: #a6adc8;
+  color: @fg2;
 }
 
 #clock {
-  color: #cba6f7;
+  color: @purple;
 }
 
 #language {
-  color: #cba6f7;
+  color: @purple;
   min-width: 20px;
 }
 
 #custom-notifications {
-  color: #cba6f7;
+  color: @purple;
 }
 
 #custom-notifications.dnd-notification,
 #custom-notifications.dnd-none {
-  color: #f9e2af;
+  color: @yellow;
 }
 
 #network {
-  color: #89dceb;
+  color: @aqua;
 }
 
 #custom-wireguard.connected {
-  color: #a6e3a1;
+  color: @green;
 }
 
 #custom-wireguard.disconnected {
-  color: #6c7086;
+  color: @gray;
 }
 
 #custom-wireguard.error {
-  color: #f38ba8;
+  color: @red;
 }
 
 #custom-throne.connected {
-  color: #a6e3a1;
+  color: @green;
 }
 
 #custom-throne.disconnected {
-  color: #f9e2af;
+  color: @yellow;
 }
 
 #custom-throne.stopped {
-  color: #6c7086;
+  color: @gray;
 }
 
 #custom-internal-display.enabled {
-  color: #a6e3a1;
+  color: @green;
 }
 
 #custom-internal-display.disabled,
 #custom-internal-display.disconnected {
-  color: #6c7086;
+  color: @gray;
 }
 
 #custom-internal-display.error {
-  color: #f38ba8;
+  color: @red;
 }
 
 #cpu {
-  color: #89b4fa;
+  color: @blue;
 }
 
 #cpu.warning {
-  color: #f9e2af;
+  color: @yellow;
 }
 
 #cpu.critical {
-  color: #f38ba8;
+  color: @red;
 }
 
 #temperature {
-  color: #fab387;
+  color: @orange;
 }
 
 #temperature.critical {
-  color: #f38ba8;
+  color: @red;
 }
 
 #pulseaudio {
-  color: #f9e2af;
+  color: @yellow;
 }
 
 #pulseaudio.muted {
-  color: #6c7086;
+  color: @gray;
 }
 
 #power-profiles-daemon {
-  color: #fab387;
+  color: @orange;
 }
 
 #power-profiles-daemon.performance {
-  color: #f38ba8;
+  color: @red;
 }
 
 #power-profiles-daemon.power-saver {
-  color: #a6e3a1;
+  color: @green;
 }
 
 #battery {
-  color: #a6e3a1;
+  color: @green;
 }
 
 #battery.warning {
-  color: #f9e2af;
+  color: @yellow;
 }
 
 #battery.critical {
-  color: #f38ba8;
+  color: @red;
 }
 
 #tray {
@@ -250,6 +266,6 @@ window#waybar {
 
 #tray image {
   -gtk-icon-style: symbolic;
-  color: #cdd6f4;
-  -gtk-icon-palette: success #cdd6f4, warning #cdd6f4, error #cdd6f4;
+  color: @fg1;
+  -gtk-icon-palette: success @green, warning @yellow, error @red;
 }

@@ -11,12 +11,11 @@ window#waybar {
 
 #workspaces,
 #window,
-#clock,
+#clock-notifications,
 #network-status,
 #system-monitor,
 #custom-internal-display,
 #language,
-#custom-notifications,
 #pulseaudio,
 #power-status,
 #tray {
@@ -39,6 +38,18 @@ window#waybar {
 
 #network-status #custom-throne {
   margin-right: 0;
+}
+
+#clock-notifications #clock,
+#clock-notifications #custom-notifications {
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+#clock-notifications #clock {
+  margin-right: 10px;
 }
 
 #system-monitor #cpu,
@@ -116,6 +127,7 @@ window#waybar {
 
 #language {
   color: #cba6f7;
+  min-width: 20px;
 }
 
 #custom-notifications {
@@ -222,4 +234,10 @@ window#waybar {
 
 #tray {
   padding: 2px 6px;
+}
+
+#tray image {
+  -gtk-icon-style: symbolic;
+  color: #cdd6f4;
+  -gtk-icon-palette: success #cdd6f4, warning #cdd6f4, error #cdd6f4;
 }

@@ -14,9 +14,7 @@
   "modules-right": [
     "group/system-monitor",
     "group/network-status",
-    "custom/internal-display",
-    "hyprland/language",
-    "pulseaudio",
+    "group/device-controls",
     "group/power-status",
     "tray",
     "group/clock-notifications"
@@ -58,11 +56,20 @@
   },
 
   "hyprland/language": {
-    "format": "󰌌 {}",
+    "format": "{}",
     "min-length": 5,
     "format-en": "EN",
     "format-ru": "RU",
     "on-click": "hyprctl switchxkblayout all next"
+  },
+
+  "group/device-controls": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/internal-display",
+      "hyprland/language",
+      "pulseaudio"
+    ]
   },
 
   "clock": {

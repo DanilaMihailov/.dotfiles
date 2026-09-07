@@ -111,8 +111,8 @@ hl.env("HYPRCURSOR_SIZE", "20")
 local gruvbox = {
     bg0    = "282828",
     bg2    = "504945",
-    yellow = "fabd2f",
-    orange = "fe8019",
+    green  = "b8bb26",
+    aqua   = "8ec07c",
 }
 
 hl.config({
@@ -125,8 +125,8 @@ hl.config({
         col = {
             active_border   = {
                 colors = {
-                    "rgba(" .. gruvbox.orange .. "ee)",
-                    "rgba(" .. gruvbox.yellow .. "ee)",
+                    "rgba(" .. gruvbox.green .. "ee)",
+                    "rgba(" .. gruvbox.aqua .. "ee)",
                 },
                 angle = 45,
             },

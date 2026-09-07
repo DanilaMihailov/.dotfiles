@@ -30,9 +30,7 @@ window#waybar {
 #clock-notifications,
 #network-status,
 #system-monitor,
-#custom-internal-display,
-#language,
-#pulseaudio,
+#device-controls,
 #power-status,
 #tray {
   background: @bg0;
@@ -54,6 +52,26 @@ window#waybar {
 
 #network-status #custom-throne {
   margin-right: 0;
+}
+
+#device-controls {
+  padding: 0 7px;
+}
+
+#device-controls #custom-internal-display,
+#device-controls #language,
+#device-controls #pulseaudio {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0 6px 0 0;
+  padding: 0;
+}
+
+#device-controls #pulseaudio {
+  margin-right: 0;
+  min-width: 10px;
+  padding-right: 1px;
 }
 
 #clock-notifications #clock,
@@ -122,7 +140,7 @@ window#waybar {
 
 #workspaces button.active {
   color: @bg0;
-  background: @yellow;
+  background: @green;
   box-shadow: none;
 }
 
@@ -146,20 +164,21 @@ window#waybar {
 }
 
 #window {
-  color: @fg2;
+  color: @fg1;
 }
 
 #clock {
-  color: @purple;
+  color: @fg1;
 }
 
 #language {
-  color: @purple;
-  min-width: 20px;
+  color: @fg1;
+  min-width: 10px;
+  font-weight: bold;
 }
 
 #custom-notifications {
-  color: @purple;
+  color: @fg1;
 }
 
 #custom-notifications.dnd-notification,
@@ -168,7 +187,11 @@ window#waybar {
 }
 
 #network {
-  color: @aqua;
+  color: @fg1;
+}
+
+#network.disconnected {
+  color: @gray;
 }
 
 #custom-wireguard.connected {
@@ -209,7 +232,7 @@ window#waybar {
 }
 
 #cpu {
-  color: @blue;
+  color: @fg1;
 }
 
 #cpu.warning {
@@ -221,7 +244,7 @@ window#waybar {
 }
 
 #temperature {
-  color: @orange;
+  color: @fg1;
 }
 
 #temperature.critical {
@@ -229,7 +252,7 @@ window#waybar {
 }
 
 #pulseaudio {
-  color: @yellow;
+  color: @fg1;
 }
 
 #pulseaudio.muted {
@@ -237,7 +260,7 @@ window#waybar {
 }
 
 #power-profiles-daemon {
-  color: @orange;
+  color: @fg1;
 }
 
 #power-profiles-daemon.performance {
@@ -249,6 +272,11 @@ window#waybar {
 }
 
 #battery {
+  color: @fg1;
+}
+
+#battery.charging,
+#battery.plugged {
   color: @green;
 }
 

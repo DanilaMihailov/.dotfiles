@@ -17,8 +17,10 @@
     "group/system-monitor",
     "group/network-status",
     "custom/internal-display",
+    "hyprland/language",
     "pulseaudio",
     "group/power-status",
+    "custom/notifications",
     "tray"
   ],
 
@@ -53,6 +55,13 @@
   "hyprland/window": {
     "max-length": 60,
     "separate-outputs": true
+  },
+
+  "hyprland/language": {
+    "format": "󰌌 {}",
+    "format-en": "EN",
+    "format-ru": "RU",
+    "on-click": "hyprctl switchxkblayout all next"
   },
 
   "clock": {
@@ -183,6 +192,25 @@
       "warning": 30,
       "critical": 15
     }
+  },
+
+  "custom/notifications": {
+    "exec": "swaync-client -swb",
+    "return-type": "json",
+    "format": "{icon} {text}",
+    "format-icons": {
+      "notification": "󰂚",
+      "none": "󰂜",
+      "dnd-notification": "󰂛",
+      "dnd-none": "󰂛",
+      "inhibited-notification": "󰂚",
+      "inhibited-none": "󰂜",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰂛"
+    },
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
   },
 
   "tray": {

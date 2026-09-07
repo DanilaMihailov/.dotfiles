@@ -18,9 +18,9 @@
 local internal_monitor = {
     disabled = false,
     output   = "eDP-1",
-    mode     = "2560x1600@60",
-    position = "3840x0",
-    scale    = "2",
+    mode     = "1920x1080@60",
+    position = "1920x0",
+    scale    = 1.5,
 }
 
 local middle_external_monitor = {
@@ -77,8 +77,8 @@ end)
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XCURSOR_SIZE", "20")
+hl.env("HYPRCURSOR_SIZE", "20")
 
 
 -----------------------
@@ -243,13 +243,13 @@ hl.config({
 
 hl.config({
     input = {
-        kb_layout  = "us",
+        kb_layout  = "us,ru",
         kb_variant = "",
         kb_model   = "",
-        kb_options = "ctrl:nocaps",
+        kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
         kb_rules   = "",
 
-        follow_mouse = 0,
+        follow_mouse = 1,
 
         sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
 
@@ -259,6 +259,14 @@ hl.config({
             clickfinger_behavior = true,
             tap_to_click = false
         },
+    },
+})
+
+-- Touchscreen: swipe inward from the left/right edge to change workspace.
+hl.config({
+    gestures = {
+        workspace_swipe_touch = true,
+        workspace_swipe_touch_invert = false,
     },
 })
 
@@ -295,7 +303,9 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("swaync-client -t -sw"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.window.float({ action = "toggle" }))
 
 -- Disable the internal display when the lid closes so its workspace moves to
 -- an active external monitor, then restore the configured layout when opened.
@@ -427,10 +437,10 @@ hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
-hl.bind("XF86KbdBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -d 'spi::kbd_backlight' set 5%+"),                  { locked = true, repeating = true })
-hl.bind("XF86KbdBrightnessDown",hl.dsp.exec_cmd("brightnessctl -d 'spi::kbd_backlight' set 5%-"),                  { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -d amdgpu_bl1 -e4 -n2 set +5%"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -d amdgpu_bl1 -e4 -n2 set 5%-"), { locked = true, repeating = true })
+hl.bind("XF86KbdBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -d 'tpacpi::kbd_backlight' set +1"), { locked = true, repeating = true })
+hl.bind("XF86KbdBrightnessDown",hl.dsp.exec_cmd("brightnessctl -d 'tpacpi::kbd_backlight' set 1-"),  { locked = true, repeating = true })
 
 -- Requires playerctl
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })

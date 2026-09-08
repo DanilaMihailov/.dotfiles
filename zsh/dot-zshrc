@@ -9,7 +9,7 @@ fi
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
-export GITLAB_URL="https://gitlab.clabs.net/"
+export GITLAB_URL="https://gitlab.rtlq.ru/"
 
 # Do not run update on every command wtf
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -85,7 +85,7 @@ export LANG=en_US.UTF-8
 
 export MANPAGER='nvim +Man!'
 export EDITOR='nvim'
-export BROWSER='qutebrowser'
+export BROWSER='zen-browser'
 
 # run this command on ssh login 
 if [[ -n $SSH_CONNECTION ]]; then
@@ -116,7 +116,7 @@ bindkey '^p' history-search-backward
 
 
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+#eval "$(zoxide init --cmd cd zsh)"
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -151,7 +151,7 @@ pyclean () {
         find . -type d -name "__pycache__" -delete
 }
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+#. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -192,7 +192,9 @@ eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
-eval "$(codex completion zsh)"
+if (( $+commands[codex] )); then
+  eval "$(codex completion zsh)"
+fi
 
 # bun completions
 [ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"

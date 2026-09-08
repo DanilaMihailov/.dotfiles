@@ -114,6 +114,26 @@ bindkey '^y' autosuggest-accept
 bindkey '^n' history-search-forward
 bindkey '^p' history-search-backward
 
+# Keep binaries installed in a Distrobox container separate from the host.
+if [[ -n ${CONTAINER_ID:-} ]]; then
+  distrobox_tools="$HOME/.local/share/distrobox/$CONTAINER_ID"
+
+  export NVIM_APPNAME="nvim-$CONTAINER_ID"
+
+  export BUN_INSTALL="$distrobox_tools/bun"
+  export CARGO_HOME="$distrobox_tools/cargo"
+  export RUSTUP_HOME="$distrobox_tools/rustup"
+
+  export UV_PYTHON_INSTALL_DIR="$distrobox_tools/uv/python"
+  export UV_TOOL_DIR="$distrobox_tools/uv/tools"
+  export UV_TOOL_BIN_DIR="$distrobox_tools/bin"
+  export UV_INSTALL_DIR="$distrobox_tools/bin"
+  export UV_CACHE_DIR="$distrobox_tools/uv/cache"
+
+  export PATH="$CARGO_HOME/bin:$UV_TOOL_BIN_DIR:$BUN_INSTALL/bin:$PATH"
+
+  unset distrobox_tools
+fi
 
 eval "$(fzf --zsh)"
 #eval "$(zoxide init --cmd cd zsh)"
@@ -200,7 +220,9 @@ fi
 [ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"
 
 # bun
-export BUN_INSTALL="$HOME/.bun"
+if [[ -z ${CONTAINER_ID:-} ]]; then
+  export BUN_INSTALL="$HOME/.bun"
+fi
 export PATH="$BUN_INSTALL/bin:$PATH"
 export GNUPGHOME="$HOME/.gnupg"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
@@ -212,6 +234,44 @@ compinit
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/zen/.lmstudio/bin"
 # End of LM Studio CLI section
+
+# Run commands like "dbox nvim" or "dbox -n fedora ls".
+if [[ -z ${CONTAINER_ID:-} ]]; then
+  dbox() {
+    local container="work"
+
+    case ${1:-} in
+      -n|--name)
+        if [[ -z ${2:-} ]]; then
+          print -u2 "Usage: dbox [-n container] [command ...]"
+          return 2
+        fi
+
+        container=$2
+        shift 2
+        ;;
+      --name=*)
+        container=${1#*=}
+        shift
+        ;;
+      -h|--help)
+        print "Usage: dbox [-n container] [command ...]"
+        return
+        ;;
+    esac
+
+    if (( $# == 0 )); then
+      distrobox enter "$container"
+    else
+      distrobox enter "$container" -- \
+        zsh -ic 'exec "$@"' zsh "$@"
+    fi
+  }
+
+  dnvim() {
+    dbox nvim "$@"
+  }
+fi
 
 # enable to allow open code use websearch tool (may break)
 export OPENCODE_ENABLE_EXA=true

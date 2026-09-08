@@ -46,6 +46,12 @@
   local cyan='6'
   local white='7'
 
+  # Show the current Distrobox container, and hide the segment on the host.
+  prompt_distrobox() {
+    [[ -n ${CONTAINER_ID:-} ]] || return
+    p10k segment -f 6 -t "[$CONTAINER_ID]"
+  }
+
   # Left prompt segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
@@ -63,6 +69,7 @@
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     # command_execution_time    # previous command duration
+    distrobox                  # Distrobox container
     virtualenv                # python virtual environment
     context                   # user@host
     # time                    # current time

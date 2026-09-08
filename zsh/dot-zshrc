@@ -239,6 +239,7 @@ export PATH="$PATH:/Users/zen/.lmstudio/bin"
 if [[ -z ${CONTAINER_ID:-} ]]; then
   dbox() {
     local container="work"
+    local exit_status
 
     case ${1:-} in
       -n|--name)
@@ -260,12 +261,24 @@ if [[ -z ${CONTAINER_ID:-} ]]; then
         ;;
     esac
 
+    # Let new tmux panes inherit this container.
+    if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
+      tmux set-option -p -t "$TMUX_PANE" @distrobox "$container"
+    fi
+
     if (( $# == 0 )); then
       distrobox enter "$container"
     else
       distrobox enter "$container" -- \
         zsh -ic 'exec "$@"' zsh "$@"
     fi
+
+    exit_status=$?
+    # Stop inheriting the container after returning to the host.
+    if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
+      tmux set-option -p -u -t "$TMUX_PANE" @distrobox
+    fi
+    return $exit_status
   }
 
   dnvim() {

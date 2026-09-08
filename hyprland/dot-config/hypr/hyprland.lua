@@ -82,6 +82,19 @@ hl.env("XCURSOR_SIZE", "20")
 hl.env("HYPRCURSOR_SIZE", "20")
 
 
+------------------
+---- XWAYLAND ----
+------------------
+
+-- Render XWayland clients at native resolution instead of compositor-upscaling
+-- them. Steam applies its own UI scale via settings / accessiblity / scaling
+hl.config({
+    xwayland = {
+        force_zero_scaling = true,
+    },
+})
+
+
 -----------------------
 ----- PERMISSIONS -----
 -----------------------
@@ -444,6 +457,8 @@ hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("consume_or_expel next"))
 
 hl.bind(mainMod .. " + PERIOD", hl.dsp.layout("colresize +conf"))
 hl.bind(mainMod .. " + COMMA", hl.dsp.layout("colresize -conf"))
+
+hl.bind(mainMod .. " + Tab", hl.dsp.focus({ last = true }))
 
 hl.bind(
     mainMod .. " + SHIFT + F",

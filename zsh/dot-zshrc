@@ -119,6 +119,7 @@ if [[ -n ${CONTAINER_ID:-} ]]; then
   distrobox_tools="$HOME/.local/share/distrobox/$CONTAINER_ID"
 
   export NVIM_APPNAME="nvim-$CONTAINER_ID"
+  export CODEX_INSTALL_DIR="$distrobox_tools/bin"
 
   export BUN_INSTALL="$distrobox_tools/bun"
   export CARGO_HOME="$distrobox_tools/cargo"

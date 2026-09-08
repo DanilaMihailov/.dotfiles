@@ -280,6 +280,12 @@ hl.config({
     },
 })
 
+-- do not switch lalt_lwin on external keyboard (it is already at the right place)
+hl.device({
+    name = "by-tech-air60-2",
+    kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
+})
+
 -- Touchscreen: swipe inward from the left/right edge to change workspace.
 hl.config({
     gestures = {
@@ -326,6 +332,11 @@ hl.bind(
   hl.dsp.exec_cmd(menu .. ' cmd launch core:search-emojis')
 )
 hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("swaync-client -t -sw"))
+hl.bind(
+  mainMod .. " + ESCAPE",
+  hl.dsp.exec_cmd("swaync-client -t -sw"),
+  { device = { inclusive = true, list = { "by-tech-air60-2" } } }
+)
 hl.bind("Print", hl.dsp.exec_cmd("flock -n /tmp/hyprshot-region.lock hyprshot -m region"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.window.float({ action = "toggle" }))

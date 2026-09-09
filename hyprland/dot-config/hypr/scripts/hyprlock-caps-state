@@ -1,0 +1,14 @@
+#!/bin/sh
+
+for caps_file in /sys/class/leds/input*::capslock/brightness; do
+    [ -r "$caps_file" ] || continue
+    read -r caps_state < "$caps_file"
+    if [ "$caps_state" = "1" ]; then
+        printf 'CAPS\n'
+        exit 0
+    fi
+done
+
+# Keep a non-empty render result so Hyprlock clears a previous CAPS label.
+# UTF-8 E2 80 8B is an invisible zero-width space.
+printf '\342\200\213\n'

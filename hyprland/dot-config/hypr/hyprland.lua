@@ -286,7 +286,7 @@ hl.config({
         kb_layout  = "us,ru",
         kb_variant = "",
         kb_model   = "",
-        kb_options = "caps:ctrl_shifted_capslock,grp:ctrl_space_toggle,altwin:swap_lalt_lwin",
+        kb_options = "ctrl:nocaps,grp:ctrl_space_toggle,altwin:swap_lalt_lwin",
         kb_rules   = "",
 
         follow_mouse = 1,
@@ -305,7 +305,7 @@ hl.config({
 -- do not switch lalt_lwin on external keyboard (it is already at the right place)
 hl.device({
     name = "by-tech-air60-2",
-    kb_options = "caps:ctrl_shifted_capslock,grp:ctrl_space_toggle",
+    kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
 })
 
 -- Touchscreen: swipe inward from the left/right edge to change workspace.

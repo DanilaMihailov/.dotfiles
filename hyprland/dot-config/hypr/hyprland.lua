@@ -37,9 +37,17 @@ local left_external_monitor = {
     scale    = 2,
 }
 
+local top_external_monitor = {
+    output   = "HDMI-A-1",
+    mode     = "2560x1440@60",
+    position = "3456x-1152",
+    scale    = 1.25,
+}
+
 hl.monitor(internal_monitor)
 hl.monitor(middle_external_monitor)
 hl.monitor(left_external_monitor)
+hl.monitor(top_external_monitor)
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -447,6 +455,8 @@ hl.bind(mainMod .. " + k", focus_or_workspace("up", "m-1"))
 hl.bind(mainMod .. " + j", focus_or_workspace("down", "m+1"))
 hl.bind(mainMod .. " + CTRL + h", hl.dsp.focus({ monitor = "l" }))
 hl.bind(mainMod .. " + CTRL + l", hl.dsp.focus({ monitor = "r" }))
+hl.bind(mainMod .. " + CTRL + k", hl.dsp.focus({ monitor = "u" }))
+hl.bind(mainMod .. " + CTRL + j", hl.dsp.focus({ monitor = "d" }))
 hl.bind(mainMod .. " + CTRL + SHIFT + h", hl.dsp.workspace.move({ monitor = "l" }))
 hl.bind(mainMod .. " + CTRL + SHIFT + l", hl.dsp.workspace.move({ monitor = "r" }))
 hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ workspace = "m-1" }))

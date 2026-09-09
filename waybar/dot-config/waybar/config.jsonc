@@ -46,7 +46,8 @@
       "class<org.mozilla.Thunderbird>": "",
       "class<(spotify|Spotify)>": "",
       "class<(steam|Steam)>": "",
-      "class<(Throne|throne)>": "󰒍"
+      "class<(Throne|throne)>": "󰒍",
+      "class<(blueman-manager)>": "󰂯"
     }
   },
 

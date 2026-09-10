@@ -59,6 +59,7 @@ window#waybar {
 }
 
 #device-controls #custom-internal-display,
+#device-controls #custom-game-mode,
 #device-controls #language,
 #device-controls #pulseaudio {
   background: transparent;
@@ -228,6 +229,19 @@ window#waybar {
 }
 
 #custom-internal-display.error {
+  color: @red;
+}
+
+#custom-game-mode.enabled {
+  color: @green;
+}
+
+#custom-game-mode.native,
+#custom-game-mode.disconnected {
+  color: @gray;
+}
+
+#custom-game-mode.error {
   color: @red;
 }
 

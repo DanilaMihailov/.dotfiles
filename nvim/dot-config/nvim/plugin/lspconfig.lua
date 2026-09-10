@@ -10,3 +10,8 @@ vim.lsp.enable 'expert' -- elixir lsp
 vim.lsp.enable 'jsonls'
 -- vim.lsp.enable 'eslint'
 vim.lsp.enable 'biome'
+
+vim.lsp.config("qmlls", {
+  cmd = { "qmlls6" },
+})
+vim.lsp.enable 'qmlls'

@@ -308,6 +308,16 @@ hl.device({
     kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
 })
 
+hl.device({
+    name = "by-tech-air60",
+    kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
+})
+
+hl.device({
+    name = "by-tech-air60-1",
+    kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
+})
+
 -- Touchscreen: swipe inward from the left/right edge to change workspace.
 hl.config({
     gestures = {

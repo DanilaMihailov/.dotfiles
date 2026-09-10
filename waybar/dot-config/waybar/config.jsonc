@@ -68,6 +68,7 @@
     "orientation": "horizontal",
     "modules": [
       "custom/internal-display",
+      "custom/game-mode",
       "hyprland/language",
       "pulseaudio"
     ]
@@ -119,6 +120,13 @@
   "custom/internal-display": {
     "exec": "~/.config/waybar/internal-display-toggle.sh",
     "on-click": "~/.config/waybar/internal-display-toggle.sh toggle",
+    "return-type": "json",
+    "interval": 2
+  },
+
+  "custom/game-mode": {
+    "exec": "~/.config/waybar/game-mode-toggle.sh",
+    "on-click": "~/.config/waybar/game-mode-toggle.sh toggle",
     "return-type": "json",
     "interval": 2
   },

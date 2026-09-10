@@ -368,7 +368,7 @@ hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 hl.bind(
   mainMod .. " + ESCAPE",
   hl.dsp.exec_cmd("swaync-client -t -sw"),
-  { device = { inclusive = true, list = { "by-tech-air60-2" } } }
+  { device = { inclusive = true, list = { "by-tech-air60-2", "by-tech-air60-1", "by-tech-air60" } } }
 )
 hl.bind("Print", hl.dsp.exec_cmd("flock -n /tmp/hyprshot-region.lock hyprshot -m region"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())

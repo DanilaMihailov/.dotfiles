@@ -4,6 +4,8 @@ set -u
 
 action="${1:-status}"
 output="eDP-1"
+state_home="${XDG_STATE_HOME:-$HOME/.local/state}"
+disabled_marker="$state_home/hyprland/internal-display-disabled"
 
 monitors=$(hyprctl -j monitors all 2>/dev/null) || {
   printf '{"text":"󰍹","tooltip":"Hyprland display status is unavailable","class":"error"}\n'
@@ -37,11 +39,14 @@ if [[ "$action" == "toggle" ]]; then
       printf '{"text":"󰍹","tooltip":"Failed to enable the internal display","class":"error"}\n'
       exit 0
     fi
+    rm -f -- "$disabled_marker"
   elif (( active_displays > 1 )); then
     if ! hyprctl eval 'hl.monitor({ output = "eDP-1", disabled = true })' >/dev/null 2>&1; then
       printf '{"text":"󰍹","tooltip":"Failed to disable the internal display","class":"error"}\n'
       exit 0
     fi
+    mkdir -p -- "${disabled_marker%/*}"
+    : >"$disabled_marker"
   else
     printf '{"text":"󰍹","tooltip":"Cannot disable the only active display","class":"error"}\n'
     exit 0

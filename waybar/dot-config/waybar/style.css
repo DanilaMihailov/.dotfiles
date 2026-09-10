@@ -36,7 +36,7 @@ window#waybar {
   background: @bg0;
   border: 1px solid @bg2;
   border-radius: 5px;
-  margin: 5px 3px;
+  margin: 1px 3px;
   padding: 0 10px;
 }
 
@@ -46,7 +46,7 @@ window#waybar {
   background: transparent;
   border: none;
   border-radius: 0;
-  margin: 0 10px 0 0;
+  margin: 0 14px 0 0;
   padding: 0;
 }
 
@@ -73,6 +73,24 @@ window#waybar {
   margin-right: 0;
   min-width: 10px;
   padding-right: 1px;
+}
+
+#device-controls #custom-internal-display {
+  margin-right: 14px;
+}
+
+/* Icon-only controls need a larger glyph than the bar's compact text. */
+#network-status #network,
+#network-status #custom-wireguard,
+#network-status #custom-throne,
+#device-controls #custom-internal-display,
+#device-controls #custom-game-mode,
+#device-controls #pulseaudio {
+  font-size: 14px;
+}
+
+#device-controls #custom-game-mode {
+  font-size: 14px;
 }
 
 #clock-notifications #clock,

@@ -15,8 +15,18 @@
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
+-- The Waybar display toggle maintains this marker so config reloads preserve
+-- its runtime choice instead of always enabling the laptop panel again.
+local state_home = os.getenv("XDG_STATE_HOME") or (os.getenv("HOME") .. "/.local/state")
+local internal_disabled_marker = state_home .. "/hyprland/internal-display-disabled"
+local internal_disabled_file = io.open(internal_disabled_marker, "r")
+local internal_disabled = internal_disabled_file ~= nil
+if internal_disabled_file then
+    internal_disabled_file:close()
+end
+
 local internal_monitor = {
-    disabled = false,
+    disabled = internal_disabled,
     output   = "eDP-1",
     mode     = "1920x1080@60",
     position = "3840x0",

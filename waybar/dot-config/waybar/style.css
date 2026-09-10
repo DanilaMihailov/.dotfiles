@@ -208,7 +208,7 @@ window#waybar {
 }
 
 #custom-throne.connected {
-  color: @green;
+  color: @blue;
 }
 
 #custom-throne.disconnected {

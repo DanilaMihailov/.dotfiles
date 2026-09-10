@@ -161,6 +161,16 @@ alias lazyvim="NVIM_APPNAME=lazynvim $EDITOR"
 alias nvchad="NVIM_APPNAME=nvchad $EDITOR"
 alias nvimrocks="NVIM_APPNAME=nvimrocks $EDITOR"
 
+alias c='clear'
+alias grep='grep --color=auto'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias mkdir='mkdir -pv'
+alias df='df -h'
+alias free='free -h'
+alias ports='ss -tulpn'
+alias please='sudo $(fc -ln -1)'
+
 # alias to love
 alias love="/Applications/love.app/Contents/MacOS/love"
 
@@ -291,3 +301,13 @@ fi
 export OPENCODE_ENABLE_EXA=true
 # trying to fix pi timeout with openai-responses
 CODEX_LB_UPSTREAM_STREAM_TRANSPORT=websocket
+
+setopt AUTO_CD
+setopt CORRECT
+setopt HIST_IGNORE_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY
+
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000

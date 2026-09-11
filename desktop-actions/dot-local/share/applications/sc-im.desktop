@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=sc-im
+GenericName=Terminal Spreadsheet
+Comment=Edit spreadsheets with Vim-style controls
+Exec=sc-im
+TryExec=sc-im
+Icon=x-office-spreadsheet
+Terminal=true
+Categories=Office;
+Keywords=spreadsheet;table;csv;calculator;vim;terminal;
+StartupNotify=false
+

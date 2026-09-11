@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Codex
+Comment=Open the Codex coding agent
+Exec=codex
+TryExec=codex
+Icon=utilities-terminal
+Terminal=true
+Categories=Development;
+Keywords=codex;openai;agent;ai;code;terminal;
+StartupNotify=false

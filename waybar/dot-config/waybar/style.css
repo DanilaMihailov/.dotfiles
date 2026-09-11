@@ -32,6 +32,9 @@ window#waybar {
 #system-monitor,
 #device-controls,
 #power-status,
+#privacy,
+#systemd-failed-units,
+#custom-mattermost,
 #tray {
   background: @bg0;
   border: 1px solid @bg2;
@@ -41,6 +44,7 @@ window#waybar {
 }
 
 #network-status #network,
+#network-status #bluetooth,
 #network-status #custom-wireguard,
 #network-status #custom-throne {
   background: transparent;
@@ -60,6 +64,8 @@ window#waybar {
 
 #device-controls #custom-internal-display,
 #device-controls #custom-game-mode,
+#device-controls #idle_inhibitor,
+#device-controls #backlight,
 #device-controls #language,
 #device-controls #pulseaudio {
   background: transparent;
@@ -79,12 +85,19 @@ window#waybar {
   margin-right: 14px;
 }
 
+#device-controls #idle_inhibitor,
+#device-controls #backlight {
+  margin-right: 10px;
+}
+
 /* Icon-only controls need a larger glyph than the bar's compact text. */
 #network-status #network,
+#network-status #bluetooth,
 #network-status #custom-wireguard,
 #network-status #custom-throne,
 #device-controls #custom-internal-display,
 #device-controls #custom-game-mode,
+#device-controls #idle_inhibitor,
 #device-controls #pulseaudio {
   font-size: 14px;
 }
@@ -105,6 +118,7 @@ window#waybar {
   margin-right: 10px;
 }
 
+#system-monitor #memory,
 #system-monitor #cpu,
 #system-monitor #temperature {
   background: transparent;
@@ -114,6 +128,7 @@ window#waybar {
   padding: 0;
 }
 
+#system-monitor #memory,
 #system-monitor #cpu {
   margin-right: 10px;
 }
@@ -205,11 +220,64 @@ window#waybar {
   color: @yellow;
 }
 
+#idle_inhibitor.deactivated {
+  color: @gray;
+}
+
+#idle_inhibitor.activated {
+  color: @green;
+}
+
+#backlight {
+  color: @fg1;
+}
+
+#privacy-item.audio-in {
+  color: @yellow;
+}
+
+#privacy-item.screenshare {
+  color: @red;
+}
+
+#systemd-failed-units.degraded {
+  color: @red;
+}
+
+#custom-mattermost {
+  color: @fg1;
+  font-size: 14px;
+  min-width: 14px;
+  padding: 0 8px 0 6px;
+}
+
+#custom-mattermost.channel {
+  color: @blue;
+}
+
+#custom-mattermost.private {
+  color: @red;
+}
+
 #network {
   color: @fg1;
 }
 
 #network.disconnected {
+  color: @gray;
+}
+
+#bluetooth {
+  color: @fg1;
+}
+
+#bluetooth.connected {
+  color: @blue;
+}
+
+#bluetooth.disabled,
+#bluetooth.off,
+#bluetooth.no-controller {
   color: @gray;
 }
 
@@ -267,6 +335,18 @@ window#waybar {
   color: @fg1;
 }
 
+#memory {
+  color: @fg1;
+}
+
+#memory.warning {
+  color: @yellow;
+}
+
+#memory.critical {
+  color: @red;
+}
+
 #cpu.warning {
   color: @yellow;
 }
@@ -321,7 +401,11 @@ window#waybar {
 }
 
 #tray {
-  padding: 2px 6px;
+  background: transparent;
+  border: none;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
 }
 
 /* #tray image { */

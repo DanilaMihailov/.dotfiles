@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Mosh dev.clabs.net
+Comment=Connect to mihd@dev.clabs.net using Mosh
+Exec=mosh mihd@dev.clabs.net
+TryExec=mosh
+Icon=utilities-terminal
+Terminal=true
+Categories=Network;RemoteAccess;
+Keywords=mosh;ssh;remote;server;dev;clabs;mihd;
+StartupNotify=false
+

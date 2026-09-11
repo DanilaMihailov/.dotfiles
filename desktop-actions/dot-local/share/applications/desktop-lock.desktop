@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Lock Screen
+Comment=Lock the current session
+Exec=hyprlock
+TryExec=hyprlock
+Icon=system-lock-screen
+Terminal=false
+Categories=System;
+Keywords=lock;screen;session;security;
+StartupNotify=false
+

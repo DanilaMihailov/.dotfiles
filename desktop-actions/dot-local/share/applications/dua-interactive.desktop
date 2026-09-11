@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Disk Usage Analyzer (DUA)
+Comment=Inspect disk usage interactively
+Exec=dua interactive
+TryExec=dua
+Icon=drive-harddisk
+Terminal=true
+Categories=System;Filesystem;
+Keywords=disk;usage;storage;files;size;dua;
+StartupNotify=false
+

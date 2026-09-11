@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+# Local extension of tmux-fzf's session picker. This lives outside TPM's
+# plugin directory so updates cannot overwrite the added -f option.
+PLUGIN_SCRIPTS="$HOME/.tmux/plugins/tmux-fzf/scripts"
+source "$PLUGIN_SCRIPTS/.envs"
+
+session_filter=""
+while getopts ":f:" option; do
+    case "$option" in
+        f) session_filter=$OPTARG ;;
+        *) printf 'usage: %s [-f tmux-filter] [action]\n' "$0" >&2; exit 2 ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+list_args=()
+[[ -n $session_filter ]] && list_args=(-f "$session_filter")
+
+if [[ -z "$TMUX_FZF_SESSION_FORMAT" ]]; then
+    sessions=$(tmux list-sessions "${list_args[@]}")
+else
+    sessions=$(tmux list-sessions "${list_args[@]}" -F "#S: $TMUX_FZF_SESSION_FORMAT")
+fi
+
+if [[ -z "$TMUX_FZF_SWITCH_CURRENT" ]]; then
+    current_session=$(tmux display-message -p $TMUX_FZF_CLIENT_ARG | sed -e 's/^\[//' -e 's/].*//')
+    sessions=$(printf '%s\n' "$sessions" | grep -v "^$current_session: ")
+fi
+
+FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select an action.'"
+if [[ -z "$1" ]]; then
+    action=$(printf "switch\nnew\nrename\ndetach\nkill\n[cancel]" | eval "$TMUX_FZF_BIN $TMUX_FZF_OPTIONS")
+else
+    action="$1"
+fi
+
+[[ "$action" == "[cancel]" || -z "$action" ]] && exit
+if [[ "$action" != "detach" ]]; then
+    if [[ "$action" == "kill" ]]; then
+        FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target session(s). Press TAB to mark multiple items.'"
+    else
+        FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target session.'"
+    fi
+    if [[ "$action" == "switch" ]]; then
+        target_origin=$(printf "%s\n[cancel]" "$sessions" | eval "$TMUX_FZF_BIN $TMUX_FZF_OPTIONS $TMUX_FZF_PREVIEW_SESSION_OPTIONS")
+    elif [[ "$action" != "new" ]]; then
+        target_origin=$(printf "[current]\n%s\n[cancel]" "$sessions" | eval "$TMUX_FZF_BIN $TMUX_FZF_OPTIONS $TMUX_FZF_PREVIEW_SESSION_OPTIONS")
+        target_origin=$(printf '%s\n' "$target_origin" | sed -E "s/\[current\]/$current_session:/")
+    fi
+    if [[ "$action" == "new" || "$action" == "rename" ]]; then
+        fifo=$(mktemp -u "${TMPDIR:-/tmp}/tmux_fzf_session.XXXXXX")
+        mkfifo "$fifo"
+        tmux split-window -v -l 30% -b "bash -c 'printf \"Session Name: \"; read -r session_name; printf \"%s\\n\" \"\$session_name\" > \"$fifo\"'" &
+        session_name=$(<"$fifo")
+        rm -f "$fifo"
+        [[ -n "$session_name" ]] || exit
+        if [[ "$action" == "new" ]]; then
+            tmux new-session -d -s "$session_name" && tmux switch-client $TMUX_FZF_CLIENT_ARG -t "$session_name"
+            exit
+        fi
+    fi
+else
+    tmux_attached_sessions=$(tmux list-sessions "${list_args[@]}" | grep 'attached' | grep -o '^[[:alpha:][:digit:]_-]*:' | sed 's/.$//g')
+    sessions=$(printf '%s\n' "$sessions" | grep "^$tmux_attached_sessions")
+    FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target session(s). Press TAB to mark multiple items.'"
+    target_origin=$(printf "[current]\n%s\n[cancel]" "$sessions" | eval "$TMUX_FZF_BIN $TMUX_FZF_OPTIONS $TMUX_FZF_PREVIEW_SESSION_OPTIONS")
+    target_origin=$(printf '%s\n' "$target_origin" | sed -E "s/\[current\]/$current_session:/")
+fi
+
+[[ "$target_origin" == "[cancel]" || -z "$target_origin" ]] && exit
+target=$(printf '%s\n' "$target_origin" | sed -e 's/:.*$//')
+if [[ "$action" == "switch" ]]; then
+    tmux switch-client $TMUX_FZF_CLIENT_ARG -t "$target"
+elif [[ "$action" == "detach" ]]; then
+    printf '%s\n' "$target" | xargs -r -I{} tmux detach -s "{}"
+elif [[ "$action" == "kill" ]]; then
+    printf '%s\n' "$target" | sort -r | xargs -r -I{} tmux kill-session -t "{}"
+elif [[ "$action" == "rename" ]]; then
+    tmux rename-session -t "$target" "$session_name"
+fi

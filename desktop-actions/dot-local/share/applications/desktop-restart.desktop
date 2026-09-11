@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Restart
+Comment=Close applications gracefully and restart the computer
+Exec=hyprshutdown -t "Restarting…" -p "systemctl reboot"
+TryExec=hyprshutdown
+Icon=system-reboot
+Terminal=false
+Categories=System;
+Keywords=restart;reboot;power;system;
+StartupNotify=false
+

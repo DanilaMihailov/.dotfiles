@@ -26,7 +26,8 @@ if internal_disabled_file then
 end
 
 local internal_monitor = {
-    disabled = internal_disabled,
+    -- disabled = internal_disabled,
+    disabled = false,
     output   = "eDP-1",
     mode     = "1920x1080@60",
     position = "3840x0",
@@ -66,7 +67,7 @@ hl.monitor(top_external_monitor)
 -- Set programs that you use
 local terminal    = "foot"
 local fileManager = "dolphin"
-local menu        = "vicinae toggle"
+local menu        = "pkill -x fuzzel || fuzzel"
 
 
 -------------------
@@ -235,6 +236,9 @@ hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.2, bezier = "qu
 hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 1.0, bezier = "quick", style = "fade" })
 hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 1.0, bezier = "quick" })
 
+-- Launchers are opened constantly and should appear immediately.
+hl.layer_rule({ match = { namespace = "^launcher$" }, no_anim = true })
+
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
 -- uncomment all if you wish to use that.
@@ -371,7 +375,10 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(
   mainMod .. " + CTRL + SPACE",
-  hl.dsp.exec_cmd(menu .. ' cmd launch core:search-emojis')
+  hl.dsp.exec_cmd(
+    "pkill -x fuzzel || BEMOJI_PICKER_CMD='fuzzel --dmenu  --placeholder=Search-emoji --cache=/dev/null' " ..
+    "bemoji --type --noline --hist-limit 30 2>/dev/null || true"
+  )
 )
 hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("swaync-client -t -sw"))
 hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
@@ -381,7 +388,6 @@ hl.bind(
   { device = { inclusive = true, list = { "by-tech-air60-2", "by-tech-air60-1", "by-tech-air60" } } }
 )
 hl.bind("Print", hl.dsp.exec_cmd("flock -n /tmp/hyprshot-region.lock hyprshot -m region"))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.window.float({ action = "toggle" }))
 
 -- Disable the internal display when the lid closes so its workspace moves to
@@ -483,6 +489,11 @@ hl.bind(mainMod .. " + CTRL + SHIFT + h", hl.dsp.workspace.move({ monitor = "l" 
 hl.bind(mainMod .. " + CTRL + SHIFT + l", hl.dsp.workspace.move({ monitor = "r" }))
 hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ workspace = "m-1" }))
 hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ workspace = "m+1" }))
+
+hl.bind(mainMod .. " + SHIFT + p", hl.dsp.window.move({ workspace = "m-1" }))
+hl.bind(mainMod .. " + SHIFT + n", hl.dsp.window.move({ workspace = "m+1" }))
+hl.bind(mainMod .. " + p", hl.dsp.focus({ workspace = "m-1" }))
+hl.bind(mainMod .. " + n", hl.dsp.focus({ workspace = "m+1" }))
 
 hl.bind(mainMod .. " + SHIFT + h",  hl.dsp.layout("consume_or_expel prev"))
 hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("consume_or_expel next"))

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# client-detached runs before tmux updates its client counts.
+sleep 1
+
+# Only consider sessions automatically created by Foot. Manually named tmux
+# sessions are never removed by this helper.
+tmux list-sessions -f '#{m:foot-*,#{session_name}}' \
+  -F '#{session_id} #{session_attached} #{status}' 2>/dev/null |
+while read -r session_id attached status; do
+  if [ "$attached" = "0" ] && [ "$status" = "off" ]; then
+    pane_count=$(tmux list-panes -s -t "$session_id" -F '#{pane_id}' 2>/dev/null |
+      awk 'END { print NR }')
+
+    if [ "$pane_count" = "1" ]; then
+      tmux kill-session -t "$session_id"
+    fi
+  fi
+done

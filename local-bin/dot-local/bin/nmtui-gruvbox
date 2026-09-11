@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# libnewt uses terminal ANSI colors; Foot maps these to its Gruvbox palette.
+export NEWT_COLORS='root=lightgray,black
+border=brightgreen,black
+window=lightgray,black
+shadow=black,black
+title=brightgreen,black
+button=black,green
+actbutton=black,brightgreen
+checkbox=lightgray,black
+actcheckbox=brightgreen,black
+entry=white,black
+label=lightgray,black
+listbox=lightgray,black
+actlistbox=black,brightgreen
+textbox=lightgray,black
+acttextbox=black,green
+helpline=black,green
+roottext=lightgray,black
+emptyscale=black,gray
+fullscale=black,brightgreen
+disentry=gray,black
+compactbutton=lightgray,black
+actsellistbox=black,brightgreen
+sellistbox=lightgray,black'
+
+exec nmtui "$@"

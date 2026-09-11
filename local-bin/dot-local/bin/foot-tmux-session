@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Give each Foot-created tmux session a unique, recognizable name.
+session_name="foot-$(date +%Y%m%d-%H%M%S)-$$"
+
+if [ "$#" -eq 0 ]; then
+  exec tmux new-session -s "$session_name"
+fi
+
+# Terminal=true desktop entries bypass the interactive Zsh hooks that normally
+# set this title, so initialize it from the launch directory and executable.
+application=${1##*/}
+pane_title="$PWD | $application"
+
+exec tmux new-session -s "$session_name" "$@" \; \
+  select-pane -t "$session_name" -T "$pane_title"

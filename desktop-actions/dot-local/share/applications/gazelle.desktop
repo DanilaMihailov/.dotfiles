@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Network Manager (Gazelle)
+GenericName=NetworkManager TUI
+Comment=Scan, connect to, and manage networks
+Exec=/usr/sbin/gazelle
+TryExec=/usr/sbin/gazelle
+Icon=network-workgroup
+Terminal=true
+Categories=Network;
+Keywords=network;wifi;wireless;ethernet;connection;gazelle;
+StartupNotify=false
+

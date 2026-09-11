@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+client_tty=$1
+client_args=()
+if [[ -n $client_tty ]]; then
+  client_args=(-c "$client_tty")
+fi
+
+current_session=$(tmux display-message -p "${client_args[@]}" '#{session_name}')
+
+sessions=$(
+  tmux list-sessions \
+    -f '#{==:#{m:foot-*,#{session_name}},0}' \
+    -F '#{session_name}' |
+    awk -v current="$current_session" '$0 != current'
+)
+
+[[ -n $sessions ]] || exit 0
+
+selection=$(
+  printf '%s\n' "$sessions" |
+    fzf-tmux -p -w 62% -h 38% \
+      --no-multi \
+      --prompt='> '
+)
+
+[[ -n $selection ]] || exit 0
+tmux switch-client "${client_args[@]}" -t "$selection"

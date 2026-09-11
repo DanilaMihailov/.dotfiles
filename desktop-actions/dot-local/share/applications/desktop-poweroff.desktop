@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Power Off
+Comment=Close applications gracefully and shut down the computer
+Exec=hyprshutdown -t "Shutting down…" -p "systemctl poweroff"
+TryExec=hyprshutdown
+Icon=system-shutdown
+Terminal=false
+Categories=System;
+Keywords=power off;poweroff;shutdown;shut down;system;
+StartupNotify=false
+

@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+# Renumber Hyprland workspaces by monitor role without moving any workspace.
+#
+# Role priority:
+#   main      home: DP-1, work: HDMI-A-1
+#   secondary home: DP-2
+#   side      laptop panel: eDP-1 (or main when it is the only display)
+
+set -euo pipefail
+
+readonly SIDE_MONITOR="eDP-1"
+readonly HOME_MAIN="DP-1"
+readonly HOME_SECONDARY="DP-2"
+readonly WORK_MAIN="HDMI-A-1"
+
+dry_run=false
+if [[ ${1-} == "--dry-run" ]]; then
+    dry_run=true
+elif [[ $# -ne 0 ]]; then
+    printf 'Usage: %s [--dry-run]\n' "${0##*/}" >&2
+    exit 2
+fi
+
+readonly HYPRCTL=${HYPRCTL:-hyprctl}
+
+for command in "$HYPRCTL" jq flock; do
+    if ! command -v "$command" >/dev/null; then
+        printf 'Error: required command not found: %s\n' "$command" >&2
+        exit 1
+    fi
+done
+
+# Prevent two monitor-change hooks or key presses from renumbering at once.
+exec 9>"${XDG_RUNTIME_DIR:-/tmp}/reorder-hypr-workspaces.lock"
+flock -n 9 || exit 0
+
+monitors_json=$("$HYPRCTL" -j monitors)
+workspaces_json=$("$HYPRCTL" -j workspaces)
+
+monitor_is_active() {
+    jq -e --arg monitor "$1" 'any(.[]; .name == $monitor)' \
+        <<<"$monitors_json" >/dev/null
+}
+
+# The work setup wins if its main output is connected. Otherwise use home.
+roles=()
+if monitor_is_active "$WORK_MAIN"; then
+    roles+=("$WORK_MAIN")
+elif monitor_is_active "$HOME_MAIN"; then
+    roles+=("$HOME_MAIN")
+elif monitor_is_active "$SIDE_MONITOR"; then
+    roles+=("$SIDE_MONITOR")
+else
+    printf 'Error: none of the configured main monitors is active (%s, %s, or %s).\n' \
+        "$WORK_MAIN" "$HOME_MAIN" "$SIDE_MONITOR" >&2
+    exit 1
+fi
+
+if monitor_is_active "$HOME_SECONDARY"; then
+    roles+=("$HOME_SECONDARY")
+fi
+if [[ ${roles[0]} != "$SIDE_MONITOR" ]] && monitor_is_active "$SIDE_MONITOR"; then
+    roles+=("$SIDE_MONITOR")
+fi
+
+# Include every regular workspace, including an active workspace with no windows.
+# Workspaces keep their existing ascending order within each monitor.
+ordered_ids=()
+ordered_monitors=()
+for monitor in "${roles[@]}"; do
+    while IFS=$'\t' read -r id workspace_monitor; do
+        [[ -n $id ]] || continue
+        ordered_ids+=("$id")
+        ordered_monitors+=("$workspace_monitor")
+    done < <(
+        jq -r --arg monitor "$monitor" \
+            '[.[] | select(.id > 0 and .monitor == $monitor)]
+             | sort_by(.id)[] | [.id, .monitor] | @tsv' \
+            <<<"$workspaces_json"
+    )
+done
+
+if ((${#ordered_ids[@]} == 0)); then
+    printf 'No regular workspaces found on the configured monitors.\n' >&2
+    exit 1
+fi
+
+# Refuse to silently ignore a workspace on an unclassified active output.
+known_roles_json=$(printf '%s\n' "${roles[@]}" | jq -R . | jq -s .)
+unknown=$(jq -r --argjson known "$known_roles_json" \
+    '.[] | select(.id > 0 and (.monitor as $m | $known | index($m) | not))
+     | "workspace \(.id) on \(.monitor)"' <<<"$workspaces_json")
+if [[ -n $unknown ]]; then
+    printf 'Error: regular workspaces exist on an unclassified monitor:\n%s\n' \
+        "$unknown" >&2
+    exit 1
+fi
+
+printf 'Workspace order (main -> secondary -> side):\n'
+changes=0
+for i in "${!ordered_ids[@]}"; do
+    old_id=${ordered_ids[$i]}
+    new_id=$((i + 1))
+    printf '  %-12s %s -> %s\n' "${ordered_monitors[$i]}" "$old_id" "$new_id"
+    [[ $old_id -eq $new_id ]] || changes=$((changes + 1))
+done
+
+if ((changes == 0)); then
+    printf 'Already in order.\n'
+    exit 0
+fi
+if $dry_run; then
+    exit 0
+fi
+
+# First move all IDs above the currently used range, then assign 1..N. This
+# avoids collisions for cycles such as 1 -> 3, 3 -> 1.
+max_id=$(jq '[.[] | select(.id > 0) | .id] | max // 0' <<<"$workspaces_json")
+temp_base=$((max_id + 1000))
+lua=''
+for i in "${!ordered_ids[@]}"; do
+    old_id=${ordered_ids[$i]}
+    temp_id=$((temp_base + i + 1))
+    lua+="hl.dispatch(hl.dsp.workspace.change_id({ workspace = ${old_id}, id = ${temp_id} })); "
+done
+for i in "${!ordered_ids[@]}"; do
+    temp_id=$((temp_base + i + 1))
+    new_id=$((i + 1))
+    lua+="hl.dispatch(hl.dsp.workspace.change_id({ workspace = ${temp_id}, id = ${new_id} })); "
+done
+
+"$HYPRCTL" eval "$lua" >/dev/null
+
+# Waybar 0.15 does not rebuild its Hyprland workspace map for change_id itself,
+# but its workspace module reinitializes on Hyprland's configreloaded event.
+# A config-only reload emits that event without restarting Waybar or reloading
+# monitor modes, avoiding the full-bar flicker caused by SIGUSR2.
+"$HYPRCTL" reload config-only >/dev/null
+
+printf 'Reordered %d workspace(s); windows stayed on their current monitors.\n' \
+    "${#ordered_ids[@]}"

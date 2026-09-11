@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Sleep
+Comment=Suspend the computer
+Exec=systemctl suspend
+TryExec=systemctl
+Icon=system-suspend
+Terminal=false
+Categories=System;
+Keywords=sleep;suspend;standby;power;
+StartupNotify=false
+

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Bluetooth Manager
+GenericName=Bluetooth TUI
+Comment=Discover, pair, and manage Bluetooth devices
+Exec=bluetui
+TryExec=bluetui
+Icon=bluetooth
+Terminal=true
+Categories=System;
+Keywords=bluetooth;bluez;wireless;pair;device;bluetui;
+StartupNotify=false
+

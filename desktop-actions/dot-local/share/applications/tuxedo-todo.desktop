@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=Tuxedo Todo
+GenericName=Todo.txt Manager
+Comment=Manage tasks in ~/todo.txt
+Exec=/home/zen/.cargo/bin/tuxedo /home/zen/todo.txt
+TryExec=/home/zen/.cargo/bin/tuxedo
+Path=/home/zen
+Icon=view-task
+Terminal=true
+Categories=Office;
+Keywords=todo;task;tasks;todo.txt;project;tuxedo;terminal;
+StartupNotify=false
+

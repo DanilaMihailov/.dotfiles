@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=Mosh dev.clabs.net
+Name=mosh dev.clabs.net
 Comment=Connect to mihd@dev.clabs.net using Mosh
 Exec=mosh mihd@dev.clabs.net
 TryExec=mosh
@@ -9,4 +9,3 @@ Terminal=true
 Categories=Network;RemoteAccess;
 Keywords=mosh;ssh;remote;server;dev;clabs;mihd;
 StartupNotify=false
-

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Screenshot: Region
+Comment=Select a region to capture
+Exec=flock -n /tmp/hyprshot-region.lock hyprshot -m region
+TryExec=hyprshot
+Icon=applets-screenshooter
+Terminal=false
+Categories=Graphics;
+Keywords=screenshot;capture;region;selection;screen;
+StartupNotify=false

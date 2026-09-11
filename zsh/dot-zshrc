@@ -1,3 +1,5 @@
+source "$HOME/.config/zsh/environment.zsh"
+
 eval "$(direnv hook zsh)"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -6,28 +8,6 @@ eval "$(direnv hook zsh)"
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-export XDG_CONFIG_HOME="$HOME/.config"
-
-export GITLAB_URL="https://gitlab.rtlq.ru/"
-
-# Do not run update on every command wtf
-export HOMEBREW_NO_AUTO_UPDATE=1
-
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export TOOLCHAINS=swift
-
-# allows to install global packages without root
-export PATH=~/.npm-global/bin:$PATH
-export PATH="$HOME/.cargo/bin:$PATH"
-
-export ANDROID_HOME=/Users/$USER/Library/Android/sdk
-export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools/platform-tools
-
-export PATH="$HOME/Library/Python/2.7/bin:$PATH"
-
-export PATH="$HOME/.local/bin:$PATH"
 
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
@@ -81,20 +61,12 @@ zinit cdreplay -q
 # vim mode
 bindkey -v
 
-export LANG=en_US.UTF-8
-
-export MANPAGER='nvim +Man!'
-export EDITOR='nvim'
-export BROWSER='zen-browser'
-
 # run this command on ssh login 
 if [[ -n $SSH_CONNECTION ]]; then
     if [ -z $TMUX ]; then
         tmux attach || tmux new
     fi
 fi
-
-export GIT_EDITOR=nvim
 
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
@@ -187,8 +159,6 @@ pyclean () {
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-source ~/secrets.sh
-
 alias emacs='exec $(brew --prefix)/opt/emacs-mac/Emacs.app/Contents/MacOS/Emacs.sh "$@"'
 
 DISABLE_AUTO_TITLE="true"
@@ -230,21 +200,11 @@ fi
 # bun completions
 [ -s "/Users/zen/.bun/_bun" ] && source "/Users/zen/.bun/_bun"
 
-# bun
-if [[ -z ${CONTAINER_ID:-} ]]; then
-  export BUN_INSTALL="$HOME/.bun"
-fi
-export PATH="$BUN_INSTALL/bin:$PATH"
-export GNUPGHOME="$HOME/.gnupg"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/zen/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/zen/.lmstudio/bin"
-# End of LM Studio CLI section
 
 # Run commands like "dbox nvim" or "dbox -n fedora ls".
 if [[ -z ${CONTAINER_ID:-} ]]; then
@@ -297,8 +257,6 @@ if [[ -z ${CONTAINER_ID:-} ]]; then
   }
 fi
 
-# enable to allow open code use websearch tool (may break)
-export OPENCODE_ENABLE_EXA=true
 # trying to fix pi timeout with openai-responses
 CODEX_LB_UPSTREAM_STREAM_TRANSPORT=websocket
 

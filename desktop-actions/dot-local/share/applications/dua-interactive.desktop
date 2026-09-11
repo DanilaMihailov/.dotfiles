@@ -9,4 +9,3 @@ Terminal=true
 Categories=System;Filesystem;
 Keywords=disk;usage;storage;files;size;dua;
 StartupNotify=false
-

@@ -10,4 +10,3 @@ Terminal=true
 Categories=Network;
 Keywords=network;wifi;wireless;ethernet;connection;gazelle;
 StartupNotify=false
-

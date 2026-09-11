@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Screenshot: Window
+Comment=Select a window to capture
+Exec=flock -n /tmp/hyprshot-window.lock hyprshot -m window
+TryExec=hyprshot
+Icon=applets-screenshooter
+Terminal=false
+Categories=Graphics;
+Keywords=screenshot;capture;window;screen;
+StartupNotify=false

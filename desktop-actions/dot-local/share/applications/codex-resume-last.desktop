@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Codex: Resume Last
+Comment=Resume the most recent Codex session
+Exec=codex resume --last
+TryExec=codex
+Icon=utilities-terminal
+Terminal=true
+Categories=Development;
+Keywords=codex;resume;continue;last;session;
+StartupNotify=false

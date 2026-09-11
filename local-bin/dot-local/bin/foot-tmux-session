@@ -8,12 +8,13 @@ if [ "$#" -eq 0 ]; then
 fi
 
 # Terminal=true desktop entries bypass the interactive Zsh hooks that normally
-# set this title and export the user's shell environment. Initialize Zsh first,
-# then replace it with the requested application.
+# set this title and export the user's shell environment. Load only the shared
+# environment file, then replace Zsh with the requested application.
 application=${1##*/}
 pane_title="$PWD | $application"
 
-exec tmux new-session -s "$session_name" zsh -lic '
+exec tmux new-session -s "$session_name" zsh -lc '
+  source "$HOME/.config/zsh/environment.zsh"
   pane_title=$1
   shift
   printf "\033]0;%s\007" "$pane_title"

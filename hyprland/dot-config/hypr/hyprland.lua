@@ -300,7 +300,7 @@ hl.config({
         kb_layout  = "us,ru",
         kb_variant = "",
         kb_model   = "",
-        kb_options = "ctrl:nocaps,grp:ctrl_space_toggle,altwin:swap_lalt_lwin",
+        kb_options = "ctrl:nocaps,altwin:swap_lalt_lwin",
         kb_rules   = "",
 
         follow_mouse = 1,
@@ -319,17 +319,17 @@ hl.config({
 -- do not switch lalt_lwin on external keyboard (it is already at the right place)
 hl.device({
     name = "by-tech-air60-2",
-    kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
+    kb_options = "ctrl:nocaps",
 })
 
 hl.device({
     name = "by-tech-air60",
-    kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
+    kb_options = "ctrl:nocaps",
 })
 
 hl.device({
     name = "by-tech-air60-1",
-    kb_options = "ctrl:nocaps,grp:ctrl_space_toggle",
+    kb_options = "ctrl:nocaps",
 })
 
 -- Touchscreen: swipe inward from the left/right edge to change workspace.
@@ -373,6 +373,7 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind("CTRL + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
 hl.bind(
   mainMod .. " + CTRL + SPACE",
   hl.dsp.exec_cmd(

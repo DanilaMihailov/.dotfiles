@@ -307,6 +307,7 @@ setopt CORRECT
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
+unsetopt BEEP
 
 HISTFILE=~/.zsh_history
 HISTSIZE=50000

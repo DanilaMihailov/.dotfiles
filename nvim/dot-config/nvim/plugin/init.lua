@@ -27,8 +27,36 @@ gruvbox.setup {
     GruvboxGreenSign = { bg = 'NONE' },
   },
 }
-vim.cmd.colorscheme 'gruvbox'
 vim.opt.background = 'dark'
+
+local function running_in_linux_tty()
+  if vim.env.TERM == 'linux' then
+    return true
+  end
+
+  if vim.env.TMUX then
+    local tty = vim.fn.system {
+      'tmux',
+      'display-message',
+      '-p',
+      '#{client_tty}',
+    }
+
+    return vim.v.shell_error == 0
+      and tty:match '^/dev/tty%d+%s*$' ~= nil
+  end
+
+  return false
+end
+
+
+if running_in_linux_tty() then
+  vim.opt.termguicolors = false
+  vim.cmd.colorscheme 'retrobox'
+else
+  vim.cmd.colorscheme 'gruvbox'
+end
+
 vim.cmd [[
         hi FoldColumn guibg=NONE
         hi! link Delimiter GruvboxFg1

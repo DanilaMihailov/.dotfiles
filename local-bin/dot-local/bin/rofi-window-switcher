@@ -1,0 +1,9 @@
+#!/bin/sh
+
+exec rofi \
+  -show window \
+  -theme /home/zen/.config/rofi/window-switcher.rasi \
+  -selected-row 1 \
+  -kb-element-next 'Super+Tab,Tab' \
+  -kb-element-prev 'Super+ISO_Left_Tab,ISO_Left_Tab' \
+  -kb-accept-entry '!Super_L,!Super_R,Control+j,Control+m,Return,KP_Enter'

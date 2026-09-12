@@ -129,7 +129,11 @@ hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("consume_or_expel next"))
 hl.bind(mainMod .. " + PERIOD", hl.dsp.layout("colresize +conf"))
 hl.bind(mainMod .. " + COMMA", hl.dsp.layout("colresize -conf"))
 
-hl.bind(mainMod .. " + Tab", hl.dsp.focus({ last = true }))
+hl.bind(
+    mainMod .. " + Tab",
+    hl.dsp.exec_cmd("pidof rofi >/dev/null || /home/zen/.local/bin/rofi-window-switcher"),
+    { non_consuming = true }
+)
 
 hl.bind(
     mainMod .. " + SHIFT + F",

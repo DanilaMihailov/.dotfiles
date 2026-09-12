@@ -1,0 +1,15 @@
+@theme "/home/zen/.config/rofi/hyprland.rasi"
+
+window {
+    width: 55em;
+    location: north;
+    anchor: north;
+    y-offset: 22%;
+}
+
+listview {
+    require-input: false;
+    lines: 12;
+    dynamic: true;
+    fixed-height: false;
+}

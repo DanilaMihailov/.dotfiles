@@ -1,0 +1,67 @@
+#!/bin/sh
+
+emit_action() {
+  name=$1
+  icon=$2
+  id=$3
+  meta=$4
+
+  printf '%s\0icon\x1f%s\x1finfo\x1f%s\x1fmeta\x1f%s\n' \
+    "$name" "$icon" "$id" "$meta"
+}
+
+list_actions() {
+  emit_action 'Lock Screen' 'system-lock-screen' 'lock' \
+    'lock screen session security'
+  emit_action 'Sleep' 'system-suspend' 'sleep' \
+    'sleep suspend standby power'
+  emit_action 'Log Out' 'system-log-out' 'logout' \
+    'logout log out sign out session exit'
+  emit_action 'Restart' 'system-reboot' 'restart' \
+    'restart reboot power system'
+  emit_action 'Power Off' 'system-shutdown' 'poweroff' \
+    'power off poweroff shutdown shut down system'
+  emit_action 'Normalize Workspaces' 'preferences-desktop-workspaces' 'normalize-workspaces' \
+    'workspace workspaces reorder renumber normalize sort hyprland'
+  emit_action 'Restart Waybar' 'view-refresh' 'restart-waybar' \
+    'waybar restart reload bar panel status'
+  emit_action 'Screenshot: Region' 'applets-screenshooter' 'screenshot-region' \
+    'screenshot capture region selection screen'
+  emit_action 'Screenshot: Window' 'applets-screenshooter' 'screenshot-window' \
+    'screenshot capture window screen'
+  emit_action 'Screenshot: Fullscreen' 'applets-screenshooter' 'screenshot-fullscreen' \
+    'screenshot capture fullscreen monitor output active screen'
+  emit_action 'Toggle WireGuard' 'network-vpn' 'toggle-wireguard' \
+    'wireguard vpn network connect disconnect toggle'
+  emit_action 'Toggle Xray' 'network-vpn' 'toggle-xray' \
+    'xray proxy vpn network connect disconnect toggle throne'
+}
+
+run_action() {
+  case "$1" in
+    lock) hyprlock ;;
+    sleep) systemctl suspend ;;
+    logout) hyprshutdown -t 'Logging out…' ;;
+    restart) hyprshutdown -t 'Restarting…' -p 'systemctl reboot' ;;
+    poweroff) hyprshutdown -t 'Shutting down…' -p 'systemctl poweroff' ;;
+    normalize-workspaces) /home/zen/.local/bin/reorder-hypr-workspaces ;;
+    restart-waybar) systemctl --user restart waybar.service ;;
+    screenshot-region) flock -n /tmp/hyprshot-region.lock hyprshot -m region ;;
+    screenshot-window) flock -n /tmp/hyprshot-window.lock hyprshot -m window ;;
+    screenshot-fullscreen) flock -n /tmp/hyprshot-fullscreen.lock hyprshot -m output -m active ;;
+    toggle-wireguard) /home/zen/.config/waybar/wireguard-toggle.sh toggle ;;
+    toggle-xray) /home/zen/.config/waybar/throne-toggle.sh toggle ;;
+    *) return 1 ;;
+  esac
+}
+
+case "${ROFI_RETV:-0}" in
+  0)
+    printf '\0prompt\x1factions\n'
+    printf '\0no-custom\x1ftrue\n'
+    list_actions
+    ;;
+  1)
+    run_action "${ROFI_INFO:-}" >/dev/null 2>&1 &
+    ;;
+esac

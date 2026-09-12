@@ -1,18 +1,20 @@
 // @theme "/home/zen/.config/rofi/fuzzel-like.rasi"
 
 configuration {
-    modes: "combi,calc,filebrowser";
+    modes: "combi,calc,filebrowser,actions:/home/zen/.local/bin/rofi-actions";
     font: "JetBrainsMono Nerd Font 13";
     terminal: "foot -e /home/zen/.local/bin/foot-tmux-session";
-    show-icons: true;
+    show-icons: false;
     drun-match-fields: "name,generic,exec,categories,keywords";
-    combi-modes: "window,drun";
-    combi-display-format: "{mode} {text}";
+    combi-modes: "window,drun,actions";
+    combi-display-format: "<span foreground='#928374'>{mode}</span>  {text}";
+    drun-display-format: "{name} <span size='small' alpha='60%'>{generic}</span>";
+    window-format: "{t} — {c}";
     display-drun: "app";
     display-window: "win";
     display-calc: "calc";
+    display-actions: "act";
     drun-show-actions: true;
-    // drun-display-format: "{name}";
     matching: "fuzzy";
     sorting-method: "fzf";
     sort: true;

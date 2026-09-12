@@ -3,6 +3,12 @@
 # Give each Foot-created tmux session a unique, recognizable name.
 session_name="foot-$(date +%Y%m%d-%H%M%S)-$$"
 
+# Rofi invokes the configured terminal as `{terminal} -e {cmd}`. Since this
+# wrapper is part of `{terminal}`, discard that terminal-emulator separator.
+if [ "${1-}" = "-e" ]; then
+  shift
+fi
+
 if [ "$#" -eq 0 ]; then
   exec tmux new-session -s "$session_name"
 fi

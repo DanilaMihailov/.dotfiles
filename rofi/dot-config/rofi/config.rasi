@@ -1,0 +1,38 @@
+// @theme "/home/zen/.config/rofi/fuzzel-like.rasi"
+
+configuration {
+    modes: "combi,calc,filebrowser";
+    font: "JetBrainsMono Nerd Font 13";
+    terminal: "foot -e /home/zen/.local/bin/foot-tmux-session";
+    show-icons: true;
+    drun-match-fields: "name,generic,exec,categories,keywords";
+    combi-modes: "window,drun";
+    combi-display-format: "{mode} {text}";
+    display-drun: "app";
+    display-window: "win";
+    display-calc: "calc";
+    drun-show-actions: true;
+    // drun-display-format: "{name}";
+    matching: "fuzzy";
+    sorting-method: "fzf";
+    sort: true;
+    case-smart: true;
+    disable-history: false;
+    max-history-size: 30;
+    // display-drun: "❯";
+}
+
+@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
+
+window {
+    location: north;
+    anchor: north;
+    y-offset: 35%;
+}
+
+listview {
+    require-input: false;
+    lines: 12;
+    dynamic: true;
+    fixed-height: false;
+}

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=Bluetooth Manager (bluetui)
+Name=Bluetooth Manager
 GenericName=Bluetooth TUI
 Comment=Discover, pair, and manage Bluetooth devices
 Exec=bluetui

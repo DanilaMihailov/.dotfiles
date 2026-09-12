@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Name=Neovim
+GenericName=Text Editor
+Comment=Edit text files
+TryExec=nvim
+Exec=nvim %F
+Icon=nvim
+Terminal=true
+Categories=Utility;TextEditor;Development;
+Keywords=Text;editor;nvim;vim;dotfiles;config;configuration;
+Actions=Dotfiles;
+StartupNotify=false
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+
+[Desktop Action Dotfiles]
+Name=Dotfiles
+Exec=env --chdir=/home/zen/dotfiles nvim

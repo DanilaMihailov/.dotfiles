@@ -7,5 +7,14 @@ TryExec=codex
 Icon=utilities-terminal
 Terminal=true
 Categories=Development;
-Keywords=codex;openai;agent;ai;code;terminal;
+Keywords=codex;openai;agent;ai;code;terminal;resume;continue;session;
+Actions=Resume;ResumeLast;
 StartupNotify=false
+
+[Desktop Action Resume]
+Name=Resume
+Exec=codex resume
+
+[Desktop Action ResumeLast]
+Name=Resume Last
+Exec=codex resume --last

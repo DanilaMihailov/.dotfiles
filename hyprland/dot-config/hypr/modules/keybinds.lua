@@ -16,12 +16,14 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill -x rofi || rofi -show drun"))
 hl.bind("CTRL + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
 hl.bind(
   mainMod .. " + CTRL + SPACE",
   hl.dsp.exec_cmd(
-    "pkill -x fuzzel || BEMOJI_PICKER_CMD='fuzzel --dmenu  --placeholder=Search-emoji --cache=/dev/null' " ..
-    "bemoji --type --noline --hist-limit 30 2>/dev/null || true"
+    "pkill -x rofi || BEMOJI_PICKER_CMD=/home/zen/.local/bin/rofi-bemoji-picker " ..
+    "bemoji --type --noline --hist-limit 30 " ..
+    "--file /home/zen/.local/share/bemoji/emojis-yellow.txt 2>/dev/null || true"
   )
 )
 hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("swaync-client -t -sw"))

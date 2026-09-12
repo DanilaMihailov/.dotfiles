@@ -1,0 +1,6 @@
+#!/bin/sh
+
+grep -Ev '🏻|🏼|🏽|🏾|🏿' | rofi \
+  -dmenu \
+  -p "emoji" \
+  -theme /home/zen/.config/rofi/emoji.rasi

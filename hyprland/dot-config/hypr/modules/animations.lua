@@ -30,6 +30,7 @@ hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 1.0, bezier = "qu
 
 -- Launchers are opened constantly and should appear immediately.
 hl.layer_rule({ match = { namespace = "^launcher$" }, no_anim = true })
+hl.layer_rule({ match = { namespace = "^rofi$" }, no_anim = true })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
@@ -48,4 +49,3 @@ hl.layer_rule({ match = { namespace = "^launcher$" }, no_anim = true })
 --     border_size = 0,
 --     rounding    = 0,
 -- })
-

@@ -1,0 +1,117 @@
+@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
+
+* {
+    bg0: #282828;
+    bg1: #3c3836;
+    bg2: #504945;
+    fg0: #fbf1c7;
+    fg1: #ebdbb2;
+    gray: #928374;
+    green: #b8bb26;
+    aqua: #8ec07c;
+    blue: #83a598;
+    yellow: #fabd2f;
+    match-highlight: bold #83a598;
+    selected-match-highlight: bold #fabd2f;
+}
+
+window {
+    width: 42em;
+    padding: 2px;
+    border: 0;
+    border-radius: 5px;
+    background-color: transparent;
+    background-image: linear-gradient(45deg, #b8bb26, #8ec07c);
+}
+
+mainbox {
+    padding: 4px;
+    spacing: 4px;
+    border-radius: 3px;
+    background-color: @bg0;
+}
+
+inputbar {
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 5px;
+    background-color: @bg0;
+    children: [ prompt, textbox-prompt-sep, entry ];
+}
+
+prompt {
+    text-color: @aqua;
+}
+
+textbox-prompt-sep {
+    str: ":";
+    margin: 0 0.5em 0 0;
+    text-color: @gray;
+}
+
+entry {
+    text-color: @fg0;
+    cursor-color: @green;
+}
+
+listview {
+    padding: 0;
+    border: 0;
+    spacing: 4px;
+    scrollbar: false;
+}
+
+element {
+    padding: 5px 8px;
+    border: 2px;
+    border-color: transparent;
+    border-radius: 5px;
+    spacing: 8px;
+    margin: 0px 8px;
+}
+
+element.normal.normal,
+element.alternate.normal {
+    background-color: @bg0;
+    text-color: @fg1;
+}
+
+element.selected.normal,
+element.selected.active {
+    background-color: @bg2;
+    text-color: @fg0;
+}
+
+element.normal.active,
+element.alternate.active {
+    background-color: @bg0;
+    text-color: @fg1;
+    border-color: @active-background;
+}
+
+element.selected.active {
+    border-color: @active-background;
+}
+
+element-icon {
+    size: 1.1em;
+}
+
+element-text {
+    highlight: @match-highlight;
+}
+
+element.selected.normal element-text {
+    highlight: @selected-match-highlight;
+}
+
+message {
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 5px;
+    background-color: @bg0;
+}
+
+textbox {
+    text-color: @fg1;
+}

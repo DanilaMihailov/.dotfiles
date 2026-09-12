@@ -129,11 +129,63 @@ hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("consume_or_expel next"))
 hl.bind(mainMod .. " + PERIOD", hl.dsp.layout("colresize +conf"))
 hl.bind(mainMod .. " + COMMA", hl.dsp.layout("colresize -conf"))
 
-hl.bind(
-    mainMod .. " + Tab",
-    hl.dsp.exec_cmd("pidof rofi >/dev/null || /home/zen/.local/bin/rofi-window-switcher"),
-    { non_consuming = true }
-)
+local function rofiIsOpen()
+    for _, layer in ipairs(hl.get_layers()) do
+        if layer.namespace == "rofi" then return true end
+    end
+    return false
+end
+
+local modTabGeneration = 0
+
+local function modTabModifierIsDown()
+    -- The internal keyboard swaps Alt and Super, while external keyboards do
+    -- not. Check both pairs of physical XKB keycodes after the logical
+    -- SUPER+Tab chord has already started.
+    return hl.is_key_down(133) or hl.is_key_down(134)
+        or hl.is_key_down(64) or hl.is_key_down(108)
+end
+
+-- Hyprland 0.56 does not dispatch release binds reliably here, so detect Tab-up
+-- through its key-state API. A quick gesture focuses the previous window; if
+-- Super remains held for 120 ms after Tab-up, open the full Rofi switcher.
+hl.bind(mainMod .. " + Tab", function()
+    if rofiIsOpen() then return end
+
+    modTabGeneration = modTabGeneration + 1
+    local generation = modTabGeneration
+    local tabReleasePoll
+
+    tabReleasePoll = hl.timer(function()
+        if generation ~= modTabGeneration then
+            tabReleasePoll:set_enabled(false)
+            return
+        end
+        if hl.is_key_down("Tab") then return end
+
+        tabReleasePoll:set_enabled(false)
+        local heldTicks = 0
+        local superReleasePoll
+        superReleasePoll = hl.timer(function()
+            if generation ~= modTabGeneration then
+                superReleasePoll:set_enabled(false)
+                return
+            end
+
+            if not modTabModifierIsDown() then
+                superReleasePoll:set_enabled(false)
+                hl.dispatch(hl.dsp.focus({ last = true }))
+                return
+            end
+
+            heldTicks = heldTicks + 1
+            if heldTicks < 24 then return end
+
+            superReleasePoll:set_enabled(false)
+            hl.dispatch(hl.dsp.exec_cmd("/home/zen/.local/bin/rofi-window-switcher"))
+        end, { timeout = 5, type = "repeat" })
+    end, { timeout = 5, type = "repeat" })
+end, { non_consuming = true })
 
 hl.bind(
     mainMod .. " + SHIFT + F",

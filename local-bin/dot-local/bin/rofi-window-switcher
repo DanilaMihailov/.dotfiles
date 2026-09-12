@@ -1,9 +1,49 @@
 #!/bin/sh
 
-exec rofi \
-  -show window \
-  -theme /home/zen/.config/rofi/window-switcher.rasi \
-  -selected-row 1 \
-  -kb-element-next 'Super+Tab,Tab' \
-  -kb-element-prev 'Super+ISO_Left_Tab,ISO_Left_Tab' \
-  -kb-accept-entry '!Super_L,!Super_R,Control+j,Control+m,Return,KP_Enter'
+clients=$(hyprctl -j clients 2>/dev/null) || exit 1
+
+selected_index=$(
+  printf '%s\n' "$clients" | jq -rj '
+    sort_by(
+      if (.focusHistoryID // -1) < 0
+      then 2147483647
+      else .focusHistoryID
+      end
+    )[] |
+    (.title // "" | gsub("[\\n\\r\\t]"; " ")) as $title |
+    (.class // "" | gsub("[\\n\\r\\t]"; " ")) as $class |
+    (.workspace.name // "" | gsub("[\\n\\r\\t]"; " ")) as $workspace |
+    "\($title) — \($class)" +
+    "\u0000icon\u001f\($class)" +
+    "\u001fmeta\u001f\($class) \($workspace)" +
+    "\u001factive\u001f\((.focusHistoryID // -1) == 0)" +
+    "\u001furgent\u001f\(.urgent // false)\n"
+  ' | rofi \
+    -dmenu \
+    -p win \
+    -format i \
+    -no-custom \
+    -theme /home/zen/.config/rofi/window-switcher.rasi \
+    -selected-row 1 \
+    -no-sort \
+    -kb-element-next 'Super+Tab,Tab' \
+    -kb-element-prev 'Super+ISO_Left_Tab,ISO_Left_Tab' \
+    -kb-accept-entry '!Super_L,!Super_R,Control+j,Control+m,Return,KP_Enter'
+)
+rofi_status=$?
+[ "$rofi_status" -eq 0 ] || exit 0
+
+address=$(
+  printf '%s\n' "$clients" | jq -r --argjson index "$selected_index" '
+    sort_by(
+      if (.focusHistoryID // -1) < 0
+      then 2147483647
+      else .focusHistoryID
+      end
+    )[$index].address
+  '
+) || exit 1
+
+if [ -n "$address" ]; then
+  hyprctl dispatch "hl.dsp.focus({ window = \"address:${address}\" })" >/dev/null 2>&1
+fi

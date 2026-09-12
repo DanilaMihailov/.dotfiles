@@ -57,7 +57,7 @@ run_action() {
 
 case "${ROFI_RETV:-0}" in
   0)
-    printf '\0prompt\x1factions\n'
+    printf '\0prompt\x1fact\n'
     printf '\0no-custom\x1ftrue\n'
     list_actions
     ;;

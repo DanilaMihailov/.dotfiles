@@ -1,0 +1,13 @@
+# Open documents fitted to the window width.
+set adjust-open width
+set selection-clipboard clipboard
+set window-title-home-tilde true
+set statusbar-home-tilde true
+# set font "JetBrainsMono Nerd Font 10"
+
+# Gruvbox dark document recoloring. Ctrl+r toggles it per document.
+set recolor true
+set recolor-lightcolor "#282828"
+set recolor-darkcolor "#ebdbb2"
+set recolor-keephue true
+set recolor-reverse-video true

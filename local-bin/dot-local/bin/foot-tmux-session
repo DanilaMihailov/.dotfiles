@@ -14,10 +14,37 @@ if [ "$#" -eq 0 ]; then
 fi
 
 # Terminal=true desktop entries bypass the interactive Zsh hooks that normally
-# set this title and export the user's shell environment. Load only the shared
-# environment file, then replace Zsh with the requested application.
+# set this title and export the user's shell environment. Look through an
+# `env --chdir=… command` launcher so the initial title describes the actual
+# working directory and application rather than the outer `env` process.
+initial_directory=$PWD
 application=${1##*/}
-pane_title="$PWD | $application"
+if [ "$application" = "env" ]; then
+  find_application=false
+  for argument do
+    if [ "$find_application" = true ]; then
+      application=${argument##*/}
+      break
+    fi
+    case $argument in
+      env|*/env)
+        ;;
+      --chdir=*)
+        initial_directory=${argument#--chdir=}
+        ;;
+      --)
+        find_application=true
+        ;;
+      -*|*=*)
+        ;;
+      *)
+        application=${argument##*/}
+        break
+        ;;
+    esac
+  done
+fi
+pane_title="$initial_directory | $application"
 
 exec tmux new-session -s "$session_name" zsh -lc '
   source "$HOME/.config/zsh/environment.zsh"

@@ -23,6 +23,7 @@ selected_index=$(
     -p win \
     -format i \
     -no-custom \
+    -show-icons \
     -theme /home/zen/.config/rofi/window-switcher.rasi \
     -selected-row 1 \
     -no-sort \

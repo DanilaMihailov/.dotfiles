@@ -11,7 +11,7 @@ Categories=Utility;TextEditor;Development;
 Keywords=Text;editor;nvim;vim;dotfiles;config;configuration;
 Actions=Dotfiles;
 StartupNotify=false
-MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+MimeType=text/english;text/plain;text/markdown;text/yaml;application/json;application/yaml;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
 
 [Desktop Action Dotfiles]
 Name=Dotfiles

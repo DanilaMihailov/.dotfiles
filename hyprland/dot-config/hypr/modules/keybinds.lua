@@ -1,6 +1,5 @@
 return function(programs)
     local terminal = programs.terminal
-    local fileManager = programs.file_manager
     local menu = programs.menu
 
 ---------------------
@@ -14,7 +13,13 @@ hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(
+  mainMod .. " + E",
+  hl.dsp.exec_cmd(
+    "pkill -x rofi || rofi -show filebrowser -show-icons " ..
+    "-theme /home/zen/.config/rofi/filebrowser.rasi"
+  )
+)
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill -x rofi || rofi -show drun"))
 hl.bind("CTRL + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))

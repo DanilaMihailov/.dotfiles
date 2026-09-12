@@ -21,6 +21,9 @@ configuration {
     case-smart: true;
     disable-history: false;
     max-history-size: 30;
+    filebrowser {
+        command: "/home/zen/.local/bin/rofi-file-opener";
+    }
     // display-drun: "❯";
 }
 

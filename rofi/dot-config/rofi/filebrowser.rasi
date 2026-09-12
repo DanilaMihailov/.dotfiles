@@ -1,0 +1,8 @@
+@theme "/home/zen/.config/rofi/hyprland.rasi"
+
+listview {
+    require-input: false;
+    lines: 12;
+    dynamic: true;
+    fixed-height: false;
+}

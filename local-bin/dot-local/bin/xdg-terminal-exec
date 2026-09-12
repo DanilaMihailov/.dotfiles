@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Default terminal bridge used by GLib for Terminal=true desktop entries.
+# Foot's configured shell already uses this wrapper when no command is given.
+if [ "$#" -eq 0 ]; then
+  exec foot
+fi
+
+while [ "$#" -gt 0 ]; do
+  case $1 in
+    --dir=*)
+      cd -- "${1#--dir=}" || exit 1
+      shift
+      ;;
+    --app-id=*|--title=*|--hold)
+      shift
+      ;;
+    -e|--)
+      shift
+      break
+      ;;
+    -*)
+      shift
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+exec foot -e /home/zen/.local/bin/foot-tmux-session "$@"

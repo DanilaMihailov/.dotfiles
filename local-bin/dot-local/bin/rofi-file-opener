@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Rofi is started directly by Hyprland and does not inherit the interactive
+# Zsh PATH. Ensure GLib can discover our default-terminal bridge.
+PATH="/home/zen/.local/bin:/usr/local/bin:/usr/bin${PATH:+:$PATH}"
+export PATH
+
+[ "$#" -gt 0 ] || exit 1
+
+mime_type=$(xdg-mime query filetype "$1") || exit 1
+desktop_id=$(xdg-mime query default "$mime_type") || exit 1
+
+for applications_dir in \
+  /home/zen/.local/share/applications \
+  /usr/local/share/applications \
+  /usr/share/applications
+do
+  desktop_file=$applications_dir/$desktop_id
+  if [ -f "$desktop_file" ]; then
+    exec gio launch "$desktop_file" "$@"
+  fi
+done
+
+# Retain xdg-open as a fallback for uncommon handlers that do not resolve to a
+# desktop file in the standard application directories.
+exec /usr/bin/xdg-open "$@"

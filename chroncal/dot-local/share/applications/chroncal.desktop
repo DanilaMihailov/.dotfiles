@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Chroncal
+GenericName=Calendar
+Comment=Manage local and CalDAV calendars in the terminal
+Exec=foot --app-id=chroncal --title=Chroncal chroncal
+TryExec=chroncal
+Icon=chroncal
+Terminal=false
+Categories=Office;Calendar;
+Keywords=calendar;agenda;caldav;events;terminal;tui;
+StartupNotify=true

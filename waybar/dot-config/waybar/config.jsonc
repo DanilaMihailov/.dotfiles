@@ -122,9 +122,12 @@
     "user": true
   },
 
-  "clock": {
-    "format": "{:%a %d %b  %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>"
+  "custom/clock": {
+    "exec": "~/.config/waybar/clock-agenda.sh",
+    "return-type": "json",
+    "interval": 60,
+    "escape": false,
+    "on-click": "foot --app-id=chroncal --title=Chroncal chroncal"
   },
 
   "network": {
@@ -288,7 +291,7 @@
 
   "group/clock-notifications": {
     "orientation": "horizontal",
-    "modules": ["clock", "custom/notifications"]
+    "modules": ["custom/clock", "custom/notifications"]
   },
 
   "custom/notifications": {

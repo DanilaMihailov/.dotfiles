@@ -1,0 +1,16 @@
+[ui]
+# Follow Foot's Gruvbox ANSI palette for text, surfaces, and borders.
+theme = "system"
+week_start = "monday"
+
+[sync]
+interval = "5m"
+conflict_strategy = "prompt"
+http_timeout = "5m"
+
+[soft_delete]
+purge_days = 30
+
+[security]
+allow_unsafe_alarm_audio_attach = false
+allow_unsafe_alarm_email_attendees = false

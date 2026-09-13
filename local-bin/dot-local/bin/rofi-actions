@@ -46,9 +46,9 @@ run_action() {
     poweroff) hyprshutdown -t 'Shutting down…' -p 'systemctl poweroff' ;;
     normalize-workspaces) /home/zen/.local/bin/reorder-hypr-workspaces ;;
     restart-waybar) systemctl --user restart waybar.service ;;
-    screenshot-region) flock -n /tmp/hyprshot-region.lock hyprshot -m region ;;
-    screenshot-window) flock -n /tmp/hyprshot-window.lock hyprshot -m window ;;
-    screenshot-fullscreen) flock -n /tmp/hyprshot-fullscreen.lock hyprshot -m output -m active ;;
+    screenshot-region) flock --close --nonblock /tmp/hyprshot-region.lock hyprshot -m region ;;
+    screenshot-window) flock --close --nonblock /tmp/hyprshot-window.lock hyprshot -m window ;;
+    screenshot-fullscreen) flock --close --nonblock /tmp/hyprshot-fullscreen.lock hyprshot -m output -m active ;;
     toggle-wireguard) /home/zen/.config/waybar/wireguard-toggle.sh toggle ;;
     toggle-xray) /home/zen/.config/waybar/throne-toggle.sh toggle ;;
     *) return 1 ;;

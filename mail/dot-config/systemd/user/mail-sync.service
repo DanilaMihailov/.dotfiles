@@ -1,0 +1,10 @@
+[Unit]
+Description=Synchronize and index RTLQ mail
+Documentation=man:mbsync(1) man:notmuch-new(1)
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/mail-sync
+TimeoutStartSec=10min
+Nice=10
+IOSchedulingClass=idle

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=aerc
+GenericName=Email Client
+Comment=Read and compose email in the terminal
+Exec=foot --app-id=aerc --title=aerc aerc %u
+Icon=aerc
+Terminal=false
+Categories=Network;Email;
+MimeType=x-scheme-handler/mailto;
+StartupNotify=false
+StartupWMClass=aerc

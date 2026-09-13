@@ -1,0 +1,91 @@
+#!/bin/sh
+set -eu
+umask 077
+
+mode=${1:---dry-run}
+case "$mode" in
+  --dry-run|--execute)
+    ;;
+  *)
+    printf 'usage: mail-archive-read [--dry-run|--execute]\n' >&2
+    exit 2
+    ;;
+esac
+
+account=rtlq
+maildir="$HOME/.local/share/mail/$account"
+inbox_cur="$maildir/cur"
+archive_cur="$maildir/.Archive/cur"
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/mail"
+files_tmp=$(mktemp "${TMPDIR:-/tmp}/mail-archive-read.XXXXXX")
+trap 'rm -f "$files_tmp"' EXIT HUP INT TERM
+
+[ -d "$inbox_cur" ] || {
+  printf 'component=mail-archive-read result=failure reason=inbox-missing\n' >&2
+  exit 1
+}
+[ -d "$archive_cur" ] || {
+  printf 'component=mail-archive-read result=failure reason=archive-missing\n' >&2
+  exit 1
+}
+
+# A notmuch message may have additional copies in Sent or another folder.
+# Search logically, then retain only physical files directly in Inbox/cur.
+notmuch search --output=files \
+  'tag:account-rtlq and folder:rtlq and not tag:unread' |
+while IFS= read -r file; do
+  case "$file" in
+    "$inbox_cur"/*)
+      printf '%s\n' "$file"
+      ;;
+  esac
+done > "$files_tmp"
+
+count=$(wc -l < "$files_tmp")
+count=${count##* }
+
+if [ "$mode" = "--dry-run" ]; then
+  printf 'Read Inbox messages to archive: %s\n' "$count"
+  if [ "$count" -gt 0 ]; then
+    printf 'First files in the batch:\n'
+    sed -n '1,10p' "$files_tmp"
+    if [ "$count" -gt 10 ]; then
+      printf '... and %s more\n' "$((count - 10))"
+    fi
+  fi
+  printf 'Run mail-archive-read --execute to move this batch locally.\n'
+  exit 0
+fi
+
+mkdir -p "$state_dir"
+exec 9>"$state_dir/sync.lock"
+if ! flock -n 9; then
+  printf 'component=mail-archive-read result=failure reason=sync-running\n' >&2
+  exit 1
+fi
+
+# Validate the complete batch before moving the first file.
+while IFS= read -r source_file; do
+  [ -f "$source_file" ] || {
+    printf 'component=mail-archive-read result=failure reason=source-missing file=%s\n' \
+      "$source_file" >&2
+    exit 1
+  }
+  target_file="$archive_cur/${source_file##*/}"
+  [ ! -e "$target_file" ] || {
+    printf 'component=mail-archive-read result=failure reason=target-exists file=%s\n' \
+      "$target_file" >&2
+    exit 1
+  }
+done < "$files_tmp"
+
+moved=0
+while IFS= read -r source_file; do
+  mv -- "$source_file" "$archive_cur/${source_file##*/}"
+  moved=$((moved + 1))
+done < "$files_tmp"
+
+# Refresh local paths and folder tags. Network synchronization remains an
+# explicit follow-up through aerc :check-mail or mail-sync.service.
+notmuch new
+printf 'component=mail-archive-read result=success moved=%s sync=pending\n' "$moved"

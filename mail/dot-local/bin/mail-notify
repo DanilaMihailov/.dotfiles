@@ -1,0 +1,39 @@
+#!/bin/sh
+set -eu
+umask 077
+
+account=rtlq
+mode=${1:-}
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/mail/notifications"
+mkdir -p "$state_dir"
+
+pending_query="tag:notification-pending and tag:account-rtlq"
+
+if [ "$mode" = "--seed" ]; then
+  notmuch tag -notification-pending -- "$pending_query"
+  printf 'component=mail-notify account=%s result=seeded\n' "$account"
+  exit 0
+fi
+
+messages_tmp="$state_dir/.$account.messages.$$"
+trap 'rm -f "$messages_tmp"' EXIT HUP INT TERM
+notmuch search --output=messages "$pending_query" > "$messages_tmp"
+
+notification_count=0
+while IFS= read -r message_query; do
+  [ -n "$message_query" ] || continue
+
+  if [ "$(notmuch count "$message_query and tag:inbox and tag:unread")" -gt 0 ]; then
+    notification_count=$((notification_count + 1))
+    systemd-run --user --collect --quiet \
+      --unit="mail-notification-$$-$notification_count" \
+      "$HOME/.local/bin/mail-notification" "$message_query"
+  fi
+
+  # Clear only messages captured in this batch. Anything indexed concurrently
+  # retains its marker for the next run.
+  notmuch tag -notification-pending -- "$message_query"
+done < "$messages_tmp"
+
+printf 'component=mail-notify account=%s result=success notifications=%s\n' \
+  "$account" "$notification_count"

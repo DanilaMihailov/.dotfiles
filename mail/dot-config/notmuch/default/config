@@ -1,0 +1,18 @@
+[database]
+path=.local/share/mail
+
+[user]
+name=Данила Михайлов
+primary_email=mihd@rtlq.ru
+
+[new]
+# notification-pending is a local queue marker. mail-notify removes it after
+# evaluating each newly indexed message; it is never synchronized to IMAP.
+tags=unread;notification-pending
+ignore=.uidvalidity;.mbsyncstate
+
+[search]
+exclude_tags=deleted;spam
+
+[maildir]
+synchronize_flags=true

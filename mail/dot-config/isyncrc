@@ -1,0 +1,26 @@
+# mihd@rtlq.ru: IMAP to local Maildir synchronization.
+# The password stays in gopass; only its entry name is stored here.
+IMAPAccount rtlq
+Host mail.rtlq.ru
+Port 993
+User mihd@rtlq.ru
+PassCmd "gopass show --password mail.rtlq.ru/mihd"
+TLSType IMAPS
+
+IMAPStore rtlq-remote
+Account rtlq
+
+MaildirStore rtlq-local
+Inbox ~/.local/share/mail/rtlq/
+SubFolders Maildir++
+
+Channel rtlq
+Far :rtlq-remote:
+Near :rtlq-local:
+Patterns INBOX *
+Create Near
+Remove None
+Expunge None
+Sync All
+CopyArrivalDate yes
+SyncState *

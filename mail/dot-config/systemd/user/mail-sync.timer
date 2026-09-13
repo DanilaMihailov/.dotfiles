@@ -1,0 +1,12 @@
+[Unit]
+Description=Periodic fallback synchronization for RTLQ mail
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=5min
+RandomizedDelaySec=30s
+Persistent=true
+Unit=mail-sync.service
+
+[Install]
+WantedBy=timers.target

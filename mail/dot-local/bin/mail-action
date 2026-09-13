@@ -1,0 +1,54 @@
+#!/bin/sh
+set -eu
+umask 077
+
+action=${1:?missing mail action}
+message_query=${2:?missing notmuch message query}
+maildir="$HOME/.local/share/mail/rtlq"
+
+case "$action" in
+  trash)
+    files_tmp=$(mktemp "${TMPDIR:-/tmp}/mail-action.XXXXXX")
+    trap 'rm -f "$files_tmp"' EXIT HUP INT TERM
+    notmuch search --output=files "$message_query and folder:rtlq" > "$files_tmp"
+
+    moved=0
+    while IFS= read -r source_file; do
+      case "$source_file" in
+        "$maildir"/cur/*)
+          target_dir="$maildir/.Trash/cur"
+          ;;
+        "$maildir"/new/*)
+          target_dir="$maildir/.Trash/new"
+          ;;
+        *)
+          # A notmuch message can have copies in several folders. Move only
+          # the physical Inbox copy and preserve Sent/Archive copies.
+          continue
+          ;;
+      esac
+
+      target_file="$target_dir/${source_file##*/}"
+      if [ -e "$target_file" ]; then
+        printf 'component=mail-action action=trash result=failure reason=target-exists\n' >&2
+        exit 1
+      fi
+
+      mv -- "$source_file" "$target_file"
+      moved=$((moved + 1))
+    done < "$files_tmp"
+
+    if [ "$moved" -eq 0 ]; then
+      printf 'component=mail-action action=trash result=failure reason=no-inbox-file\n' >&2
+      exit 1
+    fi
+
+    systemctl --user start mail-sync.service
+    printf 'component=mail-action action=trash result=success files=%s\n' "$moved"
+    ;;
+  *)
+    printf 'component=mail-action action=%s result=failure reason=unknown-action\n' \
+      "$action" >&2
+    exit 2
+    ;;
+esac

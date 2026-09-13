@@ -1,0 +1,38 @@
+#!/bin/sh
+set -eu
+
+account=rtlq
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/mail"
+lock_file="$state_dir/sync.lock"
+success_file="$state_dir/$account.last-success"
+started_at=$(date +%s)
+
+mkdir -p "$state_dir"
+
+# IDLE, timer, manual, and notification-triggered syncs all share this lock.
+exec 9>"$lock_file"
+if ! flock -n 9; then
+  printf 'component=mail-sync account=%s result=skipped reason=already-running\n' "$account"
+  exit 0
+fi
+
+finish() {
+  result=$?
+  finished_at=$(date +%s)
+  duration=$((finished_at - started_at))
+
+  if [ "$result" -eq 0 ]; then
+    date --iso-8601=seconds > "$success_file"
+    printf 'component=mail-sync account=%s duration_seconds=%s result=success\n' \
+      "$account" "$duration"
+  else
+    printf 'component=mail-sync account=%s duration_seconds=%s result=failure exit_code=%s\n' \
+      "$account" "$duration" "$result" >&2
+  fi
+}
+trap finish EXIT
+
+printf 'component=mail-sync account=%s result=started\n' "$account"
+mbsync "$account"
+notmuch new
+"$HOME/.local/bin/mail-notify"

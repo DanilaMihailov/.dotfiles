@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+# Keep account identity separate from folder state. This makes queries work
+# across multiple Maildirs when more accounts are added later.
+notmuch tag +account-rtlq -- 'path:rtlq/**'
+
+# With Maildir++, the account root itself is INBOX. Other folders live below
+# it (for example rtlq/.Sent), so only the root receives the inbox tag.
+notmuch tag +inbox -- 'tag:account-rtlq and folder:rtlq'
+notmuch tag -inbox -- 'tag:account-rtlq and not folder:rtlq'

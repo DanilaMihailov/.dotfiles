@@ -1,0 +1,24 @@
+[buffer]
+# Keep Chawan's privacy-first defaults: scripting, images, cookies, and
+# referrers remain disabled unless enabled for an individual site later.
+user-style = '''
+html {
+  background-color: #282828;
+  color: #ebdbb2;
+}
+a:link { color: #83a598; }
+a:visited { color: #d3869b; }
+a:focus { color: #282828; background-color: #b8bb26; }
+'''
+
+[display]
+color-mode = "true-color"
+highlight-color = "#b8bb26"
+image-mode = "none"
+
+[external]
+editor = "nvim +%d %s"
+
+[input]
+vi-numeric-prefix = true
+

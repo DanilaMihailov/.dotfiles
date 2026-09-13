@@ -1,5 +1,5 @@
 * {
-  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-family: "JetBrainsMono Nerd Font Propo", sans-serif;
   font-size: 10px;
   min-height: 0;
 }
@@ -34,8 +34,7 @@ window#waybar {
 #power-status,
 #privacy,
 #systemd-failed-units,
-#custom-mattermost,
-#tray {
+#custom-mattermost {
   background: @bg0;
   border: 1px solid @bg2;
   border-radius: 5px;
@@ -43,51 +42,38 @@ window#waybar {
   padding: 0 10px;
 }
 
+/* All modules within a group share one reset and one 8px gap. */
 #network-status #network,
 #network-status #bluetooth,
 #network-status #custom-wireguard,
-#network-status #custom-throne {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  margin: 0 14px 0 0;
-  padding: 0;
-}
-
-#network-status #custom-throne {
-  margin-right: 0;
-}
-
-#device-controls {
-  padding: 0 7px;
-}
-
+#network-status #custom-throne,
 #device-controls #custom-internal-display,
 #device-controls #custom-game-mode,
 #device-controls #idle_inhibitor,
 #device-controls #backlight,
 #device-controls #language,
-#device-controls #pulseaudio {
+#device-controls #pulseaudio,
+#clock-notifications #clock,
+#clock-notifications #custom-notifications,
+#system-monitor #memory,
+#system-monitor #cpu,
+#system-monitor #temperature,
+#power-status #power-profiles-daemon,
+#power-status #battery {
   background: transparent;
   border: none;
   border-radius: 0;
-  margin: 0 6px 0 0;
+  margin: 0 8px 0 0;
   padding: 0;
 }
 
-#device-controls #pulseaudio {
+/* The final module in each group has no trailing gap. */
+#network-status #custom-throne,
+#device-controls #pulseaudio,
+#clock-notifications #custom-notifications,
+#system-monitor #temperature,
+#power-status #battery {
   margin-right: 0;
-  min-width: 10px;
-  padding-right: 1px;
-}
-
-#device-controls #custom-internal-display {
-  margin-right: 14px;
-}
-
-#device-controls #idle_inhibitor,
-#device-controls #backlight {
-  margin-right: 10px;
 }
 
 /* Icon-only controls need a larger glyph than the bar's compact text. */
@@ -98,52 +84,11 @@ window#waybar {
 #device-controls #custom-internal-display,
 #device-controls #custom-game-mode,
 #device-controls #idle_inhibitor,
-#device-controls #pulseaudio {
-  font-size: 14px;
-}
-
-#device-controls #custom-game-mode {
-  font-size: 14px;
-}
-
-#clock-notifications #clock,
-#clock-notifications #custom-notifications {
-  background: transparent;
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
-#clock-notifications #clock {
-  margin-right: 10px;
-}
-
-#system-monitor #memory,
-#system-monitor #cpu,
-#system-monitor #temperature {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  padding: 0;
-}
-
-#system-monitor #memory,
-#system-monitor #cpu {
-  margin-right: 10px;
-}
-
+#device-controls #pulseaudio,
 #power-status #power-profiles-daemon,
-#power-status #battery {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  padding: 0;
-}
-
-#power-status #power-profiles-daemon {
-  margin-right: 10px;
+#custom-mattermost {
+  font-size: 13px;
+  min-width: 14px;
 }
 
 #workspaces {
@@ -246,9 +191,6 @@ window#waybar {
 
 #custom-mattermost {
   color: @fg1;
-  font-size: 14px;
-  min-width: 14px;
-  padding: 0 8px 0 6px;
 }
 
 #custom-mattermost.channel {

@@ -1,0 +1,98 @@
+#!/usr/bin/python3
+"""Render messages from aerc's mbox pipe as a plain-text conversation."""
+
+from __future__ import annotations
+
+import email
+import email.policy
+import email.utils
+import mailbox
+import os
+import sys
+import tempfile
+from collections.abc import Iterator
+from email.message import Message
+
+
+def plain_parts(message: Message) -> Iterator[str]:
+    """Yield inline text/plain parts without descending into attachments."""
+    if message.get_content_disposition() == "attachment":
+        return
+
+    if message.is_multipart():
+        for part in message.iter_parts():
+            yield from plain_parts(part)
+        return
+
+    if message.get_content_type() != "text/plain":
+        return
+
+    try:
+        content = message.get_content()
+    except (LookupError, UnicodeError):
+        payload = message.get_payload(decode=True) or b""
+        content = payload.decode(message.get_content_charset() or "utf-8", "replace")
+
+    if isinstance(content, str):
+        yield content
+
+
+def sort_date(message: Message) -> float:
+    try:
+        value = email.utils.parsedate_to_datetime(message.get("Date", ""))
+        return value.timestamp()
+    except (TypeError, ValueError, OverflowError):
+        return 0
+
+
+def header(message: Message, name: str) -> str:
+    value = message.get(name)
+    return str(value) if value is not None else ""
+
+
+def render(message: Message) -> str:
+    body = "\n\n".join(part.replace("\r\n", "\n").rstrip() for part in plain_parts(message))
+    if not body:
+        body = "(no text/plain part)"
+
+    lines = [
+        f"From: {header(message, 'From')}",
+        f"Date: {header(message, 'Date')}",
+        f"Subject: {header(message, 'Subject')}",
+        "",
+        body,
+    ]
+    return "\n".join(lines).rstrip()
+
+
+def parse_messages(data: bytes) -> list[Message]:
+    # Multiple messages from aerc use mbox separators. A single one is raw RFC
+    # 5322, so prepend a separator to make both inputs parse the same way.
+    if not data.startswith(b"From "):
+        data = b"From aerc@localhost Thu Jan  1 00:00:00 1970\n" + data
+
+    path = ""
+    try:
+        with tempfile.NamedTemporaryFile(prefix="aerc-thread-", delete=False) as stream:
+            path = stream.name
+            stream.write(data)
+        box = mailbox.mbox(path, factory=lambda value: email.message_from_binary_file(
+            value, policy=email.policy.default
+        ))
+        return list(box)
+    finally:
+        if path:
+            os.unlink(path)
+
+
+def main() -> None:
+    messages = parse_messages(sys.stdin.buffer.read())
+    messages.sort(key=sort_date)
+    separator = "\n\n" + ("─" * 72) + "\n\n"
+    sys.stdout.write(separator.join(render(message) for message in messages))
+    if messages:
+        sys.stdout.write("\n")
+
+
+if __name__ == "__main__":
+    main()

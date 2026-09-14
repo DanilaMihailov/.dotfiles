@@ -128,8 +128,13 @@ hl.bind(mainMod .. " + SHIFT + n", hl.dsp.window.move({ workspace = "m+1" }))
 hl.bind(mainMod .. " + p", hl.dsp.focus({ workspace = "m-1" }))
 hl.bind(mainMod .. " + n", hl.dsp.focus({ workspace = "m+1" }))
 
-hl.bind(mainMod .. " + SHIFT + h",  hl.dsp.layout("consume_or_expel prev"))
-hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("consume_or_expel next"))
+-- Scrolling layout: combine/expel windows
+hl.bind(mainMod .. " + SHIFT + left",  hl.dsp.layout("consume_or_expel prev"))
+hl.bind(mainMod .. " + SHIFT + right", hl.dsp.layout("consume_or_expel next"))
+
+-- Move the current scrolling-layout column without combining windows
+hl.bind(mainMod .. " + SHIFT + h", hl.dsp.layout("swapcol l"))
+hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("swapcol r"))
 
 hl.bind(mainMod .. " + PERIOD", hl.dsp.layout("colresize +conf"))
 hl.bind(mainMod .. " + COMMA", hl.dsp.layout("colresize -conf"))

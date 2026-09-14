@@ -2,26 +2,27 @@
 set -eu
 umask 077
 
-account=rtlq
+accounts="rtlq icloud"
 mode=${1:-}
 state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/mail/notifications"
 mkdir -p "$state_dir"
 
-pending_query="tag:notification-pending and tag:account-rtlq"
+pending_query="tag:notification-pending and (tag:account-rtlq or tag:account-icloud)"
+inbox_query="folder:rtlq or folder:icloud"
 
 if [ "$mode" = "--seed" ]; then
   notmuch tag -notification-pending -- "$pending_query"
-  printf 'component=mail-notify account=%s result=seeded\n' "$account"
+  printf 'component=mail-notify accounts="%s" result=seeded\n' "$accounts"
   exit 0
 fi
 
-messages_tmp="$state_dir/.$account.messages.$$"
-notify_tmp="$state_dir/.$account.notify.$$"
-tags_tmp="$state_dir/.$account.tags.$$"
+messages_tmp="$state_dir/.messages.$$"
+notify_tmp="$state_dir/.notify.$$"
+tags_tmp="$state_dir/.tags.$$"
 trap 'rm -f "$messages_tmp" "$notify_tmp" "$tags_tmp"' EXIT HUP INT TERM
 notmuch search --output=messages "$pending_query" > "$messages_tmp"
 notmuch search --output=messages \
-  "$pending_query and tag:inbox and tag:unread" > "$notify_tmp"
+  "$pending_query and tag:unread and ($inbox_query)" > "$notify_tmp"
 
 notification_count=0
 while IFS= read -r message_query; do
@@ -38,5 +39,5 @@ done < "$notify_tmp"
 sed 's/^/-notification-pending -- /' "$messages_tmp" > "$tags_tmp"
 notmuch tag --batch --input="$tags_tmp"
 
-printf 'component=mail-notify account=%s result=success notifications=%s\n' \
-  "$account" "$notification_count"
+printf 'component=mail-notify accounts="%s" result=success notifications=%s\n' \
+  "$accounts" "$notification_count"

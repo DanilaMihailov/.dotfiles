@@ -1,5 +1,5 @@
 [Unit]
-Description=Watch RTLQ IMAP for changes
+Description=Watch IMAP accounts for mail changes
 Documentation=https://gitlab.com/shackra/goimapnotify
 After=network-online.target
 Wants=network-online.target
@@ -8,7 +8,7 @@ StartLimitBurst=20
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/goimapnotify -conf %h/.config/goimapnotify/rtlq.yaml -wait 2
+ExecStart=/usr/bin/goimapnotify -conf %h/.config/goimapnotify/mail.yaml -wait 2
 Restart=always
 RestartSec=30s
 

@@ -1,5 +1,5 @@
 [Unit]
-Description=Periodic fallback synchronization for RTLQ mail
+Description=Periodic fallback mail synchronization
 
 [Timer]
 OnBootSec=2min

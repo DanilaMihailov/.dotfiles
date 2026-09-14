@@ -24,3 +24,29 @@ Expunge None
 Sync All
 CopyArrivalDate yes
 SyncState *
+
+# danilamihailov@icloud.com: iCloud IMAP connection.
+IMAPAccount icloud
+Host imap.mail.me.com
+Port 993
+User danilamihailov
+PassCmd "gopass show --password apple-app-pwd/mail"
+TLSType IMAPS
+
+IMAPStore icloud-remote
+Account icloud
+
+MaildirStore icloud-local
+Inbox ~/.local/share/mail/icloud/
+SubFolders Maildir++
+
+Channel icloud
+Far :icloud-remote:
+Near :icloud-local:
+Patterns INBOX *
+Create Near
+Remove None
+Expunge None
+Sync All
+CopyArrivalDate yes
+SyncState *

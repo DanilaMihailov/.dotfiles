@@ -4,6 +4,7 @@ set -eu
 # Keep account identity separate from folder state. This makes queries work
 # across multiple Maildirs when more accounts are added later.
 notmuch tag +account-rtlq -- 'path:rtlq/**'
+notmuch tag +account-icloud -- 'path:icloud/**'
 
 # With Maildir++, the account root itself is INBOX. Other folders live below
 # it (for example rtlq/.Sent), so only the root receives the inbox tag.

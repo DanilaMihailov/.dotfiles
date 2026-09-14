@@ -1,0 +1,27 @@
+# One watcher process owns the IDLE connections for every mail account.
+configurations:
+  - host: mail.rtlq.ru
+    port: 993
+    tls: true
+    tlsOptions:
+      starttls: false
+    username: mihd@rtlq.ru
+    passwordCMD: gopass show --password mail.rtlq.ru/mihd
+    boxes:
+      - mailbox: INBOX
+        onNewMail: systemctl --user start mail-sync.service
+        onDeletedMail: systemctl --user start mail-sync.service
+        onUpdatedMail: systemctl --user start mail-sync.service
+
+  - host: imap.mail.me.com
+    port: 993
+    tls: true
+    tlsOptions:
+      starttls: false
+    username: danilamihailov
+    passwordCMD: gopass show --password apple-app-pwd/mail
+    boxes:
+      - mailbox: INBOX
+        onNewMail: systemctl --user start mail-sync.service
+        onDeletedMail: systemctl --user start mail-sync.service
+        onUpdatedMail: systemctl --user start mail-sync.service

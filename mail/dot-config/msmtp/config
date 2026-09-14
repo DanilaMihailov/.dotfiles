@@ -13,4 +13,13 @@ from mihd@rtlq.ru
 user mihd@rtlq.ru
 passwordeval gopass show --password mail.rtlq.ru/mihd < /dev/null
 
+# danilamihailov@icloud.com via SMTP submission with STARTTLS.
+account icloud
+host smtp.mail.me.com
+port 587
+from danilamihailov@icloud.com
+user danilamihailov@icloud.com
+tls_starttls on
+passwordeval gopass show --password apple-app-pwd/mail < /dev/null
+
 account default : rtlq

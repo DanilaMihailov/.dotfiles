@@ -1,38 +1,86 @@
 #!/bin/sh
 set -eu
 
-account=rtlq
+accounts="rtlq icloud"
 state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/mail"
-lock_file="$state_dir/sync.lock"
-success_file="$state_dir/$account.last-success"
+success_file="$state_dir/mail-sync.last-success"
 started_at=$(date +%s)
 
 mkdir -p "$state_dir"
+run_dir=$(mktemp -d "$state_dir/.mail-sync.XXXXXX")
 
-# IDLE, timer, manual, and notification-triggered syncs all share this lock.
-exec 9>"$lock_file"
-if ! flock -n 9; then
-  printf 'component=mail-sync account=%s result=skipped reason=already-running\n' "$account"
+cleanup() {
+  for account in $accounts; do
+    rm -f "$run_dir/$account.log" "$run_dir/$account.status"
+  done
+  rmdir "$run_dir"
+}
+trap cleanup EXIT
+trap 'exit 1' HUP INT TERM
+
+sync_account() {
+  account=$1
+  account_started_at=$(date +%s)
+
+  if mbsync "$account" > "$run_dir/$account.log" 2>&1; then
+    status=0
+  else
+    status=$?
+  fi
+
+  account_finished_at=$(date +%s)
+  printf '%s %s\n' "$status" "$((account_finished_at - account_started_at))" \
+    > "$run_dir/$account.status"
+}
+
+printf 'component=mail-sync result=started accounts="%s"\n' "$accounts"
+
+for account in $accounts; do
+  printf 'component=mbsync account=%s result=started\n' "$account"
+  sync_account "$account" &
+done
+wait
+
+failures=0
+for account in $accounts; do
+  cat "$run_dir/$account.log"
+  read -r status duration < "$run_dir/$account.status"
+
+  if [ "$status" -eq 0 ]; then
+    printf 'component=mbsync account=%s duration_seconds=%s result=success\n' \
+      "$account" "$duration"
+  else
+    failures=$((failures + 1))
+    printf 'component=mbsync account=%s duration_seconds=%s result=failure exit_code=%s\n' \
+      "$account" "$duration" "$status" >&2
+  fi
+done
+
+if notmuch new; then
+  printf 'component=notmuch result=success\n'
+else
+  status=$?
+  failures=$((failures + 1))
+  printf 'component=notmuch result=failure exit_code=%s\n' "$status" >&2
+fi
+
+if "$HOME/.local/bin/mail-notify"; then
+  :
+else
+  status=$?
+  failures=$((failures + 1))
+  printf 'component=mail-notify result=failure exit_code=%s\n' "$status" >&2
+fi
+
+finished_at=$(date +%s)
+duration=$((finished_at - started_at))
+
+if [ "$failures" -eq 0 ]; then
+  date --iso-8601=seconds > "$success_file"
+  printf 'component=mail-sync duration_seconds=%s result=success\n' "$duration"
   exit 0
 fi
 
-finish() {
-  result=$?
-  finished_at=$(date +%s)
-  duration=$((finished_at - started_at))
-
-  if [ "$result" -eq 0 ]; then
-    date --iso-8601=seconds > "$success_file"
-    printf 'component=mail-sync account=%s duration_seconds=%s result=success\n' \
-      "$account" "$duration"
-  else
-    printf 'component=mail-sync account=%s duration_seconds=%s result=failure exit_code=%s\n' \
-      "$account" "$duration" "$result" >&2
-  fi
-}
-trap finish EXIT
-
-printf 'component=mail-sync account=%s result=started\n' "$account"
-mbsync "$account"
-notmuch new
-"$HOME/.local/bin/mail-notify"
+printf 'component=mail-sync duration_seconds=%s result=partial-failure failures=%s\n' \
+  "$duration" "$failures" >&2
+exit 1

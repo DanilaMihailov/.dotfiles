@@ -4,6 +4,7 @@ path=.local/share/mail
 [user]
 name=Данила Михайлов
 primary_email=mihd@rtlq.ru
+other_email=danilamihailov@icloud.com
 
 [new]
 # notification-pending is a local queue marker. mail-notify removes it after

@@ -1,5 +1,5 @@
 [Unit]
-Description=Synchronize and index RTLQ mail
+Description=Synchronize and index mail
 Documentation=man:mbsync(1) man:notmuch-new(1)
 
 [Service]

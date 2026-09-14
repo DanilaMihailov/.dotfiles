@@ -4,8 +4,12 @@ set -eu
 message_query=${1:?missing notmuch message query}
 message_json=$(notmuch show --format=json --body=false --entire-thread=false "$message_query")
 
-sender=$(printf '%s' "$message_json" | jq -r '.[0][0][0].headers.From // "Unknown sender"' | tr '\r\n' '  ' | cut -c 1-160)
-subject=$(printf '%s' "$message_json" | jq -r '.[0][0][0].headers.Subject // "(no subject)"' | tr '\r\n' '  ' | cut -c 1-240)
+sender=$(printf '%s' "$message_json" | jq -r \
+  '[.. | objects | select(.match == true and has("headers")) | .headers.From][0] // "Unknown sender"' |
+  tr '\r\n' '  ' | cut -c 1-160)
+subject=$(printf '%s' "$message_json" | jq -r \
+  '[.. | objects | select(.match == true and has("headers")) | .headers.Subject][0] // "(no subject)"' |
+  tr '\r\n' '  ' | cut -c 1-240)
 
 action=$(notify-send \
   --app-name=aerc \

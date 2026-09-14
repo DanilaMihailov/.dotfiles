@@ -20,6 +20,12 @@ state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/mail"
 files_tmp=$(mktemp "${TMPDIR:-/tmp}/mail-archive-read.XXXXXX")
 trap 'rm -f "$files_tmp"' EXIT HUP INT TERM
 
+archive_name() {
+  # mbsync's U value belongs to the source folder's UID namespace. Keeping it
+  # after a cross-folder move can collide with an unrelated Archive UID.
+  printf '%s\n' "${1##*/}" | sed 's/,U=[0-9][0-9]*\(:2,\)/\1/'
+}
+
 [ -d "$inbox_cur" ] || {
   printf 'component=mail-archive-read result=failure reason=inbox-missing\n' >&2
   exit 1
@@ -71,7 +77,7 @@ while IFS= read -r source_file; do
       "$source_file" >&2
     exit 1
   }
-  target_file="$archive_cur/${source_file##*/}"
+  target_file="$archive_cur/$(archive_name "$source_file")"
   [ ! -e "$target_file" ] || {
     printf 'component=mail-archive-read result=failure reason=target-exists file=%s\n' \
       "$target_file" >&2
@@ -81,7 +87,7 @@ done < "$files_tmp"
 
 moved=0
 while IFS= read -r source_file; do
-  mv -- "$source_file" "$archive_cur/${source_file##*/}"
+  mv -- "$source_file" "$archive_cur/$(archive_name "$source_file")"
   moved=$((moved + 1))
 done < "$files_tmp"
 

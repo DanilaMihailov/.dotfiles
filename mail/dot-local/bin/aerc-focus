@@ -17,5 +17,6 @@ if [ -n "$window_address" ]; then
   fi
   hyprctl dispatch "hl.dsp.focus({ window = \"address:$window_address\" })"
 else
-  foot --app-id=aerc --title=aerc aerc
+  foot --app-id=aerc --title=aerc -e \
+    "$HOME/.local/bin/foot-tmux-session" aerc
 fi

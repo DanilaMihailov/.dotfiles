@@ -34,7 +34,7 @@ local function running_in_linux_tty()
     return true
   end
 
-  if vim.env.TMUX then
+  if vim.env.TMUX and vim.fn.executable 'tmux' == 1 then
     local tty = vim.fn.system {
       'tmux',
       'display-message',

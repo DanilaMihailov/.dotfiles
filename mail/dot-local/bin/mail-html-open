@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+"""Extract an email's HTML alternative from stdin and open it in Chawan."""
+
+import email.policy
+import os
+import subprocess
+import sys
+import tempfile
+from email.parser import BytesParser
+
+
+message = BytesParser(policy=email.policy.default).parse(sys.stdin.buffer)
+part = message.get_body(preferencelist=("html",))
+
+if part is None:
+  subprocess.run(
+    ["notify-send", "aerc", "This message has no HTML alternative"],
+    check=False,
+  )
+  raise SystemExit(1)
+
+html = part.get_content()
+with tempfile.NamedTemporaryFile(
+  mode="w",
+  encoding=part.get_content_charset() or "utf-8",
+  suffix=".html",
+  delete=False,
+) as temporary:
+  temporary.write(html)
+  path = temporary.name
+
+environment = os.environ.copy()
+environment.pop("TMUX", None)
+
+try:
+  raise SystemExit(
+    subprocess.run(
+      [
+        "foot",
+        "--app-id=cha",
+        "--title=Chawan",
+        "cha",
+        "--config",
+        os.path.expanduser("~/.config/chawan/email.toml"),
+        "--type",
+        "text/html",
+        path,
+      ],
+      env=environment,
+      check=False,
+    ).returncode
+  )
+finally:
+  os.unlink(path)

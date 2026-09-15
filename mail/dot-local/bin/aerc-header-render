@@ -39,6 +39,18 @@ function format_date(raw, command, formatted) {
 	return fallback_date(raw)
 }
 
+function format_addresses(raw, rendered, address) {
+	while (match(raw, /<[^<>]+>/)) {
+		rendered = rendered substr(raw, 1, RSTART) blue
+		address = substr(raw, RSTART + 1, RLENGTH - 2)
+		rendered = rendered address reset ">"
+		raw = substr(raw, RSTART + RLENGTH)
+	}
+	if (rendered == "" && raw ~ /^[^[:space:]<>]+@[^[:space:]<>]+$/)
+		return blue raw reset
+	return rendered raw
+}
+
 {
 	name = tolower(substr($0, 1, index($0, ":") - 1))
 	if (name == "from" && from == "")
@@ -53,15 +65,15 @@ function format_date(raw, command, formatted) {
 
 END {
 	blue = "\033[38;2;131;165;152m"
-	muted = "\033[2;38;2;146;131;116m"
+	arrow_color = "\033[1;38;2;146;131;116m"
 	date_color = "\033[1;38;2;146;131;116m"
 	subject_color = "\033[1;38;2;189;174;147m"
 	reset = "\033[0m"
 
-	printf "%s%s%s", blue, from, reset
+	printf "%s", format_addresses(from)
 	if (from != "" && to != "")
-		printf " %s→%s ", muted, reset
-	printf "%s%s%s", blue, to, reset
+		printf " %s⟶%s ", arrow_color, reset
+	printf "%s", format_addresses(to)
 	if (date != "")
 		printf "   %s%s%s", date_color, date, reset
 	printf "\n%s%s%s\n\n", subject_color, subject, reset

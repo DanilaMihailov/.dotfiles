@@ -4,7 +4,7 @@
 *.default=true
 *.normal=true
 
-border.fg=#98971a
+border.fg=#9c9276
 border.bold=true
 title.bg=#3c3836
 title.fg=#b8bb26
@@ -78,6 +78,8 @@ selector_focused.bold=true
 [user]
 index_dim.fg=#928374
 index_dim.dim=true
+index_flagged.fg=#fabd2f
+index_flagged.bold=true
 index_sender.fg=#83a598
 index_thread.fg=#928374
 index_subject.fg=#bdae93

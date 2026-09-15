@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# Parse and decode the header block once, then format it in one awk pass.
+mhdr -d - 2>/dev/null | awk '
+function value(line) {
+	sub(/^[^:]*:[[:space:]]*/, "", line)
+	gsub(/[\001-\010\013\014\016-\037\177]/, "", line)
+	return line
+}
+
+function fallback_date(raw, fields, n, i, day, month, clock) {
+	sub(/^[^,]*,[[:space:]]*/, "", raw)
+	n = split(raw, fields, /[[:space:]]+/)
+	for (i = 1; i <= n; i++) {
+		if (fields[i] ~ /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/) {
+			day = fields[i - 1]
+			month = fields[i]
+			clock = fields[i + 2]
+			sub(/:[0-9][0-9]$/, "", clock)
+			return month " " day ", " clock
+		}
+	}
+	return raw
+}
+
+function shell_quote(text, quote) {
+	quote = sprintf("%c", 39)
+	gsub(quote, quote "\\" quote quote, text)
+	return quote text quote
+}
+
+function format_date(raw, command, formatted) {
+	command = "date -d " shell_quote(raw) " \"+%b %d, %H:%M\""
+	if ((command | getline formatted) > 0) {
+		close(command)
+		return formatted
+	}
+	close(command)
+	return fallback_date(raw)
+}
+
+{
+	name = tolower(substr($0, 1, index($0, ":") - 1))
+	if (name == "from" && from == "")
+		from = value($0)
+	else if (name == "to" && to == "")
+		to = value($0)
+	else if (name == "subject" && subject == "")
+		subject = value($0)
+	else if (name == "date" && date == "")
+		date = format_date(value($0))
+}
+
+END {
+	blue = "\033[38;2;131;165;152m"
+	muted = "\033[2;38;2;146;131;116m"
+	date_color = "\033[1;38;2;146;131;116m"
+	subject_color = "\033[1;38;2;189;174;147m"
+	reset = "\033[0m"
+
+	printf "%s%s%s", blue, from, reset
+	if (from != "" && to != "")
+		printf " %s→%s ", muted, reset
+	printf "%s%s%s", blue, to, reset
+	if (date != "")
+		printf "   %s%s%s", date_color, date, reset
+	printf "\n%s%s%s\n\n", subject_color, subject, reset
+}
+'

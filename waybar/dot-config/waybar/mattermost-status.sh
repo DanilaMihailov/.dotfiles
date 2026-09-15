@@ -22,12 +22,23 @@ property=$(busctl --user get-property \
   ToolTip 2>/dev/null) || property=
 tooltip=$(printf '%s\n' "$property" | sed -n 's/.* 0 "\([^"]*\)" ""$/\1/p')
 
-case $tooltip in
-  *"unread mentions"*) class=private ;;
-  *"unread channels"*) class=channel ;;
-  *) class=idle ;;
+tooltip_lower=$(printf '%s' "$tooltip" | tr '[:upper:]' '[:lower:]')
+
+case $tooltip_lower in
+  *mention*)
+    class=private
+    text='<span letter_spacing="-10000"><span foreground="#fb4934" size="6000" rise="-500">●</span></span><span size="6000"> </span>'
+    ;;
+  *"unread channel"*)
+    class=channel
+    text='<span letter_spacing="-10000"><span foreground="#83a598" size="6000" rise="-500">●</span></span><span size="6000"> </span>'
+    ;;
+  *)
+    class=idle
+    text=''
+    ;;
 esac
 
 [ -n "$tooltip" ] || tooltip=Mattermost
-jq -cn --arg class "$class" --arg tooltip "$tooltip" \
-  '{text:"", class:$class, tooltip:$tooltip}'
+jq -cn --arg text "$text" --arg class "$class" --arg tooltip "$tooltip" \
+  '{text:$text, class:$class, tooltip:$tooltip}'

@@ -319,6 +319,7 @@
   "custom/mattermost": {
     "exec": "~/.config/waybar/mattermost-status.sh",
     "return-type": "json",
+    "escape": false,
     "hide-empty-text": true,
     "interval": 2,
     "on-click": "hyprctl dispatch focuswindow class:^Mattermost.Desktop$"

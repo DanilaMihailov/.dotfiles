@@ -193,14 +193,6 @@ window#waybar {
   color: @fg1;
 }
 
-#custom-mattermost.channel {
-  color: @blue;
-}
-
-#custom-mattermost.private {
-  color: @red;
-}
-
 #network {
   color: @fg1;
 }

@@ -1,0 +1,40 @@
+# Local-first RTLQ account. mbsync owns network synchronization; aerc reads
+# the local Maildir++ store directly; msmtp handles outgoing mail.
+[RTLQ]
+source = maildirpp://~/.local/share/mail/rtlq
+
+from = Данила Михайлов <mihd@rtlq.ru>
+outgoing = /usr/bin/msmtp
+
+default = INBOX
+copy-to = Sent
+postpone = Drafts
+archive = Archive
+folders-sort = INBOX,Sent,Drafts,Archive,Junk,Trash
+restrict-delete = true
+
+# Background synchronization remains owned by systemd/goimapnotify. A manual
+# :check-mail in aerc starts the same serialized sync pipeline; aerc does not
+# add its own polling timer.
+check-mail = 0
+check-mail-cmd = systemctl --user start mail-sync.service
+check-mail-timeout = 2m
+
+# Local-first iCloud account. aerc reads its local Maildir++ store directly;
+# its transport is selected explicitly in msmtp.
+[iCloud]
+source = maildirpp://~/.local/share/mail/icloud
+
+from = Данила Михайлов <danilamihailov@icloud.com>
+outgoing = /usr/bin/msmtp --account=icloud
+
+default = INBOX
+copy-to = Sent Messages
+postpone = Drafts
+archive = Archive
+folders-sort = INBOX,Sent Messages,Drafts,Archive,Junk,Deleted Messages,Trash,Sent,Notes
+restrict-delete = true
+
+check-mail = 0
+check-mail-cmd = systemctl --user start mail-sync.service
+check-mail-timeout = 2m

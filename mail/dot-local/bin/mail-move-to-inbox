@@ -1,0 +1,99 @@
+#!/bin/sh
+
+set -eu
+
+notify() {
+  message=$1
+  aerc ":echo $message" >/dev/null 2>&1 || printf '%s\n' "$message"
+}
+
+fail() {
+  notify "Move to Inbox failed [1]: $1"
+  # The reason is already visible in aerc. Avoid replacing it with the generic
+  # background-pipe "exit status 1" message.
+  exit 0
+}
+
+input=$(mktemp)
+matches=$(mktemp)
+trap 'rm -f "$input" "$matches"' EXIT HUP INT TERM
+
+tee "$input" >/dev/null
+
+# aerc emits mbox separators when multiple marked messages are piped.
+if [ "$(grep -c '^From ' "$input" || :)" -gt 1 ]; then
+  fail "select exactly one message"
+fi
+
+message_id=$(mhdr -h message-id "$input" 2>/dev/null | sed -n '1{s/^[[:space:]]*<//;s/>[[:space:]]*$//;p;}')
+if [ -z "$message_id" ]; then
+  fail "message has no Message-ID"
+fi
+
+# Quote characters that are significant inside a Notmuch quoted term.
+query_id=$(printf '%s' "$message_id" | sed 's/\\/\\\\/g; s/"/\\"/g')
+mail_root=${XDG_DATA_HOME:-"$HOME/.local/share"}/mail
+
+# Native Maildir moves may have happened since the last database update.
+if ! refresh_error=$(notmuch new 2>&1); then
+  fail "Notmuch refresh failed: $(printf '%s\n' "$refresh_error" | sed -n '1p')"
+fi
+
+notmuch search --output=files "id:\"$query_id\"" | while IFS= read -r path; do
+  case "$path" in
+    "$mail_root"/rtlq/.Archive/cur/*|"$mail_root"/rtlq/.Archive/new/*|\
+    "$mail_root"/rtlq/.Trash/cur/*|"$mail_root"/rtlq/.Trash/new/*|\
+    "$mail_root"/icloud/.Archive/cur/*|"$mail_root"/icloud/.Archive/new/*|\
+    "$mail_root"/icloud/.Deleted\ Messages/cur/*|"$mail_root"/icloud/.Deleted\ Messages/new/*)
+      printf '%s\n' "$path"
+      ;;
+  esac
+done > "$matches"
+
+count=$(wc -l < "$matches")
+if [ "$count" -ne 1 ]; then
+  fail "expected one Archive/Trash copy, found $count"
+fi
+
+path=$(sed -n '1p' "$matches")
+case "$path" in
+  "$mail_root"/rtlq/.Archive/*)
+    account=rtlq
+    source=archive
+    ;;
+  "$mail_root"/rtlq/.Trash/*)
+    account=rtlq
+    source=trash
+    ;;
+  "$mail_root"/icloud/.Archive/*)
+    account=icloud
+    source=archive
+    ;;
+  "$mail_root"/icloud/.Deleted\ Messages/*)
+    account=icloud
+    source=trash
+    ;;
+  *)
+    fail "unsupported source path: $path"
+    ;;
+esac
+
+filename=${path##*/}
+maildir_id=${filename%%:2,*}
+
+if [ "${1:-}" = "--dry-run" ]; then
+  printf 'Would move <%s> from %s/%s to Inbox (Maildir ID: %s)\n' \
+    "$message_id" "$account" "$source" "$maildir_id"
+  exit 0
+fi
+
+if ! move_error=$(himalaya --account "$account" --backend maildir \
+  message move --from "$source" --to inbox "$maildir_id" 2>&1); then
+  fail "Himalaya move failed: $(printf '%s\n' "$move_error" | sed -n '1p')"
+fi
+notify "Moved $account/$source → Inbox"
+
+if ! refresh_error=$(notmuch new 2>&1); then
+  fail "message moved, but Notmuch refresh failed: $(printf '%s\n' "$refresh_error" | sed -n '1p')"
+fi
+notify "Notmuch index updated"

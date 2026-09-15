@@ -1,0 +1,20 @@
+display-name = "Данила Михайлов"
+
+[accounts.rtlq]
+default = true
+email = "mihd@rtlq.ru"
+maildir.root = "/home/zen/.local/share/mail/rtlq"
+mailbox.alias.inbox = "/home/zen/.local/share/mail/rtlq"
+mailbox.alias.archive = "/home/zen/.local/share/mail/rtlq/.Archive"
+mailbox.alias.sent = "/home/zen/.local/share/mail/rtlq/.Sent"
+mailbox.alias.drafts = "/home/zen/.local/share/mail/rtlq/.Drafts"
+mailbox.alias.trash = "/home/zen/.local/share/mail/rtlq/.Trash"
+
+[accounts.icloud]
+email = "danilamihailov@icloud.com"
+maildir.root = "/home/zen/.local/share/mail/icloud"
+mailbox.alias.inbox = "/home/zen/.local/share/mail/icloud"
+mailbox.alias.archive = "/home/zen/.local/share/mail/icloud/.Archive"
+mailbox.alias.sent = "/home/zen/.local/share/mail/icloud/.Sent Messages"
+mailbox.alias.drafts = "/home/zen/.local/share/mail/icloud/.Drafts"
+mailbox.alias.trash = "/home/zen/.local/share/mail/icloud/.Deleted Messages"

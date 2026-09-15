@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Render HTML mail without allowing remote content to phone home.
+set -- cha --dump --type text/html \
+  --css 'html, body { color: #ebdbb2 !important; background-color: #282828 !important; } body * { color: inherit !important; background-color: transparent !important; } body a { color: #83a598 !important; }' \
+  --input-charset UTF-8 --output-charset UTF-8
+
+if command -v unshare >/dev/null 2>&1; then
+  set -- unshare --map-root-user --net "$@"
+fi
+
+exec "$@"

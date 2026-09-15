@@ -1,0 +1,19 @@
+[buffer]
+images = true
+user-style = '''
+html, body {
+  background-color: #ffffff !important;
+  color: #1d2021;
+}
+'''
+
+[display]
+color-mode = "true-color"
+image-mode = "sixel"
+
+[network]
+# The rich email view is explicitly allowed to load remote images.
+allow-http-from-file = true
+
+[input]
+vi-numeric-prefix = true

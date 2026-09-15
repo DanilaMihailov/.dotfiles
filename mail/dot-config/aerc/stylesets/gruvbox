@@ -30,6 +30,7 @@ statusline_error.bg=#cc241d
 statusline_error.fg=#fbf1c7
 
 msglist_unread.bold=true
+msglist_read.dim=true
 msglist_deleted.fg=#928374
 msglist_deleted.dim=true
 msglist_*.selected.bg=#504945

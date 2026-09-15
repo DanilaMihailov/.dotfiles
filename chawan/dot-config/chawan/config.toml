@@ -1,6 +1,7 @@
 [buffer]
-# Keep Chawan's privacy-first defaults: scripting, images, cookies, and
-# referrers remain disabled unless enabled for an individual site later.
+# Keep scripting, cookies, and referrers disabled unless enabled for an
+# individual site. Images are enabled globally for Sixel-capable terminals.
+images = true
 user-style = '''
 html {
   background-color: #282828;
@@ -14,11 +15,10 @@ a:focus { color: #282828; background-color: #b8bb26; }
 [display]
 color-mode = "true-color"
 highlight-color = "#b8bb26"
-image-mode = "none"
+image-mode = "sixel"
 
 [external]
 editor = "nvim +%d %s"
 
 [input]
 vi-numeric-prefix = true
-

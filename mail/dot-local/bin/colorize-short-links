@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Keep colorize's full OSC 8 target while replacing HTTP(S) labels with "link".
+/usr/lib/aerc/filters/colorize -8 "$@" | perl -0pe '
+  s{
+    (\e\]8;[^;]*;)(https?://[^\e]+)(\e\\)
+    (.*?)
+    (\e\]8;;\e\\)
+  }{
+    my ($prefix, $url, $separator, $text, $suffix) =
+      ($1, $2, $3, $4, $5);
+    my $label = $text eq $url ? "link" : $text;
+    $prefix . $url . $separator . $label . $suffix;
+  }gsex;
+'

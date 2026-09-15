@@ -1,0 +1,55 @@
+# RTLQ uses the local Maildir++ store maintained by mbsync.
+set mbox_type = Maildir
+
+set folder     = "~/.local/share/mail/rtlq"
+set spool_file = "~/.local/share/mail/rtlq"
+
+set from      = "mihd@rtlq.ru"
+set real_name = "Данила Михайлов"
+set use_from  = yes
+
+# Outgoing mail is handled by the existing default msmtp account.
+set sendmail          = "/usr/bin/msmtp"
+set use_envelope_from = yes
+
+set record    = "+.Sent"
+set postponed = "+.Drafts"
+set trash     = "+.Trash"
+
+# Prefer plain text; render HTML through Chawan only when it is the best
+# available alternative.
+set mailcap_path = "~/.config/neomutt/mailcap"
+set allow_ansi = yes
+auto_view text/html
+alternative_order text/plain text/html
+
+# Keep a small portion of the message index visible above the pager.
+set pager_index_lines = 7
+# Treat the pager as a preview; normal viewing should not mark mail as read.
+set pager_read_delay = 32767
+
+# Build threads from message headers and order them by newest activity.
+set sort     = threads
+set sort_aux = reverse-last-date-received
+
+# Compact aerc-like index: state icons, sender, threaded subject, and date.
+# There is deliberately no %C message-number field.
+index-format-hook attachment "~X 1-" " "
+index-format-hook attachment "~A" ""
+index-format-hook replied    "~Q" " "
+index-format-hook replied    "~A" ""
+index-format-hook flagged    "~F" " "
+index-format-hook flagged    "~A" ""
+index-format-hook deleted    "~D" " "
+index-format-hook deleted    "~A" ""
+set index_format = " %@attachment@%@replied@%@flagged@%@deleted@%-20.20F %s%*  %[%b %d] "
+
+mailboxes \
+  "~/.local/share/mail/rtlq" \
+  "+.Sent" \
+  "+.Drafts" \
+  "+.Archive" \
+  "+.Junk" \
+  "+.Trash"
+
+source "~/.config/neomutt/colors/gruvbox.neomuttrc"

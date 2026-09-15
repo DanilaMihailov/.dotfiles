@@ -1,0 +1,2 @@
+# Render HTML as terminal text without allowing remote network access.
+text/html; ~/.local/bin/html-cha < %s; copiousoutput

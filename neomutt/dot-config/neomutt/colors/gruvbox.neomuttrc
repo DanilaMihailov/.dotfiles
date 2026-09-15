@@ -1,0 +1,37 @@
+# Gruvbox Dark, using Foot's configured ANSI palette. Keeping colors in the
+# first 16 slots avoids NeoMutt's optional direct-color mode.
+color normal      color15 color0
+color message     color15 color0
+color indicator   bold color0 color2
+color status      bold color15 color237
+color tree        color8 color0
+color error       bold color9 color0
+color markers     color11 color0
+color tilde       color8 color0
+color search      color0 color3
+color attachment  color12 color0
+color signature   color8 color0
+color bold        bold color15 color0
+color underline   underline color12 color0
+
+# Message index.
+color index       color7 color0 "~A"
+color index       bold color15 color0 "~N"
+color index       bold color15 color0 "~O"
+color index       bold color11 color0 "~F"
+color index       color8 color0 "~D"
+color index       color10 color0 "~T"
+
+# Headers and message body.
+color hdrdefault  color8 color0
+color header      bold color7 color0 "^Subject:"
+color header      color12 color0 "^(From|To|Cc|Bcc|Reply-To):"
+color header      color7 color0 "^Date:"
+color body        color12 color0 "(https?|ftp)://[^[:space:]<>]+"
+color body        color12 color0 "[-+.[:alnum:]_]+@[-.[:alnum:]]+"
+
+# Quote depth.
+color quoted      color14 color0
+color quoted1     color12 color0
+color quoted2     color13 color0
+color quoted3     color11 color0

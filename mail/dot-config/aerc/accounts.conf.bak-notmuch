@@ -1,0 +1,48 @@
+# Local-first RTLQ account. mbsync owns network synchronization; notmuch
+# supplies aerc's search and message views; msmtp handles outgoing mail.
+[RTLQ]
+source = notmuch://
+maildir-account-path = rtlq
+enable-maildir = true
+multi-file-strategy = refuse
+query-map = ~/.config/aerc/queries.conf
+
+from = Данила Михайлов <mihd@rtlq.ru>
+outgoing = /usr/bin/msmtp
+
+default = INBOX
+copy-to = .Sent
+postpone = .Drafts
+archive = .Archive
+folders-sort = INBOX,.Sent,.Drafts,.Archive,.Junk,.Trash
+restrict-delete = true
+
+# Background synchronization remains owned by systemd/goimapnotify. A manual
+# :check-mail in aerc starts the same serialized sync pipeline; aerc does not
+# add its own polling timer.
+check-mail = 0
+check-mail-cmd = systemctl --user start mail-sync.service
+check-mail-timeout = 2m
+
+# Local-first iCloud account sharing the same notmuch database and sync
+# pipeline as RTLQ. Its transport is selected explicitly in msmtp.
+[iCloud]
+source = notmuch://
+maildir-account-path = icloud
+enable-maildir = true
+multi-file-strategy = refuse
+query-map = ~/.config/aerc/queries-icloud.conf
+
+from = Данила Михайлов <danilamihailov@icloud.com>
+outgoing = /usr/bin/msmtp --account=icloud
+
+default = INBOX
+copy-to = .Sent Messages
+postpone = .Drafts
+archive = .Archive
+folders-sort = INBOX,.Sent Messages,.Drafts,.Archive,.Junk,.Deleted Messages,.Trash,.Sent,.Notes
+restrict-delete = true
+
+check-mail = 0
+check-mail-cmd = systemctl --user start mail-sync.service
+check-mail-timeout = 2m

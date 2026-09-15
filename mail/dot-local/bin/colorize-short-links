@@ -1,15 +1,34 @@
-#!/bin/sh
+#!/usr/bin/perl
 
-# Keep colorize's full OSC 8 target while replacing HTTP(S) labels with "link".
-/usr/lib/aerc/filters/colorize -8 "$@" | perl -0pe '
-  s{
-    (\e\]8;[^;]*;)(https?://[^\e]+)(\e\\)
-    (.*?)
-    (\e\]8;;\e\\)
-  }{
-    my ($prefix, $url, $separator, $text, $suffix) =
-      ($1, $2, $3, $4, $5);
-    my $label = $text eq $url ? "link" : $text;
-    $prefix . $url . $separator . $label . $suffix;
-  }gsex;
-'
+use strict;
+use warnings;
+
+# Turn HTTP(S) URLs into short OSC 8 hyperlinks without starting aerc's much
+# heavier general-purpose colorize filter. Keep common sentence punctuation
+# outside the link target, and avoid passing escape bytes into OSC sequences.
+local $/;
+my $text = <STDIN> // q{};
+my $link_style = "\e[4;38;2;131;165;152m";
+my $reset = "\e[0m";
+
+$text =~ s{\bhttps?://[^\s<>"'\x1b]+}{
+  my $url = $&;
+  my $trailing = q{};
+
+  while ($url =~ s/([.,;:!?])\z//) {
+    $trailing = $1 . $trailing;
+  }
+
+  for my $pair (["(", ")"], ["[", "]"], ["{", "}"]) {
+    my ($open, $close) = @{$pair};
+    while ($url =~ /\Q$close\E\z/
+        && (() = $url =~ /\Q$close\E/g) > (() = $url =~ /\Q$open\E/g)) {
+      chop $url;
+      $trailing = $close . $trailing;
+    }
+  }
+
+  "\e]8;;${url}\e\\${link_style}link${reset}\e]8;;\e\\${trailing}";
+}gex;
+
+print $text;

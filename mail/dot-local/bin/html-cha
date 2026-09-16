@@ -28,11 +28,23 @@ if [ -t 1 ]; then
     '
 else
   # Pipeline mode: emit text and OSC 8 links without allowing remote access.
+  case ${COLUMNS:-} in
+    ''|*[!0-9]*) preview_columns=79 ;;
+    *)
+      preview_columns=$((COLUMNS - 2))
+      if [ "$preview_columns" -lt 1 ]; then
+        preview_columns=1
+      fi
+      ;;
+  esac
+
   set -- "$@" \
     --dump \
     --opt buffer.dark-mode=true \
     --opt 'buffer.dark-mode-background="#282828"' \
     --opt buffer.dark-mode-background-threshold=99 \
+    --opt display.force-columns=true \
+    --opt display.columns="$preview_columns" \
     --css '
     img { display: none !important; }
     body pre {

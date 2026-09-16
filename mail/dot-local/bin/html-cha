@@ -32,6 +32,7 @@ else
     --dump \
     --opt buffer.dark-mode=true \
     --opt 'buffer.dark-mode-background="#282828"' \
+    --opt buffer.dark-mode-background-threshold=99 \
     --css '
     img { display: none !important; }
     body pre {
@@ -48,7 +49,6 @@ else
     body :not(pre) > code {
       color: #fabd2f !important;
       background-color: #3c3836 !important;
-      padding: 0 0.25em;
     }
   '
   if command -v unshare >/dev/null 2>&1; then

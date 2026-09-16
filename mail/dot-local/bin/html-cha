@@ -1,12 +1,55 @@
 #!/bin/sh
 
 # Render HTML mail without allowing remote content to phone home.
-set -- cha --dump --type text/html \
-  --css 'html, body { color: #ebdbb2 !important; background-color: #282828 !important; } body * { color: inherit !important; background-color: transparent !important; } body a { color: #83a598 !important; }' \
+# OSC 8 dump links require the custom-built Chawan in ~/.local/bin.
+set -- cha --type text/html \
+  --opt buffer.osc8-links=true \
+  --css '
+    html,
+    body {
+      color: #ebdbb2 !important;
+      background-color: transparent !important;
+    }
+    body * {
+      color: inherit !important;
+      background-color: transparent !important;
+    }
+    body a {
+      color: #83a598 !important;
+    }
+  ' \
   --input-charset UTF-8 --output-charset UTF-8
 
-if command -v unshare >/dev/null 2>&1; then
-  set -- unshare --map-root-user --net "$@"
+if [ -t 1 ]; then
+  # Aerc direct-filter mode: render inline and remote images interactively.
+  set -- "$@" \
+    --opt buffer.images=true \
+    --opt display.image-mode=sixel \
+    --opt network.allow-http-from-file=true
+else
+  # Pipeline mode: emit text and OSC 8 links without allowing remote access.
+  set -- "$@" --dump --css '
+    img { display: none !important; }
+    body pre {
+      color: #ebdbb2 !important;
+      background-color: #3c3836 !important;
+      border-left: 3px solid #d79921;
+      padding: 0.5em 1em;
+      white-space: pre-wrap;
+    }
+    body pre code {
+      color: inherit !important;
+      background-color: transparent !important;
+    }
+    body :not(pre) > code {
+      color: #fabd2f !important;
+      background-color: #3c3836 !important;
+      padding: 0 0.25em;
+    }
+  '
+  if command -v unshare >/dev/null 2>&1; then
+    set -- unshare --map-root-user --net "$@"
+  fi
 fi
 
 exec "$@"

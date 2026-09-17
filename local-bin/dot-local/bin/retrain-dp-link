@@ -1,0 +1,98 @@
+#!/bin/sh
+
+set -eu
+
+connector=${1:-all}
+
+usage() {
+  cat <<EOF
+Usage: ${0##*/} [all|DP-N|HDMI-A-N]
+
+Force connected external DisplayPort and/or HDMI outputs to retrain their
+links. Run this only from an active, non-graphical Linux virtual console:
+
+  1. Press Ctrl+Alt+F3 and log in.
+  2. Run: ${0##*/}
+  3. Press Ctrl+Alt+F2 to return to Hyprland.
+
+Running from a terminal emulator inside Hyprland is intentionally rejected,
+because Hyprland still owns the DRM device there. With no argument, all
+connected DP-* and HDMI-A-* outputs are retrained. The internal eDP display is
+never selected.
+EOF
+}
+
+case "$connector" in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+  all|DP-[0-9]*|HDMI-A-[0-9]*) ;;
+  *)
+    usage >&2
+    exit 2
+    ;;
+esac
+
+if ! command -v modetest >/dev/null 2>&1; then
+  printf 'Error: modetest is not installed (provided by libdrm).\n' >&2
+  exit 1
+fi
+
+terminal=$(tty 2>/dev/null || true)
+case "$terminal" in
+  /dev/tty[0-9]*) terminal_vt=${terminal#/dev/} ;;
+  *)
+    printf 'Error: this command must run from a non-graphical VT.\n' >&2
+    printf 'Switch with Ctrl+Alt+F3, log in, and run it there.\n' >&2
+    exit 1
+    ;;
+esac
+
+active_vt=$(cat /sys/class/tty/tty0/active 2>/dev/null || printf 'unknown')
+if [ "$terminal_vt" != "$active_vt" ]; then
+  printf 'Error: %s is not the active VT (active: %s).\n' \
+    "$terminal_vt" "$active_vt" >&2
+  printf 'Switch to %s before running this command.\n' "$terminal_vt" >&2
+  exit 1
+fi
+
+printf 'Active non-graphical VT: %s\n' "$active_vt"
+
+connectors=$(modetest -M amdgpu -c 2>/dev/null) || {
+  printf 'Error: unable to inspect AMD DRM connectors.\n' >&2
+  printf 'Run this from a text VT after switching away from Hyprland.\n' >&2
+  exit 1
+}
+
+if [ "$connector" = all ]; then
+  targets=$(printf '%s\n' "$connectors" |
+    awk '$3 == "connected" && ($4 ~ /^DP-/ || $4 ~ /^HDMI-A-/) { print $1, $4 }')
+else
+  targets=$(printf '%s\n' "$connectors" |
+    awk -v connector="$connector" '$3 == "connected" && $4 == connector { print $1, $4; exit }')
+fi
+
+if [ -z "$targets" ]; then
+  if [ "$connector" = all ]; then
+    printf 'Error: no connected external DP or HDMI outputs found.\n' >&2
+  else
+    printf 'Error: %s is not reported as connected.\n' "$connector" >&2
+  fi
+  exit 1
+fi
+
+printf '%s\n' "$targets" | while read -r connector_id connector_name; do
+  case "$connector_id" in
+    *[!0-9]*|'')
+      printf 'Error: invalid DRM connector ID: %s\n' "$connector_id" >&2
+      exit 1
+      ;;
+  esac
+
+  printf 'Forcing a full link retrain for %s (connector ID %s)...\n' \
+    "$connector_name" "$connector_id"
+  modetest -M amdgpu -w "$connector_id:link-status:1"
+done
+
+printf '\nLink marked for retraining. Return to Hyprland with Ctrl+Alt+F2.\n'

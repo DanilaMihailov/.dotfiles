@@ -226,14 +226,40 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -d amdgpu_bl1 -e4 -n2 set +5%"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -d amdgpu_bl1 -e4 -n2 set 5%-"), { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume +5 --max-volume 100"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume -5 --max-volume 100"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"),        { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle"),         { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("swayosd-client --brightness +5 --device amdgpu_bl1"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("swayosd-client --brightness -5 --device amdgpu_bl1"), { locked = true, repeating = true })
 hl.bind("XF86KbdBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -d 'tpacpi::kbd_backlight' set +1"), { locked = true, repeating = true })
 hl.bind("XF86KbdBrightnessDown",hl.dsp.exec_cmd("brightnessctl -d 'tpacpi::kbd_backlight' set 1-"),  { locked = true, repeating = true })
+
+-- ThinkPad function-row actions. A udev hwdb override remaps F8 from the
+-- system WLAN key to KEY_PROG1, exposed by XKB as XF86Launch1.
+-- Override: /etc/udev/hwdb.d/90-thinkpad-function-keys.hwdb
+hl.bind(
+    "XF86Display",
+    hl.dsp.exec_cmd("/home/zen/.config/waybar/internal-display-toggle.sh toggle")
+)
+hl.bind(
+    "XF86Launch1",
+    hl.dsp.exec_cmd("/home/zen/.config/waybar/throne-toggle.sh toggle")
+)
+hl.bind(
+    "XF86NotificationCenter",
+    hl.dsp.exec_cmd("/home/zen/.local/bin/focus-or-launch-app mattermost mattermost-desktop")
+)
+hl.bind(
+    "XF86PickupPhone",
+    hl.dsp.exec_cmd(
+        "/home/zen/.local/bin/focus-or-launch-app " ..
+        "'telemost|телемост|imnopdcfcjmmfankbhhfchjfcgjobibi' " ..
+        "chrome-imnopdcfcjmmfankbhhfchjfcgjobibi-Default"
+    )
+)
+hl.bind("XF86HangupPhone", hl.dsp.exec_cmd("swaync-client -d -sw"))
+hl.bind("XF86Favorites", hl.dsp.exec_cmd("foot --title=Codex zsh -lic 'exec codex'"))
 
 -- Requires playerctl
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })

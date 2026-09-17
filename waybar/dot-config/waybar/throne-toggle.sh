@@ -9,7 +9,18 @@ config_file="${WAYBAR_XRAY_CONFIG:-$HOME/.config/xray/waybar.json}"
 runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
 pid_file="$runtime_dir/waybar-xray.pid"
 log_file="$runtime_dir/waybar-xray.log"
+starting_file="$runtime_dir/waybar-xray.starting"
 action="${1:-status}"
+
+# Waybar's custom/throne module listens for SIGRTMIN+9. Refresh it as soon as
+# a click or keybinding finishes toggling, while retaining the polling fallback.
+refresh_waybar() {
+  pkill -RTMIN+9 -x waybar 2>/dev/null || true
+}
+
+if [[ "$action" == "toggle" ]]; then
+  trap refresh_waybar EXIT
+fi
 
 proxy_mode() {
   gsettings get org.gnome.system.proxy mode 2>/dev/null | tr -d "'"
@@ -50,12 +61,15 @@ start_xray() {
   [ -r "$config_file" ] || return 1
   core_ready && return 2
 
+  : > "$starting_file"
   xray run -config "$config_file" >"$log_file" 2>&1 &
   local pid=$!
   printf '%s\n' "$pid" > "$pid_file"
+  refresh_waybar
 
   for _ in {1..40}; do
     if core_ready; then
+      rm -f "$starting_file"
       enable_system_proxy
       return 0
     fi
@@ -64,7 +78,7 @@ start_xray() {
   done
 
   kill "$pid" 2>/dev/null || true
-  rm -f "$pid_file"
+  rm -f "$pid_file" "$starting_file"
   return 1
 }
 
@@ -77,7 +91,7 @@ stop_xray() {
     kill -0 "$pid" 2>/dev/null || break
     sleep 0.1
   done
-  rm -f "$pid_file"
+  rm -f "$pid_file" "$starting_file"
 }
 
 if [[ "$action" == "toggle" ]]; then
@@ -96,7 +110,9 @@ if [[ "$action" == "toggle" ]]; then
   fi
 fi
 
-if xray_pid >/dev/null && core_ready && [[ "$(proxy_mode)" == "manual" ]]; then
+if [[ -e "$starting_file" ]] && xray_pid >/dev/null; then
+  printf '{"text":"󰒎","tooltip":"Xray system proxy: connecting…","class":"connecting"}\n'
+elif xray_pid >/dev/null && core_ready && [[ "$(proxy_mode)" == "manual" ]]; then
   printf '{"text":"󰒍","tooltip":"Xray system proxy: connected\\nClick to disconnect","class":"connected"}\n'
 elif xray_pid >/dev/null && core_ready; then
   printf '{"text":"󰒎","tooltip":"Xray is running; system proxy is off","class":"disconnected"}\n'

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+pattern=$1
+desktop_id=$2
+
+address=$(
+    hyprctl clients -j | jq -r --arg pattern "$pattern" '
+        [
+            .[]
+            | select(
+                [.class, .initialClass, .title, .initialTitle]
+                | map(. // "")
+                | join("\n")
+                | test($pattern; "i")
+            )
+            | .address
+        ]
+        | first // empty
+    '
+)
+
+if [ -n "$address" ]; then
+    exec hyprctl dispatch "hl.dsp.focus({ window = 'address:$address' })"
+fi
+
+exec gtk-launch "$desktop_id"

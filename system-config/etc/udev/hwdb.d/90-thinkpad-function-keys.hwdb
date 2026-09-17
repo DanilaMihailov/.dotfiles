@@ -1,0 +1,4 @@
+# Repurpose the ThinkPad F8 radio key for a compositor action. The stock
+# systemd hwdb maps scan code 04 to KEY_WLAN; KEY_PROG1 becomes XF86Launch1.
+evdev:name:ThinkPad Extra Buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
+ KEYBOARD_KEY_04=prog1

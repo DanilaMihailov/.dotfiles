@@ -5,6 +5,11 @@ set -u
 action="${1:-status}"
 requested_connection="${2:-${WAYBAR_WIREGUARD_CONNECTION:-}}"
 
+# custom/wireguard listens for SIGRTMIN+8.
+if [[ "$action" == "toggle" ]]; then
+  trap 'pkill -RTMIN+8 -x waybar 2>/dev/null || true' EXIT
+fi
+
 json_escape() {
   local value=${1//\\/\\\\}
   value=${value//\"/\\\"}

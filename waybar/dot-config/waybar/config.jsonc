@@ -184,21 +184,24 @@
     "exec": "~/.config/waybar/throne-toggle.sh",
     "on-click": "~/.config/waybar/throne-toggle.sh toggle",
     "return-type": "json",
-    "interval": 5
+    "interval": 5,
+    "signal": 9
   },
 
   "custom/internal-display": {
     "exec": "~/.config/waybar/internal-display-toggle.sh",
     "on-click": "~/.config/waybar/internal-display-toggle.sh toggle",
     "return-type": "json",
-    "interval": 2
+    "interval": 2,
+    "signal": 10
   },
 
   "custom/game-mode": {
     "exec": "~/.config/waybar/game-mode-toggle.sh",
     "on-click": "~/.config/waybar/game-mode-toggle.sh toggle",
     "return-type": "json",
-    "interval": 2
+    "interval": 2,
+    "signal": 11
   },
 
   "group/system-monitor": {
@@ -322,7 +325,7 @@
     "escape": false,
     "hide-empty-text": true,
     "interval": 2,
-    "on-click": "hyprctl dispatch focuswindow class:^Mattermost.Desktop$"
+    "on-click": "~/.local/bin/focus-or-launch-app mattermost mattermost-desktop"
   },
 
   "tray": {

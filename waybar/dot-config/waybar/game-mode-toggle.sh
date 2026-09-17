@@ -5,6 +5,11 @@ set -u
 action="${1:-status}"
 output="DP-1"
 
+# custom/game-mode listens for SIGRTMIN+11.
+if [[ "$action" == "toggle" ]]; then
+  trap 'pkill -RTMIN+11 -x waybar 2>/dev/null || true' EXIT
+fi
+
 get_monitors() {
   hyprctl -j monitors all 2>/dev/null
 }

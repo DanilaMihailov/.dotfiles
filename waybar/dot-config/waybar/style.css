@@ -231,6 +231,10 @@ window#waybar {
   color: @blue;
 }
 
+#custom-throne.connecting {
+  color: @yellow;
+}
+
 #custom-throne.disconnected {
   color: @yellow;
 }

@@ -7,6 +7,11 @@ output="eDP-1"
 state_home="${XDG_STATE_HOME:-$HOME/.local/state}"
 disabled_marker="$state_home/hyprland/internal-display-disabled"
 
+# custom/internal-display listens for SIGRTMIN+10.
+if [[ "$action" == "toggle" ]]; then
+  trap 'pkill -RTMIN+10 -x waybar 2>/dev/null || true' EXIT
+fi
+
 monitors=$(hyprctl -j monitors all 2>/dev/null) || {
   printf '{"text":"󰍹","tooltip":"Hyprland display status is unavailable","class":"error"}\n'
   exit 0
@@ -34,6 +39,8 @@ if [[ "$display_exists" != "true" ]]; then
 fi
 
 if [[ "$action" == "toggle" ]]; then
+  # Enabling is always safe: allow it even when an external monitor is the
+  # only active display. The active-display guard applies only to disabling.
   if [[ "$display_disabled" == "true" ]]; then
     if ! hyprctl eval 'hl.monitor({ output = "eDP-1", disabled = false, mode = "1920x1080@60", position = "3840x0", scale = 1.5 })' >/dev/null 2>&1; then
       printf '{"text":"󰍹","tooltip":"Failed to enable the internal display","class":"error"}\n'

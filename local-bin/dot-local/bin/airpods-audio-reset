@@ -1,0 +1,84 @@
+#!/bin/sh
+
+set -eu
+
+usage() {
+  cat <<EOF
+Usage: ${0##*/} [call|music]
+
+Recover AirPods audio after a failed Bluetooth profile switch on Linux.
+
+PipeWire normally changes AirPods automatically between:
+
+  music  A2DP/AAC high-quality stereo playback; no microphone
+  call   HSP/HFP two-way audio; microphone enabled, lower playback quality
+
+Browsers and conferencing apps can occasionally leave the Bluetooth transport
+in an error state while moving between these profiles. Symptoms include the
+AirPods microphone disappearing, remaining suspended, or not being selectable
+in a new call even though playback still works.
+
+The default "call" action cycles only the AirPods PipeWire card through its
+off profile and then enables the HSP/HFP mSBC headset profile. This recreates
+the audio endpoints without unpairing or reconnecting the AirPods. Use "music"
+after a call to return immediately to high-quality A2DP/AAC playback; normally
+PipeWire does that automatically.
+
+Examples:
+  ${0##*/}          # recover the microphone for a call
+  ${0##*/} call     # same as above
+  ${0##*/} music    # restore high-quality playback
+
+If recovery still fails, reconnect the AirPods or restart the user audio stack:
+  systemctl --user restart wireplumber pipewire pipewire-pulse
+EOF
+}
+
+case "${1:-call}" in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+  call)
+    profile=headset-head-unit
+    ;;
+  music)
+    profile=a2dp-sink
+    ;;
+  *)
+    usage >&2
+    exit 2
+    ;;
+esac
+
+if ! command -v pactl >/dev/null 2>&1; then
+  printf 'Error: pactl is required (provided by libpulse on Arch Linux).\n' >&2
+  exit 1
+fi
+
+card=$(pactl list cards | awk '
+  /^Card #[0-9]+/ {
+    name = ""
+    airpods = 0
+  }
+  /^[[:space:]]*Name: bluez_card\./ {
+    name = $2
+  }
+  /^[[:space:]]*device\.description = / && /AirPods/ {
+    airpods = 1
+  }
+  airpods && name != "" {
+    print name
+    exit
+  }
+')
+
+if [ -z "$card" ]; then
+  printf 'Error: no connected AirPods PipeWire card was found.\n' >&2
+  exit 1
+fi
+
+printf 'Resetting %s to %s...\n' "$card" "$profile"
+pactl set-card-profile "$card" off
+pactl set-card-profile "$card" "$profile"
+printf 'Done. Reload the conferencing tab if it was already open.\n'

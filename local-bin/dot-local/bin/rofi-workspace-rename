@@ -1,0 +1,20 @@
+#!/bin/sh
+
+workspace=$(hyprctl -j activeworkspace 2>/dev/null) || exit 1
+workspace_id=$(printf '%s\n' "$workspace" | jq -r '.id') || exit 1
+current_name=$(printf '%s\n' "$workspace" | jq -r '.name') || exit 1
+
+name=$(
+  printf '%s\n' "$current_name" |
+    rofi -dmenu -i -p rename-workspace -filter "$current_name"
+)
+rofi_status=$?
+[ "$rofi_status" -eq 0 ] || exit 0
+[ -n "$name" ] || exit 0
+[ "$name" != "$current_name" ] || exit 0
+
+# JSON strings are also valid Lua strings, so jq safely quotes the new name.
+quoted_name=$(printf '%s' "$name" | jq -Rs '.') || exit 1
+
+exec hyprctl dispatch \
+  "hl.dsp.workspace.rename({ workspace = $workspace_id, name = $quoted_name })"

@@ -22,6 +22,11 @@ hl.bind(
 )
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill -x rofi || rofi -show drun"))
+hl.bind(
+  mainMod .. " + W",
+  hl.dsp.exec_cmd("pkill -x rofi || /home/zen/.local/bin/rofi-workspace-switcher")
+)
+hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("/home/zen/.local/bin/rofi-workspace-rename"))
 hl.bind("CTRL + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
 hl.bind(
   mainMod .. " + CTRL + SPACE",

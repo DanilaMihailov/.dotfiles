@@ -26,9 +26,7 @@ hl.bind("CTRL + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
 hl.bind(
   mainMod .. " + CTRL + SPACE",
   hl.dsp.exec_cmd(
-    "pkill -x rofi || BEMOJI_PICKER_CMD=/home/zen/.local/bin/rofi-bemoji-picker " ..
-    "bemoji --type --noline --hist-limit 30 " ..
-    "--file /home/zen/.local/share/bemoji/emojis-yellow.txt 2>/dev/null || true"
+    "pkill -x rofi || /home/zen/.local/bin/emoji-picker"
   )
 )
 hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("swaync-client -t -sw"))

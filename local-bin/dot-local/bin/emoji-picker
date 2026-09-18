@@ -1,0 +1,22 @@
+#!/bin/sh
+
+emoji_file=/home/zen/.local/share/bemoji/emojis-yellow.txt
+picker_cmd=/home/zen/.local/bin/rofi-bemoji-picker
+active_class=$(hyprctl activewindow -j 2>/dev/null | jq -r '.class // empty')
+
+if [ "$active_class" = "Mattermost.Desktop" ]; then
+  if BEMOJI_PICKER_CMD="$picker_cmd" bemoji \
+    --clip \
+    --noline \
+    --hist-limit 30 \
+    --file "$emoji_file" 2>/dev/null; then
+    sleep 0.1
+    wtype -M ctrl -k v -m ctrl
+  fi
+else
+  BEMOJI_PICKER_CMD="$picker_cmd" bemoji \
+    --type \
+    --noline \
+    --hist-limit 30 \
+    --file "$emoji_file" 2>/dev/null || true
+fi

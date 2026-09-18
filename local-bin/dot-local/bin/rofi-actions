@@ -35,6 +35,8 @@ list_actions() {
     'wireguard vpn network connect disconnect toggle'
   emit_action 'Toggle Xray' 'network-vpn' 'toggle-xray' \
     'xray proxy vpn network connect disconnect toggle throne'
+  emit_action 'Toggle Game Mode' 'applications-games' 'toggle-game-mode' \
+    'game mode display resolution 1080p 4k performance toggle'
 }
 
 run_action() {
@@ -51,6 +53,7 @@ run_action() {
     screenshot-fullscreen) flock --close --nonblock /tmp/hyprshot-fullscreen.lock hyprshot -m output -m active ;;
     toggle-wireguard) /home/zen/.config/waybar/wireguard-toggle.sh toggle ;;
     toggle-xray) /home/zen/.config/waybar/throne-toggle.sh toggle ;;
+    toggle-game-mode) /home/zen/.config/waybar/game-mode-toggle.sh toggle ;;
     *) return 1 ;;
   esac
 }

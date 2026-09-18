@@ -38,6 +38,13 @@ if [[ "$display_exists" != "true" ]]; then
   exit 0
 fi
 
+# When the internal panel is the only active display there is nothing useful
+# to toggle: disabling it would be rejected by the guard below.
+if [[ "$display_disabled" != "true" ]] && (( active_displays == 1 )); then
+  printf '{"text":""}\n'
+  exit 0
+fi
+
 if [[ "$action" == "toggle" ]]; then
   # Enabling is always safe: allow it even when an external monitor is the
   # only active display. The active-display guard applies only to disabling.

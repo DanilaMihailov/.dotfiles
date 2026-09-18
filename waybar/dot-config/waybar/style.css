@@ -27,14 +27,7 @@ window#waybar {
 
 #workspace-status,
 #window,
-#clock-notifications,
-#network-status,
-#system-monitor,
-#device-controls,
-#power-status,
-#privacy,
-#systemd-failed-units,
-#custom-mattermost {
+#status-area {
   background: @bg0;
   border: 1px solid @bg2;
   border-radius: 5px;
@@ -64,7 +57,54 @@ window#waybar {
 }
 
 #workspace-status {
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
   padding-left: 0;
+}
+
+#status-area {
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  padding: 0;
+}
+
+#status-area #tray,
+#status-area #custom-mattermost,
+#status-area #systemd-failed-units,
+#status-area #privacy,
+#status-area #system-monitor,
+#status-area #network-status,
+#status-area #device-controls,
+#status-area #power-status,
+#status-area #clock-notifications {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0 10px;
+}
+
+#status-area #systemd-failed-units,
+#status-area #privacy,
+#status-area #system-monitor,
+#status-area #network-status,
+#status-area #device-controls,
+#status-area #clock-notifications {
+  border-left: 1px solid @bg2;
+}
+
+#status-area #power-status {
+  padding-left: 0;
+}
+
+#status-area #clock-notifications {
+  padding-right: 8px;
 }
 
 /* All modules within a group share one reset and one 8px gap. */
@@ -75,7 +115,6 @@ window#waybar {
 #device-controls #custom-internal-display,
 #device-controls #custom-game-mode,
 #device-controls #idle_inhibitor,
-#device-controls #backlight,
 #device-controls #language,
 #device-controls #pulseaudio,
 #clock-notifications #custom-clock,
@@ -83,8 +122,7 @@ window#waybar {
 #system-monitor #memory,
 #system-monitor #cpu,
 #system-monitor #temperature,
-#power-status #power-profiles-daemon,
-#power-status #battery {
+#power-status #custom-power-battery {
   background: transparent;
   border: none;
   border-radius: 0;
@@ -97,8 +135,17 @@ window#waybar {
 #device-controls #pulseaudio,
 #clock-notifications #custom-notifications,
 #system-monitor #temperature,
-#power-status #battery {
+#power-status #custom-power-battery {
   margin-right: 0;
+}
+
+/* Keep the optional audio gap only while its muted icon is visible. */
+#device-controls #language {
+  margin-right: 0;
+}
+
+#device-controls #pulseaudio.muted {
+  margin-left: 8px;
 }
 
 /* Icon-only controls need a larger glyph than the bar's compact text. */
@@ -107,10 +154,8 @@ window#waybar {
 #network-status #custom-wireguard,
 #network-status #custom-throne,
 #device-controls #custom-internal-display,
-#device-controls #custom-game-mode,
 #device-controls #idle_inhibitor,
-#device-controls #pulseaudio,
-#power-status #power-profiles-daemon,
+#power-status #custom-power-battery,
 #custom-mattermost {
   font-size: 13px;
   min-width: 14px;
@@ -128,6 +173,10 @@ window#waybar {
   padding: 0 8px;
   margin: 3px 2px;
   box-shadow: none;
+}
+
+#workspaces button:first-child {
+  margin-left: 0;
 }
 
 #workspaces button:hover {
@@ -185,8 +234,15 @@ window#waybar {
   color: @fg1;
 }
 
+#custom-notifications.notification,
+#custom-notifications.inhibited-notification,
 #custom-notifications.dnd-notification,
-#custom-notifications.dnd-none {
+#custom-notifications.dnd-inhibited-notification {
+  color: @red;
+}
+
+#custom-notifications.dnd-none,
+#custom-notifications.dnd-inhibited-none {
   color: @yellow;
 }
 
@@ -196,10 +252,6 @@ window#waybar {
 
 #idle_inhibitor.activated {
   color: @green;
-}
-
-#backlight {
-  color: @fg1;
 }
 
 #privacy-item.audio-in {
@@ -283,6 +335,8 @@ window#waybar {
 
 #custom-game-mode.enabled {
   color: @green;
+  font-size: 13px;
+  min-width: 14px;
 }
 
 #custom-game-mode.native,
@@ -332,34 +386,28 @@ window#waybar {
 
 #pulseaudio.muted {
   color: @gray;
+  font-size: 13px;
+  min-width: 14px;
 }
 
-#power-profiles-daemon {
+#custom-power-battery {
   color: @fg1;
+  font-size: 15px;
 }
 
-#power-profiles-daemon.performance {
-  color: @red;
+#custom-power-battery.performance {
+  color: @orange;
 }
 
-#power-profiles-daemon.power-saver {
+#custom-power-battery.power-saver {
   color: @green;
 }
 
-#battery {
-  color: @fg1;
-}
-
-#battery.charging,
-#battery.plugged {
-  color: @green;
-}
-
-#battery.warning {
+#custom-power-battery.warning {
   color: @yellow;
 }
 
-#battery.critical {
+#custom-power-battery.critical {
   color: @red;
 }
 

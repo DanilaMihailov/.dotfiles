@@ -3,6 +3,8 @@
   "position": "top",
   "height": 24,
   "spacing": 4,
+  "expand-left": true,
+  "no-center": true,
 
   "modules-left": [
     "group/workspace-status"
@@ -12,15 +14,22 @@
 
   "modules-right": [
     "tray",
-    "custom/mattermost",
-    "systemd-failed-units",
-    "privacy",
-    "group/system-monitor",
-    "group/network-status",
-    "group/device-controls",
-    "group/power-status",
-    "group/clock-notifications"
+    "group/status-area"
   ],
+
+  "group/status-area": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/mattermost",
+      "systemd-failed-units",
+      "privacy",
+      "group/system-monitor",
+      "group/network-status",
+      "group/device-controls",
+      "group/power-status",
+      "group/clock-notifications"
+    ]
+  },
 
   "group/workspace-status": {
     "orientation": "horizontal",
@@ -74,7 +83,7 @@
   },
 
   "hyprland/window": {
-    "max-length": 60,
+    "expand": true,
     "separate-outputs": true
   },
 
@@ -92,7 +101,6 @@
       "idle_inhibitor",
       "custom/internal-display",
       "custom/game-mode",
-      "backlight",
       "hyprland/language",
       "pulseaudio"
     ]
@@ -106,12 +114,6 @@
     },
     "tooltip-format-activated": "Idle inhibition active — click to allow locking and sleep",
     "tooltip-format-deactivated": "Idle inhibition inactive — click to prevent locking and sleep"
-  },
-
-  "backlight": {
-    "format": "󰃠 {percent}%",
-    "tooltip-format": "Display brightness: {percent}%\nScroll to adjust",
-    "scroll-step": 5
   },
 
   "privacy": {
@@ -207,6 +209,7 @@
     "exec": "~/.config/waybar/internal-display-toggle.sh",
     "on-click": "~/.config/waybar/internal-display-toggle.sh toggle",
     "return-type": "json",
+    "hide-empty-text": true,
     "interval": 2,
     "signal": 10
   },
@@ -215,6 +218,7 @@
     "exec": "~/.config/waybar/game-mode-toggle.sh",
     "on-click": "~/.config/waybar/game-mode-toggle.sh toggle",
     "return-type": "json",
+    "hide-empty-text": true,
     "interval": 2,
     "signal": 11
   },
@@ -259,7 +263,7 @@
   },
 
   "pulseaudio": {
-    "format": "{icon}",
+    "format": "",
     "format-muted": "󰝟",
     "format-icons": {
       "default": [
@@ -272,42 +276,20 @@
     "on-click": "pavucontrol"
   },
 
-  "power-profiles-daemon": {
-    "format": "{icon}",
-    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-    "tooltip": true,
-    "format-icons": {
-      "default": "󰾅",
-      "performance": "󰓅",
-      "balanced": "󰾅",
-      "power-saver": "󰌪"
-    }
-  },
-
   "group/power-status": {
     "orientation": "horizontal",
     "modules": [
-      "power-profiles-daemon",
-      "battery"
+      "custom/power-battery"
     ]
   },
 
-  "battery": {
-    "format": "{icon} {capacity}%",
-    "format-charging": "󰂄{capacity}%",
-    "format-icons": [
-      "󰂎",
-      "󰁺",
-      "󰁼",
-      "󰁾",
-      "󰂀",
-      "󰂂",
-      "󰁹"
-    ],
-    "states": {
-      "warning": 30,
-      "critical": 15
-    }
+  "custom/power-battery": {
+    "exec": "~/.config/waybar/power-battery.sh",
+    "on-click": "~/.config/waybar/power-battery.sh cycle",
+    "return-type": "json",
+    "hide-empty-text": true,
+    "interval": 10,
+    "signal": 12
   },
 
   "group/clock-notifications": {
@@ -318,7 +300,7 @@
   "custom/notifications": {
     "exec": "swaync-client -swb",
     "return-type": "json",
-    "format": "{icon} {text}",
+    "format": "{icon}",
     "format-icons": {
       "notification": "󰂚",
       "none": "󰂜",

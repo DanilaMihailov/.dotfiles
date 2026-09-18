@@ -41,7 +41,7 @@ print_status() {
   local monitors state width height
 
   monitors=$(get_monitors) || {
-    json_status "󰊴" "Hyprland display status is unavailable" "error"
+    json_status "" "Hyprland display status is unavailable" "error"
     return
   }
 
@@ -49,13 +49,13 @@ print_status() {
 
   case "$state" in
     missing|disabled)
-      json_status "󰊴" "Game mode unavailable: $output is not active" "disconnected"
+      json_status "" "Game mode unavailable: $output is not active" "disconnected"
       ;;
     active)
       if (( width == 1920 && height == 1080 )); then
-        json_status "󰊴 1080p" $'Game mode: on\n'"$output"$': 1920x1080 at scale 1\nClick to restore native 4K' "enabled"
+        json_status "󰊴" $'Game mode: on\n'"$output"$': 1920x1080 at scale 1\nClick to restore native 4K' "enabled"
       else
-        json_status "󰊴" $'Game mode: off\n'"$output: ${width}x${height}"$'\nClick for 1920x1080' "native"
+        json_status "" $'Game mode: off\n'"$output: ${width}x${height}"$'\nUse the action menu to enable it' "native"
       fi
       ;;
   esac

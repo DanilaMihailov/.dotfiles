@@ -1,18 +1,44 @@
 #!/bin/sh
 
 workspaces=$(hyprctl -j workspaces 2>/dev/null) || exit 1
+clients=$(hyprctl -j clients 2>/dev/null) || exit 1
 
 name=$(
-  printf '%s\n' "$workspaces" |
-    jq -r '
-      sort_by(.name)[] |
+  printf '%s\n%s\n' "$workspaces" "$clients" |
+    jq -sr '
+      .[0] as $workspaces |
+      .[1] as $clients |
+      $workspaces |
+      sort_by(.id)[] |
       select(.name != "special") |
       select(.name | startswith("special:") | not) |
-      .name | gsub("[\\n\\r\\t]"; " ")
+      . as $workspace |
+      (.name | gsub("[\\n\\r\\t]"; " ")) as $name |
+      ($clients |
+        map(select(.workspace.id == $workspace.id)) |
+        sort_by(.focusHistoryID) |
+        map(
+          ((.title // "") | gsub("[\\n\\r\\t]"; " ")) |
+          if test(" \\| [^|]+$") then
+            capture("^.* \\| (?<suffix>[^|]+)$").suffix
+          else
+            .
+          end
+        ) |
+        map(select(length > 0)) |
+        join(" · ")
+      ) as $titles |
+      $name +
+      "\u0000display\u001f<span foreground=\"#928374\">\(.id)</span>  \($name | @html)" +
+      (if $titles == "" then "" else
+        "  <span size=\"small\" foreground=\"#928374\">\($titles | @html)</span>"
+      end) +
+      "\u001fmeta\u001f\(.id)"
     ' |
     rofi \
       -dmenu \
       -i \
+      -markup-rows \
       -matching fuzzy \
       -no-auto-select \
       -theme-str 'listview { require-input: false; }' \

@@ -26,6 +26,7 @@ window#waybar {
 }
 
 #workspaces,
+#custom-active-workspace,
 #window,
 #clock-notifications,
 #network-status,

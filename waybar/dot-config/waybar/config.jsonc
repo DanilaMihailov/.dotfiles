@@ -6,6 +6,7 @@
 
   "modules-left": [
     "hyprland/workspaces",
+    "custom/active-workspace",
     "hyprland/window"
   ],
 
@@ -30,7 +31,7 @@
     "show-special": true,
     "special-visible-only": true,
     "on-click": "activate",
-    "format": "{name} {windows}",
+    "format": "{id} {windows}",
     "format-window-separator": " ",
     "window-rewrite-default": "󰘔",
     "window-rewrite": {
@@ -56,6 +57,13 @@
       "class<(Throne|throne)>": "󰒍",
       "class<(blueman-manager)>": "󰂯"
     }
+  },
+
+  "custom/active-workspace": {
+    "exec": "~/.config/waybar/active-workspace-name.py",
+    "restart-interval": 1,
+    "escape": true,
+    "tooltip": false
   },
 
   "hyprland/window": {

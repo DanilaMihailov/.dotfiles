@@ -4,10 +4,7 @@ workspace=$(hyprctl -j activeworkspace 2>/dev/null) || exit 1
 workspace_id=$(printf '%s\n' "$workspace" | jq -r '.id') || exit 1
 current_name=$(printf '%s\n' "$workspace" | jq -r '.name') || exit 1
 
-name=$(
-  printf '%s\n' "$current_name" |
-    rofi -dmenu -i -p rename-workspace -filter "$current_name"
-)
+name=$(rofi -dmenu -i -p rename-workspace -filter "$current_name" </dev/null)
 rofi_status=$?
 [ "$rofi_status" -eq 0 ] || exit 0
 [ -n "$name" ] || exit 0

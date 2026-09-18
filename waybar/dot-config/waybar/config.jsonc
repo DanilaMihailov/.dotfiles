@@ -5,9 +5,7 @@
   "spacing": 4,
 
   "modules-left": [
-    "hyprland/workspaces",
-    "custom/active-workspace",
-    "hyprland/window"
+    "group/workspace-status"
   ],
 
   "modules-center": [],
@@ -23,6 +21,15 @@
     "group/power-status",
     "group/clock-notifications"
   ],
+
+  "group/workspace-status": {
+    "orientation": "horizontal",
+    "modules": [
+      "hyprland/workspaces",
+      "custom/active-workspace",
+      "hyprland/window"
+    ]
+  },
 
   "hyprland/workspaces": {
     "disable-scroll": true,

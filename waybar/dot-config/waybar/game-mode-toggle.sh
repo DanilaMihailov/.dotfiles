@@ -75,9 +75,9 @@ if [[ "$action" == "toggle" ]]; then
   fi
 
   if (( width == 1920 && height == 1080 )); then
-    command='hl.monitor({ output = "DP-1", mode = "3840x2160@60", position = "1920x0", scale = 2 })'
+    command='hl.monitor({ output = "DP-1", mode = "3840x2160@60", position = "2560x0", scale = 1.5 })'
   else
-    command='hl.monitor({ output = "DP-1", mode = "1920x1080@60", position = "1920x0", scale = 1 })'
+    command='hl.monitor({ output = "DP-1", mode = "1920x1080@60", position = "2560x0", scale = 1 })'
   fi
 
   if ! hyprctl eval "$command" >/dev/null 2>&1; then

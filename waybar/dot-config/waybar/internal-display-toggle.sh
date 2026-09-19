@@ -49,7 +49,7 @@ if [[ "$action" == "toggle" ]]; then
   # Enabling is always safe: allow it even when an external monitor is the
   # only active display. The active-display guard applies only to disabling.
   if [[ "$display_disabled" == "true" ]]; then
-    if ! hyprctl eval 'hl.monitor({ output = "eDP-1", disabled = false, mode = "1920x1080@60", position = "3840x0", scale = 1.5 })' >/dev/null 2>&1; then
+    if ! hyprctl eval 'hl.monitor({ output = "eDP-1", disabled = false, mode = "1920x1080@60", position = "5120x0", scale = 1.25 })' >/dev/null 2>&1; then
       printf '{"text":"󰍹","tooltip":"Failed to enable the internal display","class":"error"}\n'
       exit 0
     fi

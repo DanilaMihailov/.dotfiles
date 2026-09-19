@@ -18,28 +18,28 @@ local internal_monitor = {
     disabled = false,
     output   = "eDP-1",
     mode     = "1920x1080@60",
-    position = "3840x0",
-    scale    = 1.5,
+    position = "5120x0",
+    scale    = 1.25,
 }
 
 local middle_external_monitor = {
     output   = "DP-1",
     mode     = "3840x2160@60",
-    position = "1920x0",
-    scale    = 2,
+    position = "2560x0",
+    scale    = 1.5,
 }
 
 local left_external_monitor = {
     output   = "DP-2",
     mode     = "3840x2160@60",
     position = "0x0",
-    scale    = 2,
+    scale    = 1.5,
 }
 
 local top_external_monitor = {
     output   = "HDMI-A-1",
     mode     = "2560x1440@60",
-    position = "3456x-1152",
+    position = "4864x-1152",
     scale    = 1.25,
 }
 
@@ -65,5 +65,3 @@ hl.bind(
     end,
     { locked = true }
 )
-
-

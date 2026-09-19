@@ -56,9 +56,9 @@ if (( capacity <= 10 )); then
   icon=""
 elif (( capacity <= 30 )); then
   icon=""
-elif (( capacity <= 60 )); then
+elif (( capacity <= 50 )); then
   icon=""
-elif (( capacity <= 90 )); then
+elif (( capacity <= 85 )); then
   icon=""
 else
   icon=""

@@ -107,12 +107,12 @@ local function focus_or_workspace(direction, workspace)
     end
 end
 
-local function focus_or_monitor(window_direction, horizontal_step)
+local function focus_or_monitor(layout_direction, horizontal_step)
     return function()
         local before = hl.get_active_window()
         local before_address = before and before.address
 
-        hl.dispatch(hl.dsp.focus({ direction = window_direction }))
+        hl.dispatch(hl.dsp.layout("focus " .. layout_direction))
 
         hl.timer(function()
             local after = hl.get_active_window()
@@ -139,8 +139,8 @@ local function focus_or_monitor(window_direction, horizontal_step)
 end
 
 -- Move focus with mainMod + arrow keys
-hl.bind(mainMod .. " + h", focus_or_monitor("left", -1))
-hl.bind(mainMod .. " + l", focus_or_monitor("right", 1))
+hl.bind(mainMod .. " + h", focus_or_monitor("l", -1))
+hl.bind(mainMod .. " + l", focus_or_monitor("r", 1))
 hl.bind(mainMod .. " + k", focus_or_workspace("up", "m-1"))
 hl.bind(mainMod .. " + j", focus_or_workspace("down", "m+1"))
 hl.bind(mainMod .. " + CTRL + h", hl.dsp.focus({ monitor = "l" }))
@@ -149,8 +149,8 @@ hl.bind(mainMod .. " + CTRL + k", hl.dsp.focus({ monitor = "u" }))
 hl.bind(mainMod .. " + CTRL + j", hl.dsp.focus({ monitor = "d" }))
 hl.bind(mainMod .. " + CTRL + SHIFT + h", hl.dsp.workspace.move({ monitor = "l" }))
 hl.bind(mainMod .. " + CTRL + SHIFT + l", hl.dsp.workspace.move({ monitor = "r" }))
-hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ workspace = "m-1" }))
-hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ workspace = "m+1" }))
+hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "up" }))
+hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down" }))
 
 hl.bind(mainMod .. " + SHIFT + p", hl.dsp.window.move({ workspace = "m-1" }))
 hl.bind(mainMod .. " + SHIFT + n", hl.dsp.window.move({ workspace = "m+1" }))
@@ -226,9 +226,19 @@ hl.bind(mainMod .. " + Tab", function()
     end, { timeout = 5, type = "repeat" })
 end, { non_consuming = true })
 
+hl.bind(mainMod .. "+ SHIFT + F", hl.dsp.window.fullscreen({
+    mode = "maximized",
+    action = "toggle",
+    layout_aware = true,
+}))
+
 hl.bind(
-    mainMod .. " + SHIFT + F",
-    hl.dsp.layout("fit active")
+    mainMod .. " + F",
+    hl.dsp.window.fullscreen({
+        mode = "maximized",
+        action = "toggle",
+        layout_aware = false,
+    })
 )
 
 -- Switch workspaces with mainMod + [0-9]
@@ -251,8 +261,8 @@ hl.bind(mainMod .. " + SHIFT + A", hl.dsp.window.move({ workspace = "special:alp
 
 -- Follow the same window/monitor navigation as mainMod + h/l. Add Shift to
 -- scroll through workspaces on the active monitor.
-hl.bind(mainMod .. " + mouse_down", focus_or_monitor("right", 1))
-hl.bind(mainMod .. " + mouse_up",   focus_or_monitor("left", -1))
+hl.bind(mainMod .. " + mouse_down", focus_or_monitor("r", 1))
+hl.bind(mainMod .. " + mouse_up",   focus_or_monitor("l", -1))
 hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.focus({ workspace = "m+1" }))
 hl.bind(mainMod .. " + SHIFT + mouse_up",   hl.dsp.focus({ workspace = "m-1" }))
 

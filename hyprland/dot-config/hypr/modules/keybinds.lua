@@ -243,6 +243,12 @@ end
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
+hl.bind(mainMod .. " + D",         hl.dsp.workspace.toggle_special("dot"))
+hl.bind(mainMod .. " + SHIFT + D", hl.dsp.window.move({ workspace = "special:dot" }))
+
+hl.bind(mainMod .. " + A",         hl.dsp.workspace.toggle_special("alpha"))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.window.move({ workspace = "special:alpha" }))
+
 -- Follow the same window/monitor navigation as mainMod + h/l. Add Shift to
 -- scroll through workspaces on the active monitor.
 hl.bind(mainMod .. " + mouse_down", focus_or_monitor("right", 1))

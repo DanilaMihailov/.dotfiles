@@ -13,6 +13,10 @@ export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools/platform-too
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
+if [[ -n ${CONTAINER_ID:-} ]]; then
+  export PATH="$HOME/.local/lib/distrobox-host-bin:$PATH"
+fi
+
 export LANG=en_US.UTF-8
 export MANPAGER='nvim +Man!'
 export EDITOR=nvim

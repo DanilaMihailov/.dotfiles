@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/distrobox-host-exec /usr/bin/podman-compose "$@"

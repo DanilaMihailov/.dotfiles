@@ -96,6 +96,7 @@ if [[ -n ${CONTAINER_ID:-} ]]; then
 
   export NVIM_APPNAME="nvim-$CONTAINER_ID"
   export CODEX_INSTALL_DIR="$distrobox_tools/bin"
+  export MISE_INSTALL_PATH="$distrobox_tools/bin/mise"
 
   export BUN_INSTALL="$distrobox_tools/bun"
   export CARGO_HOME="$distrobox_tools/cargo"
@@ -146,6 +147,27 @@ alias df='df -h'
 alias free='free -h'
 alias ports='ss -tulpn'
 alias please='sudo $(fc -ln -1)'
+
+ctop() {
+  DOCKER_HOST="unix://${XDG_RUNTIME_DIR}/docker.sock" command ctop "$@"
+}
+
+docker-sleep() {
+  local state_file="${XDG_RUNTIME_DIR}/docker-sleep-containers"
+  docker ps -q > "$state_file"
+
+  local containers=("${(@f)$(<"$state_file")}")
+  (( ${#containers} )) && docker stop --timeout 30 "${containers[@]}"
+}
+
+docker-wake() {
+  local state_file="${XDG_RUNTIME_DIR}/docker-sleep-containers"
+  [[ -s "$state_file" ]] || return 0
+
+  local containers=("${(@f)$(<"$state_file")}")
+  docker start "${containers[@]}"
+  rm "$state_file"
+}
 
 # alias to love
 alias love="/Applications/love.app/Contents/MacOS/love"

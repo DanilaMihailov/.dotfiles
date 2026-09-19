@@ -9,7 +9,33 @@ return function(programs)
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + RETURN", function()
+  local window = hl.get_active_window()
+  local class = window and string.lower(window.class or "") or ""
+
+  if class == "alacritty" then
+    local address = tostring(window.address or "")
+    local cache_home = os.getenv("XDG_CACHE_HOME") or (os.getenv("HOME") .. "/.cache")
+    local context_file = cache_home .. "/alacritty-dbox/" .. address .. ".container"
+    local context = io.open(context_file, "r")
+
+    if context then
+      context:close()
+      hl.dispatch(hl.dsp.exec_cmd(
+        "/home/zen/.local/bin/alacritty-dbox-window " .. address
+      ))
+    else
+      -- Let Alacritty create the window so it can inherit this terminal's CWD.
+      hl.dispatch(hl.dsp.send_shortcut({
+        mods = "CTRL + SHIFT",
+        key = "N",
+        window = window,
+      }))
+    end
+  else
+    hl.dispatch(hl.dsp.exec_cmd(terminal))
+  end
+end)
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
@@ -35,7 +61,7 @@ hl.bind(
   )
 )
 hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("swaync-client -t -sw"))
-hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
+-- hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 hl.bind(
   mainMod .. " + ESCAPE",
   hl.dsp.exec_cmd("swaync-client -t -sw"),
@@ -50,7 +76,7 @@ local function mac_clipboard_shortcut(key)
         local class = window and string.lower(window.class or "") or ""
         local mods = "CTRL"
 
-        if class == "foot" or class == "footclient" then
+        if class == "alacritty" or class == "foot" or class == "footclient" then
             -- Terminals reserve Ctrl+C for SIGINT and use Ctrl+Shift+C/V.
             mods = "CTRL + SHIFT"
         end
@@ -132,12 +158,12 @@ hl.bind(mainMod .. " + p", hl.dsp.focus({ workspace = "m-1" }))
 hl.bind(mainMod .. " + n", hl.dsp.focus({ workspace = "m+1" }))
 
 -- Scrolling layout: combine/expel windows
-hl.bind(mainMod .. " + SHIFT + left",  hl.dsp.layout("consume_or_expel prev"))
-hl.bind(mainMod .. " + SHIFT + right", hl.dsp.layout("consume_or_expel next"))
+hl.bind(mainMod .. " + SHIFT + h",  hl.dsp.layout("consume_or_expel prev"))
+hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("consume_or_expel next"))
 
 -- Move the current scrolling-layout column without combining windows
-hl.bind(mainMod .. " + SHIFT + h", hl.dsp.layout("swapcol l"))
-hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("swapcol r"))
+hl.bind(mainMod .. " + SHIFT + left", hl.dsp.layout("swapcol l"))
+hl.bind(mainMod .. " + SHIFT + right", hl.dsp.layout("swapcol r"))
 
 hl.bind(mainMod .. " + PERIOD", hl.dsp.layout("colresize +conf"))
 hl.bind(mainMod .. " + COMMA", hl.dsp.layout("colresize -conf"))
@@ -262,7 +288,7 @@ hl.bind(
     )
 )
 hl.bind("XF86HangupPhone", hl.dsp.exec_cmd("swaync-client -d -sw"))
-hl.bind("XF86Favorites", hl.dsp.exec_cmd("foot --title=Codex zsh -lic 'exec codex'"))
+hl.bind("XF86Favorites", hl.dsp.exec_cmd("alacritty --title Codex -e /home/zen/.local/bin/foot-tmux-session --no-tmux codex"))
 
 -- Requires playerctl
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })

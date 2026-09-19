@@ -3,7 +3,7 @@
 configuration {
     modes: "combi,calc,filebrowser,actions:/home/zen/.local/bin/rofi-actions";
     font: "JetBrainsMono Nerd Font 13";
-    terminal: "foot -e /home/zen/.local/bin/foot-tmux-session";
+    terminal: "alacritty -e /home/zen/.local/bin/foot-tmux-session --no-tmux";
     show-icons: false;
     drun-match-fields: "name,generic,exec,categories,keywords";
     combi-modes: "window,drun,actions";

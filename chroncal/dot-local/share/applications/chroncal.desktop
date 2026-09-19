@@ -3,7 +3,7 @@ Type=Application
 Name=Chroncal
 GenericName=Calendar
 Comment=Manage local and CalDAV calendars in the terminal
-Exec=foot --app-id=chroncal --title=Chroncal chroncal
+Exec=alacritty --class chroncal --title Chroncal -e /home/zen/.local/bin/foot-tmux-session --no-tmux chroncal
 TryExec=chroncal
 Icon=chroncal
 Terminal=false

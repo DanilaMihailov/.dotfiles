@@ -57,12 +57,17 @@
       "class<(foot|footclient)> title<.*(nvim|Neovim).*>": "",
       "class<(foot|footclient)> title<.*(btop|Btop).*>": "󰨇",
       "class<(foot|footclient)> title<.*(codex|Codex).*>": "󰚩",
+      "class<Alacritty> title<.*(nvim|Neovim).*>": "",
+      "class<Alacritty> title<.*(btop|Btop).*>": "󰨇",
+      "class<Alacritty> title<.*(codex|Codex).*>": "󰚩",
+      "class<Alacritty> title<aerc>": "󰇮",
       "class<aerc>": "󰇮",
       "class<chroncal>": "󰃭",
       "class<(foot|footclient)> title<.*(tuxedo|Tuxedo|todo\\.txt).*>": "",
       "class<(foot|footclient)> title<\\[mosh\\].*>": "",
       "class<(foot|footclient)> title<.*(ssh|SSH).*>": "",
       "class<(foot|footclient)>": "",
+      "class<Alacritty>": "",
       "class<(dolphin|org.kde.dolphin)>": "󰉋",
       "class<(code|Code|codium|VSCodium)>": "󰨞",
       "class<(discord|Discord|vesktop|Vesktop)>": "󰙯",
@@ -147,7 +152,7 @@
     "return-type": "json",
     "interval": 60,
     "escape": false,
-    "on-click": "foot --app-id=chroncal --title=Chroncal chroncal"
+    "on-click": "alacritty --class chroncal --title Chroncal -e /home/zen/.local/bin/foot-tmux-session --no-tmux chroncal"
   },
 
   "network": {
@@ -162,7 +167,7 @@
       "󰤨"
     ],
     "tooltip-format": "{ifname}: {essid}\nSignal: {signalStrength}%\n{ipaddr}",
-    "on-click": "/usr/sbin/foot -e /home/zen/.local/bin/foot-tmux-session /usr/sbin/gazelle"
+    "on-click": "alacritty -e /home/zen/.local/bin/foot-tmux-session --no-tmux /usr/sbin/gazelle"
   },
 
   "bluetooth": {
@@ -176,7 +181,7 @@
     "tooltip-format-on": "Bluetooth on — no devices connected",
     "tooltip-format-connected": "{num_connections} connected\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click": "/usr/sbin/foot -e /home/zen/.local/bin/foot-tmux-session /usr/sbin/bluetui"
+    "on-click": "alacritty -e /home/zen/.local/bin/foot-tmux-session --no-tmux /usr/sbin/bluetui"
   },
 
   "group/network-status": {

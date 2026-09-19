@@ -1,15 +1,32 @@
 #!/bin/sh
 
+use_tmux=true
+
+# Alacritty launchers reuse this script for its environment setup without
+# creating a tmux session. Accept Rofi's terminal-emulator separator in either
+# order so this works as part of its `{terminal} -e {cmd}` template.
+while [ "$#" -gt 0 ]; do
+  case $1 in
+    --no-tmux)
+      use_tmux=false
+      shift
+      ;;
+    -e)
+      shift
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
 # Give each Foot-created tmux session a unique, recognizable name.
 session_name="foot-$(date +%Y%m%d-%H%M%S)-$$"
 
-# Rofi invokes the configured terminal as `{terminal} -e {cmd}`. Since this
-# wrapper is part of `{terminal}`, discard that terminal-emulator separator.
-if [ "${1-}" = "-e" ]; then
-  shift
-fi
-
 if [ "$#" -eq 0 ]; then
+  if [ "$use_tmux" = false ]; then
+    exec zsh
+  fi
   exec tmux new-session -s "$session_name"
 fi
 
@@ -45,6 +62,16 @@ if [ "$application" = "env" ]; then
   done
 fi
 pane_title="$initial_directory | $application"
+
+if [ "$use_tmux" = false ]; then
+  exec zsh -lc '
+    source "$HOME/.config/zsh/environment.zsh"
+    pane_title=$1
+    shift
+    printf "\033]0;%s\007" "$pane_title"
+    exec "$@"
+  ' zsh "$pane_title" "$@"
+fi
 
 exec tmux new-session -s "$session_name" zsh -lc '
   source "$HOME/.config/zsh/environment.zsh"

@@ -1,9 +1,8 @@
 #!/bin/sh
 
 # Default terminal bridge used by GLib for Terminal=true desktop entries.
-# Foot's configured shell already uses this wrapper when no command is given.
 if [ "$#" -eq 0 ]; then
-  exec foot
+  exec alacritty
 fi
 
 while [ "$#" -gt 0 ]; do
@@ -28,4 +27,4 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
-exec foot -e /home/zen/.local/bin/foot-tmux-session "$@"
+exec alacritty -e /home/zen/.local/bin/foot-tmux-session --no-tmux "$@"

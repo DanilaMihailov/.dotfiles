@@ -3,7 +3,7 @@ Type=Application
 Name=aerc
 GenericName=Email Client
 Comment=Read and compose email in the terminal
-Exec=foot --app-id=aerc --title=aerc -e /home/zen/.local/bin/foot-tmux-session aerc %u
+Exec=alacritty --class aerc --title aerc -e /home/zen/.local/bin/foot-tmux-session --no-tmux aerc %u
 Icon=aerc
 Terminal=false
 Categories=Network;Email;

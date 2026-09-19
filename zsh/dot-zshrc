@@ -214,6 +214,8 @@ compinit
 if [[ -z ${CONTAINER_ID:-} ]]; then
   dbox() {
     local container="work"
+    local context=""
+    local context_dir="${XDG_CACHE_HOME:-$HOME/.cache}/alacritty-dbox"
     local exit_status
 
     case ${1:-} in
@@ -241,14 +243,35 @@ if [[ -z ${CONTAINER_ID:-} ]]; then
       tmux set-option -p -t "$TMUX_PANE" @distrobox "$container"
     fi
 
+    # Associate this Alacritty window with its Distrobox so Mod+Enter can
+    # recreate the same context without relying on process-tree heuristics.
+    if [[ ${TERM:-} == alacritty ]] && (( $+commands[hyprctl] && $+commands[jq] )); then
+      context=$(hyprctl activewindow -j 2>/dev/null |
+        jq -r 'select(.class == "Alacritty") | .address // empty' 2>/dev/null)
+      if [[ $context == 0x* && $context != *[^0-9a-fA-Fx]* ]]; then
+        command mkdir -p -- "$context_dir"
+        print -r -- "$container" >| "$context_dir/$context.container"
+        print -r -- "$PWD" >| "$context_dir/$context.cwd"
+      else
+        context=""
+      fi
+    fi
+
     if (( $# == 0 )); then
-      distrobox enter "$container"
+      ALACRITTY_DBOX_CONTEXT="$context" \
+        ALACRITTY_DBOX_CONTAINER="$container" \
+        distrobox enter "$container"
     else
-      distrobox enter "$container" -- \
-        zsh -ic 'exec "$@"' zsh "$@"
+      ALACRITTY_DBOX_CONTEXT="$context" \
+        ALACRITTY_DBOX_CONTAINER="$container" \
+        distrobox enter "$container" -- \
+          zsh -ic 'exec "$@"' zsh "$@"
     fi
 
     exit_status=$?
+    if [[ -n $context ]]; then
+      command rm -f -- "$context_dir/$context.container" "$context_dir/$context.cwd"
+    fi
     # Stop inheriting the container after returning to the host.
     if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
       tmux set-option -p -u -t "$TMUX_PANE" @distrobox
@@ -259,6 +282,24 @@ if [[ -z ${CONTAINER_ID:-} ]]; then
   dnvim() {
     dbox nvim "$@"
   }
+fi
+
+# Keep the container-side directory for the Alacritty window current. The home
+# directory is shared with the host, so Hyprland's launcher can read this state.
+if [[ -n ${CONTAINER_ID:-} && -n ${ALACRITTY_DBOX_CONTEXT:-} ]]; then
+  _alacritty_dbox_track_cwd() {
+    local context_dir="${XDG_CACHE_HOME:-$HOME/.cache}/alacritty-dbox"
+    local target="$context_dir/$ALACRITTY_DBOX_CONTEXT.cwd"
+    local temporary="$target.$$"
+
+    command mkdir -p -- "$context_dir"
+    print -r -- "$PWD" >| "$temporary" && command mv -f -- "$temporary" "$target"
+  }
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _alacritty_dbox_track_cwd
+  add-zsh-hook precmd _alacritty_dbox_track_cwd
+  _alacritty_dbox_track_cwd
 fi
 
 # trying to fix pi timeout with openai-responses

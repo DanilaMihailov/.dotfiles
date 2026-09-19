@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+
+window_address=${1-}
+case $window_address in
+  0x[0-9a-fA-F]*) ;;
+  *) exit 2 ;;
+esac
+
+context_dir=${XDG_CACHE_HOME:-$HOME/.cache}/alacritty-dbox
+container_file=$context_dir/$window_address.container
+cwd_file=$context_dir/$window_address.cwd
+
+[ -r "$container_file" ] || exit 1
+IFS= read -r container < "$container_file"
+[ -n "$container" ] || exit 1
+
+directory=$HOME
+if [ -r "$cwd_file" ]; then
+  IFS= read -r directory < "$cwd_file" || true
+fi
+[ -n "$directory" ] || directory=$HOME
+
+exec alacritty -e /home/zen/.local/bin/foot-tmux-session --no-tmux \
+  /home/zen/.local/bin/alacritty-dbox-enter "$container" "$directory"

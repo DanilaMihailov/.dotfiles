@@ -1,0 +1,39 @@
+#!/bin/sh
+set -u
+
+container=${1-}
+directory=${2-$HOME}
+[ -n "$container" ] || exit 2
+
+context_dir=${XDG_CACHE_HOME:-$HOME/.cache}/alacritty-dbox
+window_address=$(
+  hyprctl activewindow -j 2>/dev/null |
+    jq -r --argjson pid "$PPID" \
+      'select(.class == "Alacritty" and .pid == $pid) | .address // empty' \
+      2>/dev/null
+)
+
+cleanup() {
+  if [ -n "$window_address" ]; then
+    rm -f -- \
+      "$context_dir/$window_address.container" \
+      "$context_dir/$window_address.cwd"
+  fi
+}
+trap cleanup EXIT HUP INT TERM
+
+case $window_address in
+  0x[0-9a-fA-F]*)
+    mkdir -p -- "$context_dir"
+    printf '%s\n' "$container" > "$context_dir/$window_address.container"
+    printf '%s\n' "$directory" > "$context_dir/$window_address.cwd"
+    ;;
+  *) window_address="" ;;
+esac
+
+ALACRITTY_DBOX_CONTEXT="$window_address" \
+  ALACRITTY_DBOX_CONTAINER="$container" \
+  distrobox enter "$container" -- \
+    zsh -ic 'cd -- "$1" 2>/dev/null || cd --; exec zsh' zsh "$directory"
+exit_status=$?
+exit "$exit_status"

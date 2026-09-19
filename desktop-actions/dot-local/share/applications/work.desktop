@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=Dbox Work
+GenericName=Terminal entering Work
+Comment=Open a terminal in the Work Distrobox
+Categories=System;TerminalEmulator;
+Exec=/home/zen/.local/bin/alacritty-dbox-enter work /home/zen
+Icon=/home/zen/.local/share/icons/distrobox/debian.png
+Keywords=distrobox;
+NoDisplay=false
+Terminal=true
+TryExec=/usr/bin/distrobox
+Type=Application
+Actions=Remove;
+
+[Desktop Action Remove]
+Name=Remove Work from system
+Exec=/usr/bin/distrobox rm work

@@ -1,5 +1,5 @@
 [window]
-dynamic_title = true
+dynamic_padding = true
 
 [scrolling]
 history = 100000
@@ -10,7 +10,6 @@ size = 8.0
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
-style = "Regular"
 
 [selection]
 save_to_clipboard = true
@@ -22,6 +21,11 @@ hide_when_typing = true
 shape = "Block"
 blinking = "Off"
 
+[bell]
+animation = "EaseOutExpo"
+duration = 100
+color = "#fb4934"
+
 [[keyboard.bindings]]
 key = "X"
 mods = "Control|Shift"
@@ -31,6 +35,11 @@ action = "ToggleViMode"
 key = "{"
 mods = "Control|Shift"
 action = "ToggleViMode"
+
+[[keyboard.bindings]]
+key = "N"
+mods = "Control|Shift"
+action = "CreateNewWindow"
 
 # Make y behave like tmux copy-mode: copy, leave Vi mode, and resume at the
 # live bottom of the terminal. Alacritty executes matching bindings in order.
@@ -57,6 +66,22 @@ action = "ScrollToBottom"
 [colors.primary]
 background = "#282828"
 foreground = "#ebdbb2"
+
+[colors.search.matches]
+foreground = "#282828"
+background = "#fabd2f"
+
+[colors.search.focused_match]
+foreground = "CellBackground"
+background = "CellForeground"
+
+[colors.footer_bar]
+foreground = "#282828"
+background = "#a89984"
+
+[colors.line_indicator]
+foreground = "#282828"
+background = "#83a598"
 
 [colors.normal]
 black = "#282828"

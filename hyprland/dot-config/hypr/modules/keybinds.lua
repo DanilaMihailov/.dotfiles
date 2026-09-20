@@ -60,11 +60,11 @@ hl.bind(
     "pkill -x rofi || /home/zen/.local/bin/emoji-picker"
   )
 )
-hl.bind(mainMod .. " + GRAVE", hl.dsp.exec_cmd("swaync-client -t -sw"))
+hl.bind(mainMod .. " + backslash", hl.dsp.exec_cmd("swaync-client -t -sw"))
 -- hl.bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 hl.bind(
   mainMod .. " + ESCAPE",
-  hl.dsp.exec_cmd("swaync-client -t -sw"),
+  hl.dsp.group.next(),
   { device = { inclusive = true, list = { "by-tech-air60-2", "by-tech-air60-1", "by-tech-air60" } } }
 )
 hl.bind("Print", hl.dsp.exec_cmd("flock --close --nonblock /tmp/hyprshot-region.lock hyprshot -m region"))
@@ -240,6 +240,10 @@ hl.bind(
         layout_aware = false,
     })
 )
+
+
+hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
+hl.bind(mainMod .. " + GRAVE", hl.dsp.group.next())
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]

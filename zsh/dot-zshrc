@@ -191,12 +191,13 @@ DISABLE_AUTO_TITLE="true"
 
 # Function to set terminal title
 function set_terminal_title() {
+  local container_prefix="${CONTAINER_ID:+[$CONTAINER_ID] }"
   if [[ -n "$1" ]]; then
     # When a process is running, show the command and the current directory
-    print -Pn "\e]0;$PWD | $1\a"
+    print -Pn "\e]0;${container_prefix}$PWD | $1\a"
   else
     # Default title showing only the current directory
-    print -Pn "\e]0;$PWD\a"
+    print -Pn "\e]0;${container_prefix}$PWD\a"
   fi
 }
 

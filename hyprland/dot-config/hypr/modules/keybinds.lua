@@ -47,7 +47,7 @@ hl.bind(
   )
 )
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill -x rofi || rofi -show drun"))
+-- hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill -x rofi || rofi -show drun"))
 hl.bind(
   mainMod .. " + W",
   hl.dsp.exec_cmd("pkill -x rofi || /home/zen/.local/bin/rofi-workspace-switcher")
@@ -91,6 +91,7 @@ end
 
 hl.bind(mainMod .. " + C", mac_clipboard_shortcut("C"))
 hl.bind(mainMod .. " + V", mac_clipboard_shortcut("V"))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload"))
 
 local function focus_or_workspace(direction, workspace)
     return function()
@@ -149,6 +150,8 @@ hl.bind(mainMod .. " + CTRL + k", hl.dsp.focus({ monitor = "u" }))
 hl.bind(mainMod .. " + CTRL + j", hl.dsp.focus({ monitor = "d" }))
 hl.bind(mainMod .. " + CTRL + SHIFT + h", hl.dsp.workspace.move({ monitor = "l" }))
 hl.bind(mainMod .. " + CTRL + SHIFT + l", hl.dsp.workspace.move({ monitor = "r" }))
+hl.bind(mainMod .. " + CTRL + SHIFT + k", hl.dsp.workspace.move({ monitor = "u" }))
+hl.bind(mainMod .. " + CTRL + SHIFT + j", hl.dsp.workspace.move({ monitor = "d" }))
 hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down" }))
 

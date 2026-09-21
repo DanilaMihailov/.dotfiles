@@ -17,16 +17,6 @@ local suppressMaximizeRule = hl.window_rule({
 -- suppressMaximizeRule:set_enabled(false)
 
 hl.window_rule({
-    name  = "suppress-alacritty-activation",
-    match = {
-        class         = "^[Aa]lacritty$",
-        initial_title = "^Codex$",
-    },
-
-    suppress_event = "activate activatefocus",
-})
-
-hl.window_rule({
     -- Fix some dragging issues with XWayland
     name  = "fix-xwayland-drags",
     match = {

@@ -3,19 +3,26 @@
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
--- The Waybar display toggle maintains this marker so config reloads preserve
--- its runtime choice instead of always enabling the laptop panel again.
+-- The Waybar toggle records the manual preference. The runtime fallback keeps
+-- the panel available after the last external display disappears, even on reload.
 local state_home = os.getenv("XDG_STATE_HOME") or (os.getenv("HOME") .. "/.local/state")
 local internal_disabled_marker = state_home .. "/hyprland/internal-display-disabled"
-local internal_disabled_file = io.open(internal_disabled_marker, "r")
-local internal_disabled = internal_disabled_file ~= nil
-if internal_disabled_file then
-    internal_disabled_file:close()
+local runtime_home = os.getenv("XDG_RUNTIME_DIR") or "/tmp"
+local fallback_marker = runtime_home .. "/hyprland-internal-display-fallback"
+local lid_marker = runtime_home .. "/hyprland-internal-display-lid-closed"
+
+local function marker_exists(path)
+    local file = io.open(path, "r")
+    if file then
+        file:close()
+        return true
+    end
+    return false
 end
 
 local internal_monitor = {
-    -- disabled = internal_disabled,
-    disabled = false,
+    disabled = (marker_exists(internal_disabled_marker) or marker_exists(lid_marker))
+        and not marker_exists(fallback_marker),
     output   = "eDP-1",
     mode     = "1920x1080@60",
     position = "5120x0",
@@ -48,20 +55,33 @@ hl.monitor(middle_external_monitor)
 hl.monitor(left_external_monitor)
 hl.monitor(top_external_monitor)
 
--- Keep display lifecycle behavior alongside the monitor definitions.
--- Disable the internal display when the lid closes so its workspace moves to
--- an active external monitor, then restore the configured layout when opened.
+-- All display changes go through one reconciler, including hotplug and reload.
+-- It only disables the panel when another active output is available.
+local display_script = os.getenv("HOME") .. "/.config/waybar/internal-display-toggle.sh"
+local function reconcile()
+    hl.exec_cmd(display_script .. " reconcile")
+end
+
+local function start_watcher()
+    hl.exec_cmd(display_script .. " watch")
+    reconcile()
+end
+
+hl.on("hyprland.start", start_watcher)
+hl.on("monitor.layout_changed", reconcile)
+hl.on("config.reloaded", start_watcher)
+
 hl.bind(
     "switch:on:Lid Switch",
     function()
-        hl.monitor({ output = "eDP-1", disabled = true })
+        hl.exec_cmd(display_script .. " lid-close")
     end,
     { locked = true }
 )
 hl.bind(
     "switch:off:Lid Switch",
     function()
-        hl.monitor({ output = "eDP-1", disabled = false })
+        hl.exec_cmd(display_script .. " lid-open")
     end,
     { locked = true }
 )

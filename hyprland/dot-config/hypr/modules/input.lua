@@ -23,6 +23,12 @@ hl.config({
     },
 })
 
+
+hl.device({
+    name = "tpps/2-elan-trackpoint",
+    sensitivity = -0.2,
+})
+
 -- do not switch lalt_lwin on external keyboard (it is already at the right place)
 hl.device({
     name = "by-tech-air60-2",

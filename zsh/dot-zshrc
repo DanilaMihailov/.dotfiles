@@ -339,3 +339,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
 eval "$(mise activate zsh)"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/zen/.local/bin:$PATH"

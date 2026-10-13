@@ -20,6 +20,48 @@ hl.config({
     },
 })
 
+-- Scroll vertically on the portrait display.
+hl.workspace_rule({
+    workspace = "m[DP-2]",
+    layout_opts = {
+        direction = "down",
+    },
+})
+
+-- The first row needs center mode to allow scrolling past the tape's start.
+-- This option is global, so select it according to the focused monitor.
+local function update_scrolling_fit()
+    local monitor = hl.get_active_monitor()
+    local portrait = monitor and monitor.name == "DP-2"
+    hl.config({
+        scrolling = {
+            focus_fit_method = portrait and 0 or 1,
+        },
+    })
+end
+
+hl.on("monitor.focused", update_scrolling_fit)
+hl.on("config.reloaded", update_scrolling_fit)
+hl.on("hyprland.start", update_scrolling_fit)
+
+-- Center the scrolling column after focus settles on the portrait display.
+hl.on("window.active", function(window)
+    update_scrolling_fit()
+    if not window or window.floating then
+        return
+    end
+
+    hl.timer(function()
+        local active = hl.get_active_window()
+        local monitor = hl.get_active_monitor()
+        local workspace = hl.get_active_special_workspace() or hl.get_active_workspace()
+        if active and active.address == window.address
+            and monitor and monitor.name == "DP-2"
+            and workspace and workspace.tiled_layout == "scrolling" then
+            hl.dispatch(hl.dsp.layout("center"))
+        end
+    end, { timeout = 1, type = "oneshot" })
+end)
 
 hl.config({
     group = {

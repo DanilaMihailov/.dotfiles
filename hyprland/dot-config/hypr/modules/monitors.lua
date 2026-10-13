@@ -25,28 +25,29 @@ local internal_monitor = {
         and not marker_exists(fallback_marker),
     output   = "eDP-1",
     mode     = "1920x1080@60",
-    position = "5120x0",
+    position = "1952x1440",
     scale    = 1.25,
 }
 
 local middle_external_monitor = {
     output   = "DP-1",
     mode     = "3840x2160@60",
-    position = "2560x0",
+    position = "1440x0",
     scale    = 1.5,
 }
 
 local left_external_monitor = {
     output   = "DP-2",
     mode     = "3840x2160@60",
-    position = "0x0",
+    position = "0x-560",
     scale    = 1.5,
+    transform = 1,
 }
 
 local top_external_monitor = {
     output   = "HDMI-A-1",
     mode     = "2560x1440@60",
-    position = "4864x-1152",
+    position = "3744x-1152",
     scale    = 1.25,
 }
 

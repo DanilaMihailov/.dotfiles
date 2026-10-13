@@ -38,7 +38,6 @@ hl.bind(mainMod .. " + RETURN", function()
 end)
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(
   mainMod .. " + E",
   hl.dsp.exec_cmd(
@@ -46,6 +45,7 @@ hl.bind(
     "-theme /home/zen/.config/rofi/filebrowser.rasi"
   )
 )
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("pkill -x rofi || rofi -show recursivebrowser"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 -- hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill -x rofi || rofi -show drun"))
 hl.bind(
@@ -168,8 +168,44 @@ hl.bind(mainMod .. " + SHIFT + l", hl.dsp.layout("consume_or_expel next"))
 hl.bind(mainMod .. " + SHIFT + left", hl.dsp.layout("swapcol l"))
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.layout("swapcol r"))
 
-hl.bind(mainMod .. " + PERIOD", hl.dsp.layout("colresize +conf"))
-hl.bind(mainMod .. " + COMMA", hl.dsp.layout("colresize -conf"))
+local function resize_scrolling(step)
+    return function()
+        local monitor = hl.get_active_monitor()
+        local window = hl.get_active_window()
+        if not monitor or monitor.name ~= "DP-2" or not window or window.floating then
+            hl.dispatch(hl.dsp.layout(step > 0 and "colresize +conf" or "colresize -conf"))
+            return
+        end
+
+        -- Current DP-2 work area: 2560 high minus the 25-pixel bar.
+        -- DP-1 windows are 1403 high; allow 12 pixels for borders/gaps.
+        local usable_height = 2535
+        local landscape_height = 1415 / usable_height
+        -- Centering leaves half the remaining height on either side.
+        local sizes = { (1 - landscape_height) / 2, landscape_height, 1.0 }
+        local current = (window.size.y + 12) / usable_height
+        local selected = step > 0 and sizes[1] or sizes[#sizes]
+        if step > 0 then
+            for _, size in ipairs(sizes) do
+                if size > current + 0.002 then
+                    selected = size
+                    break
+                end
+            end
+        else
+            for i = #sizes, 1, -1 do
+                if sizes[i] < current - 0.002 then
+                    selected = sizes[i]
+                    break
+                end
+            end
+        end
+        hl.dispatch(hl.dsp.layout("colresize " .. selected))
+    end
+end
+
+hl.bind(mainMod .. " + PERIOD", resize_scrolling(1))
+hl.bind(mainMod .. " + COMMA", resize_scrolling(-1))
 
 local function rofiIsOpen()
     for _, layer in ipairs(hl.get_layers()) do

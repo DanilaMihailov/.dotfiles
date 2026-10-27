@@ -33,16 +33,19 @@ hl.device({
 hl.device({
     name = "by-tech-air60-2",
     kb_options = "ctrl:nocaps",
+    kb_file = os.getenv("HOME") .. "/dotfiles/hyprland/dot-config/hypr/air60.xkb",
 })
 
 hl.device({
     name = "by-tech-air60",
     kb_options = "ctrl:nocaps",
+    kb_file = os.getenv("HOME") .. "/dotfiles/hyprland/dot-config/hypr/air60.xkb",
 })
 
 hl.device({
     name = "by-tech-air60-1",
     kb_options = "ctrl:nocaps",
+    kb_file = os.getenv("HOME") .. "/dotfiles/hyprland/dot-config/hypr/air60.xkb",
 })
 
 -- Touchscreen: swipe inward from the left/right edge to change workspace.

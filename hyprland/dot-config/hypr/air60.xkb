@@ -1,0 +1,25 @@
+// Air60: Esc types backtick, Shift+Esc types tilde, Ctrl+Esc sends Escape.
+// Keep both layouts and the existing Caps Lock -> Control mapping.
+xkb_keymap {
+    xkb_keycodes { include "evdev+aliases(qwerty)" };
+    xkb_types {
+        include "complete"
+        type "AIR60_ESCAPE" {
+            modifiers = Shift+Control;
+            map[None] = Level1;
+            map[Shift] = Level2;
+            map[Control] = Level3;
+            map[Shift+Control] = Level3;
+        };
+    };
+    xkb_compatibility { include "complete" };
+    xkb_symbols {
+        include "pc+us+ru:2+inet(evdev)+ctrl(nocaps)"
+        replace key <ESC> {
+            type[Group1] = "AIR60_ESCAPE",
+            symbols[Group1] = [ grave, asciitilde, Escape ],
+            type[Group2] = "AIR60_ESCAPE",
+            symbols[Group2] = [ grave, asciitilde, Escape ]
+        };
+    };
+};

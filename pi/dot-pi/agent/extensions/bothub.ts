@@ -1,20 +1,23 @@
 /**
  * Module summary: registers the custom `bothub` provider, pointing Pi at an
- * OpenAI-compatible Bothub endpoint and exposing the `gemini-3-flash-preview`
- * model with reasoning support and provider metadata.
+ * OpenAI-compatible Bothub endpoint and exposing its configured
+ * models with reasoning support and provider metadata.
  */
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 /**
- * Registers the custom Bothub provider and its Gemini model metadata.
+ * Registers the custom Bothub provider and its model metadata.
  */
 export default function bothubExtension(pi: ExtensionAPI) {
   // Inject OpenRouter provider routing for models that define compat.openRouterRouting.
   // Pi only does this automatically when baseUrl contains "openrouter.ai", but Bothub
-  // passes through all OpenRouter body params, so we do it unconditionally here.
+  // passes through OpenRouter body params, so apply routing to Bothub requests here.
   pi.on("before_provider_request", (event, ctx) => {
-    const routing = (ctx.model as any)?.compat?.openRouterRouting;
+    if (ctx.model?.provider !== "bothub" || ctx.model.api !== "openai-completions") return;
+    const compat = ctx.model.compat;
+    const routing = compat && "openRouterRouting" in compat ? compat.openRouterRouting : undefined;
     if (!routing) return;
+    if (!event.payload || typeof event.payload !== "object" || Array.isArray(event.payload)) return;
     const payload = event.payload as Record<string, unknown>;
     if (payload.provider) return; // don't override if already set
     return { ...payload, provider: routing };
@@ -22,7 +25,7 @@ export default function bothubExtension(pi: ExtensionAPI) {
 
   pi.registerProvider("bothub", {
     baseUrl: "https://bothub.chat/api/v2/openai/v1",
-    apiKey: "BOTHUB_KEY", // env var name or literal value
+    apiKey: "$BOTHUB_KEY", // resolve the API key from the environment
     api: "openai-completions", // which streaming API to use
     models: [
       {
@@ -54,8 +57,8 @@ export default function bothubExtension(pi: ExtensionAPI) {
         maxTokens: 128000, // Normalized to standard power-of-2 context where applicable
       },
       {
-        id: "gpt-5.4-mini",
-        name: "GPT-5.4 Mini",
+        id: "gpt-6-luna",
+        name: "GPT-6 Luna",
         reasoning: true,
         input: ["text", "image"],
         cost: {

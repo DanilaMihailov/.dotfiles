@@ -1,0 +1,26 @@
+#!/bin/bash
+set -euo pipefail
+
+case "${1:-}" in
+  +|-) ;;
+  *) echo "Usage: lg-brightness +|-" >&2; exit 2 ;;
+esac
+
+# Serialize monitor commands when brightness keys are pressed quickly.
+exec 9>"${XDG_RUNTIME_DIR:-/tmp}/lg-brightness-${UID}.lock"
+flock 9
+
+ddcutil --sn 501NTAB7Y208 setvcp 10 "$1" 10
+value=$(ddcutil --sn 501NTAB7Y208 --terse getvcp 10)
+read -r current maximum < <(
+  awk '$1 == "VCP" && $2 == "10" && $3 == "C" {print $4, $5}' <<< "$value"
+)
+if ! [[ "$current" =~ ^[0-9]+$ && "$maximum" =~ ^[0-9]+$ ]] || [ "$maximum" -eq 0 ]; then
+  echo "Could not read LG monitor brightness" >&2
+  exit 1
+fi
+
+fraction=$(awk -v c="$current" -v m="$maximum" 'BEGIN {printf "%.4f", c/m}')
+swayosd-client --monitor DP-1 \
+  --custom-icon display-brightness-symbolic \
+  --custom-progress "$fraction"

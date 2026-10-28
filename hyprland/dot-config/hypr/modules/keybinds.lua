@@ -323,6 +323,15 @@ hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("swayosd-client --brightness -5 
 hl.bind("XF86KbdBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -d 'tpacpi::kbd_backlight' set +1"), { locked = true, repeating = true })
 hl.bind("XF86KbdBrightnessDown",hl.dsp.exec_cmd("brightnessctl -d 'tpacpi::kbd_backlight' set 1-"),  { locked = true, repeating = true })
 
+
+hl.bind(mainMod .. " + XF86MonBrightnessUp",
+  hl.dsp.exec_cmd("~/.local/bin/lg-brightness +"),
+  { locked = true })
+
+hl.bind(mainMod .. " + XF86MonBrightnessDown",
+  hl.dsp.exec_cmd("~/.local/bin/lg-brightness -"),
+  { locked = true })
+
 -- ThinkPad function-row actions. A udev hwdb override remaps F8 from the
 -- system WLAN key to KEY_PROG1, exposed by XKB as XF86Launch1.
 -- Override: /etc/udev/hwdb.d/90-thinkpad-function-keys.hwdb
